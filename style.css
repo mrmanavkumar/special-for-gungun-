@@ -1,1 +1,187 @@
+body{
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#ffdde1,#ee9ca7);
+    overflow:hidden;
+}
 
+/* Gift */
+
+.gift-container{
+    width:100%;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.gift-container h2{
+    color:white;
+    font-size:32px;
+}
+
+.gift-container p{
+    color:white;
+    font-size:18px;
+}
+
+.gift-box img{
+    width:220px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.gift-box img:hover{
+    transform:scale(1.05);
+}
+
+/* Shake */
+
+.shake{
+    animation:shake .8s;
+}
+
+@keyframes shake{
+
+0%{transform:translateX(0);}
+20%{transform:translateX(-10px);}
+40%{transform:translateX(10px);}
+60%{transform:translateX(-10px);}
+80%{transform:translateX(10px);}
+100%{transform:translateX(0);}
+
+}
+
+/* Countdown */
+
+#countdownScreen{
+
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+justify-content:center;
+align-items:center;
+z-index:9999;
+
+}
+
+#countdownText{
+
+font-size:120px;
+color:white;
+text-shadow:0 0 20px #ff4d6d;
+
+}
+
+/* Birthday Template */
+
+#surprise{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+visibility:hidden;
+opacity:0;
+
+transition:2s;
+
+}
+
+#surprise.show{
+
+visibility:visible;
+opacity:1;
+
+}
+
+#surprise img{
+
+width:90%;
+max-width:420px;
+
+}
+
+/* Final Message */
+
+#finalMessage{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+visibility:hidden;
+opacity:0;
+
+transition:2s;
+
+background:white;
+
+overflow:hidden;
+
+}
+
+#finalMessage.show{
+
+visibility:visible;
+opacity:1;
+
+}
+
+/* Watermark Sketch */
+
+#watermark{
+
+position:absolute;
+
+width:80%;
+max-width:420px;
+
+opacity:.08;
+
+}
+
+/* Message */
+
+.message-box{
+
+position:relative;
+z-index:10;
+
+width:85%;
+
+text-align:center;
+
+}
+
+#messageText{
+
+font-size:22px;
+
+line-height:1.8;
+
+color:#333;
+
+white-space:pre-line;
+
+}
