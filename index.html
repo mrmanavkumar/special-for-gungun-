@@ -1,1 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Surprise ❤️</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- Gift Screen -->
+<div class="gift-container">
+
+    <h2>🎁 Just For You ❤️</h2>
+
+    <p>Tap the Gift to Open ✨</p>
+
+    <div class="gift-box" onclick="openGift()">
+
+        <img src="gift.png" alt="Gift">
+
+    </div>
+
+</div>
+
+<!-- Countdown -->
+<div id="countdownScreen">
+
+    <h1 id="countdownText">3</h1>
+
+</div>
+
+<!-- Birthday Template -->
+<div id="surprise">
+
+    <img src="birthday-template.png" alt="Birthday">
+
+</div>
+
+<!-- Final Message -->
+<div id="finalMessage">
+
+    <!-- Watermark Sketch -->
+    <img src="sketch.png" id="watermark">
+
+    <div class="message-box">
+
+        <p id="messageText"></p>
+
+    </div>
+
+</div>
+
+<!-- Audio -->
+<audio id="countdown">
+    <source src="countdown.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="music">
+    <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
