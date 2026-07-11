@@ -103,3 +103,44 @@ function openGift(){
     },800);
 
 }
+function typeMessage(element){
+
+const text=`Gungun,
+
+Main bas yehi dua karta hu ki tum hamesha khush raho...
+
+Kyuki tum sach me happiness deserve karti ho. ❤️
+
+Chahe waqt badal gaya ho...
+Chahe humari rahein alag ho gayi ho...
+
+Lekin tum hamesha meri life ka ek bahut special part rahogi.
+
+Main bas itna chahta hu ki tum apni life me bahut aage badho,
+khub haso,
+khush raho,
+aur apne har sapne ko pura karo. ✨
+
+Happy Birthday Gungun 🎂❤️
+
+— MANAV`;
+
+let i=0;
+
+element.innerHTML="";
+
+const typing=setInterval(()=>{
+
+element.innerHTML+=text.charAt(i);
+
+i++;
+
+if(i>=text.length){
+
+clearInterval(typing);
+
+}
+
+},45);
+
+}
