@@ -1,109 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="hi">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Happy Birthday Gungun ❤️</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🌹</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- ⭐ Background Stars -->
-<div id="stars"></div>
+    <!-- Twinkling Stars Background -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
 
-<!-- ❤️ Floating Hearts -->
-<div id="hearts"></div>
+    <!-- Canvas for Rose Petals & Hearts Particle Effect -->
+    <canvas id="effectCanvas"></canvas>
 
-<!-- 🌹 Rose Petals -->
-<div id="roseContainer"></div>
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- STEP 1: The Premium Gift Box -->
+        <div id="giftBox" class="gift-box" onclick="openGift()">
+            <div class="ribbon"></div>
+            <div class="gift-text">Tap to Open Gift 🎁</div>
+        </div>
 
-<!-- 🎁 Gift Screen -->
-<div id="giftScreen">
+        <!-- STEP 2: The Magical Content (Hidden initially) -->
+        <div id="magicalContent" class="hidden">
+            <!-- Birthday Image with Smooth Zoom -->
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=500" alt="Birthday Image" class="zoom-image">
+            </div>
 
-    <div id="giftBox" onclick="openGift()">
-
-        <img src="gift.png" alt="Gift">
+            <!-- Romantic Sliding Letter Box -->
+            <div class="letter-box">
+                <div class="letter-content">
+                    <h3>Dear [Name], ❤️</h3>
+                    <p>Aapke is special din par main bas yeh kehna chahta/chahti hoon ki aap meri zindagi ka sabse khoobsurat hissa ho.</p>
+                    <p>May your day be filled with endless love, laughter, and pure happiness. Happy Birthday! 🌹</p>
+                </div>
+            </div>
+        </div>
 
     </div>
 
-    <h2>🎁 Tap The Gift 🎁</h2>
-
-</div>
-
-<!-- Countdown -->
-
-<div id="countdownScreen">
-
-<h1 id="count">3</h1>
-
-</div>
-
-<!-- Happy Birthday -->
-
-<div id="birthdayText">
-
-<div class="birthdayCard">
-
-<h1>
-
-🎉
-
-<br>
-
-Happy Birthday
-
-<br>
-
-Gungun ❤️
-
-</h1>
-
-</div>
-
-</div>
-
-<!-- Birthday Image -->
-
-<div id="templateScreen">
-
-<img src="birthday-template.png" id="birthdayTemplate">
-
-</div>
-
-<!-- Letter -->
-
-<div id="letterScreen">
-
-<img src="sketch.png" id="watermark">
-
-<div id="letter">
-
-<h1>❤️ Happy Birthday ❤️</h1>
-
-<div id="message"></div>
-
-</div>
-
-</div>
-
-<!-- Music -->
-
-<audio id="music" src="music.mp3"></audio>
-
-<audio id="countdown" src="countdown.mp3"></audio>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
-
 </html>
