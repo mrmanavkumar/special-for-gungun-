@@ -1,216 +1,86 @@
-function openGift(){
-    const music = document.getElementById("music");
+const canvas = document.getElementById('effectCanvas');
+const ctx = canvas.getContext('2d');
 
-music.muted = true;
-music.play();
+let animationActive = false;
+let particles = [];
 
-music.pause();
-music.currentTime = 0;
-music.muted = false;
+// Handle Canvas Resize
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
-    const gift=document.querySelector(".gift-box");
+// Particle Class for Rose Petals & Hearts
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = -20;
+        this.size = Math.random() * 15 + 10;
+        this.speedY = Math.random() * 2 + 1;
+        this.speedX = Math.sin(Math.random() * 2) * 1;
+        this.type = Math.random() > 0.5 ? 'petal' : 'heart';
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = Math.random() * 2 - 1;
+    }
 
-    gift.classList.add("shake");
+    update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.rotation += this.rotationSpeed;
 
-    setTimeout(()=>{
+        if (this.y > canvas.height) {
+            this.y = -20;
+            this.x = Math.random() * canvas.width;
+        }
+    }
 
-        // Hide Gift
-        document.querySelector(".gift-container").style.display="none";
+    draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
 
-        // Elements
-        const countdown=document.getElementById("countdown");
-        const music=document.getElementById("music");
+        if (this.type === 'petal') {
+            // Draw Rose Petal
+            ctx.fillStyle = '#ff7675';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, this.size, this.size / 1.5, 0, 0, Math.PI * 2);
+            ctx.fill();
+        } else {
+            // Draw Heart
+            ctx.fillStyle = '#d63031';
+            ctx.beginPath();
+            ctx.moveTo(0, 0 - this.size / 4);
+            ctx.bezierCurveTo(0 - this.size / 2, 0 - this.size, 0 - this.size, 0 - this.size / 4, 0, 0 + this.size / 1.5);
+            ctx.bezierCurveTo(0 + this.size, 0 - this.size / 4, 0 + this.size / 2, 0 - this.size, 0, 0 - this.size / 4);
+            ctx.fill();
+        }
+        ctx.restore();
+    }
+}
 
-        const countdownScreen=document.getElementById("countdownScreen");
-        const countdownText=document.getElementById("countdownText");
-
-        const surprise=document.getElementById("surprise");
-
-        const finalMessage=document.getElementById("finalMessage");
-
-        const message=document.getElementById("messageText");
-
-        // Countdown Screen
-        countdownScreen.style.display="flex";
-
-        countdown.currentTime=0;
-
-        countdown.play().catch(()=>{});
-
-        countdownText.innerText="3";
-
-        setTimeout(()=>{
-            countdownText.innerText="2";
-        },1000);
-
-        setTimeout(()=>{
-            countdownText.innerText="1";
-        },2000);
-
-        setTimeout(()=>{
-            countdownText.innerHTML="🎉 Happy Birthday 🎉";
-        },3000);
-
-        // Countdown Finish
-        countdown.onended=()=>{
-
-            countdownScreen.style.display="none";
-
-            surprise.classList.add("show");
-
-            music.currentTime=0;
-
-            music.play().then(()=>{
-    console.log("Music Started");
-}).catch((err)=>{
+// Function to open gift and trigger everything
+function openGift() {
+    document.getElementById('giftBox').classList.add('hidden');
+    document.getElementById('magicalContent').classList.remove('hidden');
     
-    console.log(err);
-
-    // Agar music block ho jaye tab bhi letter dikhao
-    setTimeout(()=>{
-        surprise.style.opacity="0";
-
-        setTimeout(()=>{
-            surprise.style.visibility="hidden";
-            finalMessage.classList.add("show");
-            typeMessage(message);
-        },2000);
-
-    },5000);
-});
-
-            // Confetti
-            const end=Date.now()+45000;
-
-            (function frame(){
-
-                confetti({
-                    particleCount:2,
-                    angle:60,
-                    spread:55,
-                    origin:{x:0}
-                });
-
-                confetti({
-                    particleCount:2,
-                    angle:120,
-                    spread:55,
-                    origin:{x:1}
-                });
-
-                if(Date.now()<end){
-
-                    requestAnimationFrame(frame);
-
-                }
-
-            })();
-
-            // Music End
-            // Agar browser autoplay block kar de to bhi 45 sec baad letter dikha do
-setTimeout(() => {
-
-    surprise.style.opacity = "0";
-
-    setTimeout(() => {
-
-        surprise.style.visibility = "hidden";
-
-        finalMessage.classList.add("show");
-
-        typeMessage(message);
-
-    }, 2000);
-
-}, 45000);
-            music.onended=()=>{
-
-                surprise.style.opacity="0";
-
-                setTimeout(()=>{
-
-                    surprise.style.visibility="hidden";
-
-                    finalMessage.classList.add("show");
-
-                    typeMessage(message);
-
-                },2000);
-
-            };
-
-        };
-
-    },800);
-
-}
-function typeMessage(element){
-
-const text=`Gungun,
-
-Main bas yehi dua karta hu ki tum hamesha khush raho...
-
-Kyuki tum sach me happiness deserve karti ho. ❤️
-
-Chahe waqt badal gaya ho...
-Chahe humari rahein alag ho gayi ho...
-
-Lekin tum hamesha meri life ka ek bahut special part rahogi.
-
-Main bas itna chahta hu ki tum apni life me bahut aage badho,
-khub haso,
-khush raho,
-aur apne har sapne ko pura karo. ✨
-
-Happy Birthday Gungun 🎂❤️
-
-— MANAV`;
-
-let i=0;
-
-element.innerHTML="";
-
-const typing=setInterval(()=>{
-
-element.innerHTML+=text.charAt(i);
-
-i++;
-
-if(i>=text.length){
-
-clearInterval(typing);
-
+    // Start Rose Petals and Hearts Animation
+    animationActive = true;
+    for (let i = 0; i < 50; i++) {
+        particles.push(new Particle());
+    }
+    animate();
 }
 
-},45);
-
+function animate() {
+    if (!animationActive) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    particles.forEach(p => {
+        p.update();
+        p.draw();
+    });
+    
+    requestAnimationFrame(animate);
 }
-// ❤️ Floating Hearts
-
-setInterval(() => {
-
-    const heart = document.createElement("div");
-
-    heart.innerHTML = "❤️";
-
-    heart.style.position = "fixed";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.bottom = "-20px";
-    heart.style.fontSize = (20 + Math.random() * 20) + "px";
-    heart.style.opacity = "0.8";
-    heart.style.pointerEvents = "none";
-    heart.style.zIndex = "9999";
-    heart.style.transition = "transform 6s linear, opacity 6s linear";
-
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.style.transform = "translateY(-110vh)";
-        heart.style.opacity = "0";
-    }, 100);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
-
-}, 700);
