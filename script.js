@@ -1,4 +1,12 @@
 function openGift(){
+    const music = document.getElementById("music");
+
+music.muted = true;
+music.play();
+
+music.pause();
+music.currentTime = 0;
+music.muted = false;
 
     const gift=document.querySelector(".gift-box");
 
@@ -55,7 +63,7 @@ function openGift(){
             music.play().then(()=>{
     console.log("Music Started");
 }).catch((err)=>{
-    alert("Music Blocked");
+    
     console.log(err);
 
     // Agar music block ho jaye tab bhi letter dikhao
