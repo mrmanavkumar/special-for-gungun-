@@ -52,7 +52,24 @@ function openGift(){
 
             music.currentTime=0;
 
-            music.play().catch(()=>{});
+            music.play().then(()=>{
+    console.log("Music Started");
+}).catch((err)=>{
+    alert("Music Blocked");
+    console.log(err);
+
+    // Agar music block ho jaye tab bhi letter dikhao
+    setTimeout(()=>{
+        surprise.style.opacity="0";
+
+        setTimeout(()=>{
+            surprise.style.visibility="hidden";
+            finalMessage.classList.add("show");
+            typeMessage(message);
+        },2000);
+
+    },5000);
+});
 
             // Confetti
             const end=Date.now()+45000;
