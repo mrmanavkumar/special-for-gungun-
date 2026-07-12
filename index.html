@@ -4,37 +4,39 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Happy Birthday Gungun ❤️</title>
 
-<link rel="stylesheet"
-href="style.css">
+<link rel="stylesheet" href="style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
 </head>
 
 <body>
 
-<!-- Gift Screen -->
+<!-- ⭐ Background Stars -->
+<div id="stars"></div>
 
+<!-- ❤️ Floating Hearts -->
+<div id="hearts"></div>
+
+<!-- 🌹 Rose Petals -->
+<div id="roseContainer"></div>
+
+<!-- 🎁 Gift Screen -->
 <div id="giftScreen">
 
-<div id="giftBox">
+    <div id="giftBox" onclick="openGift()">
 
-<img src="gift.png">
+        <img src="gift.png" alt="Gift">
 
-</div>
+    </div>
 
-<h2>
-
-🎁 Tap The Gift 🎁
-
-</h2>
+    <h2>🎁 Tap The Gift 🎁</h2>
 
 </div>
 
@@ -42,11 +44,7 @@ rel="stylesheet">
 
 <div id="countdownScreen">
 
-<h1 id="count">
-
-3
-
-</h1>
+<h1 id="count">3</h1>
 
 </div>
 
@@ -74,13 +72,11 @@ Gungun ❤️
 
 </div>
 
-<!-- Birthday Template -->
+<!-- Birthday Image -->
 
 <div id="templateScreen">
 
-<img
-src="birthday-template.png"
-id="birthdayTemplate">
+<img src="birthday-template.png" id="birthdayTemplate">
 
 </div>
 
@@ -88,34 +84,26 @@ id="birthdayTemplate">
 
 <div id="letterScreen">
 
-<img
-src="sketch.png"
-id="watermark">
+<img src="sketch.png" id="watermark">
 
 <div id="letter">
 
-<h1>
-
-❤️ Happy Birthday ❤️
-
-</h1>
+<h1>❤️ Happy Birthday ❤️</h1>
 
 <div id="message"></div>
 
 </div>
 
 </div>
-<!-- Effects -->
 
-<div id="stars"></div>
+<!-- Music -->
 
-<div id="hearts"></div>
+<audio id="music" src="music.mp3"></audio>
 
-<div id="roseContainer"></div>
-
-<!-- JavaScript -->
+<audio id="countdown" src="countdown.mp3"></audio>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
