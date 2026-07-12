@@ -1,93 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Gungun ❤️</title>
 
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    <!-- Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<title>Happy Birthday Gungun ❤️</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
 
 </head>
 
 <body>
 
-    <!-- Gift Screen -->
-    <div class="gift-container">
+<!-- Gift Screen -->
 
-        <div class="gift-box" onclick="openGift()">
-            <img src="gift.png" alt="Gift">
-        </div>
+<div id="giftScreen">
 
-        <h2 class="tap-text">
-            🎁 Tap The Gift 🎁
-        </h2>
+<div id="giftBox">
 
-    </div>
+<img src="gift.png">
 
-    <!-- Countdown -->
-    <div id="countdownScreen">
+</div>
 
-        <h1 id="countdownText">
-            3
-        </h1>
+<h2>
 
-    </div>
+🎁 Tap The Gift 🎁
 
-    <!-- Birthday Screen -->
-    <div id="surprise">
+</h2>
 
-        <img
-            src="birthday-template.png"
-            class="birthday-template"
-            alt="Birthday">
+</div>
 
-    </div>
+<!-- Countdown -->
 
-    <!-- Letter Screen -->
-    <div id="finalMessage">
+<div id="countdownScreen">
 
-        <!-- Sketch Watermark -->
-        <img
-            src="sketch.png"
-            class="watermark"
-            alt="Sketch">
+<h1 id="count">
 
-        <div class="letter-card">
+3
 
-            <h1>
-                ❤️ Happy Birthday Gungun ❤️
-            </h1>
+</h1>
 
-            <div id="messageText"></div>
+</div>
 
-        </div>
+<!-- Happy Birthday -->
 
-    </div>
-    <!-- Audio -->
+<div id="birthdayText">
 
-    <audio id="countdown" preload="auto">
-        <source src="countdown.mp3" type="audio/mpeg">
-    </audio>
+<div class="birthdayCard">
 
-    <audio id="music" preload="auto">
-        <source src="birthday.mp3" type="audio/mpeg">
-    </audio>
+<h1>
 
-    <!-- Background Effects -->
+🎉
 
-    <div id="hearts"></div>
+<br>
 
-    <div id="confetti"></div>
+Happy Birthday
 
-    <!-- JS -->
+<br>
 
-    <script src="script.js"></script>
+Gungun ❤️
+
+</h1>
+
+</div>
+
+</div>
+
+<!-- Birthday Template -->
+
+<div id="templateScreen">
+
+<img
+src="birthday-template.png"
+id="birthdayTemplate">
+
+</div>
+
+<!-- Letter -->
+
+<div id="letterScreen">
+
+<img
+src="sketch.png"
+id="watermark">
+
+<div id="letter">
+
+<h1>
+
+❤️ Happy Birthday ❤️
+
+</h1>
+
+<div id="message"></div>
+
+</div>
+
+</div>
+<!-- Effects -->
+
+<div id="stars"></div>
+
+<div id="hearts"></div>
+
+<div id="roseContainer"></div>
+
+<!-- JavaScript -->
+
+<script src="script.js"></script>
 
 </body>
 </html>
