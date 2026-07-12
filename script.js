@@ -82,6 +82,22 @@ function openGift(){
             })();
 
             // Music End
+            // Agar browser autoplay block kar de to bhi 45 sec baad letter dikha do
+setTimeout(() => {
+
+    surprise.style.opacity = "0";
+
+    setTimeout(() => {
+
+        surprise.style.visibility = "hidden";
+
+        finalMessage.classList.add("show");
+
+        typeMessage(message);
+
+    }, 2000);
+
+}, 45000);
             music.onended=()=>{
 
                 surprise.style.opacity="0";
