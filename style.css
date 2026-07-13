@@ -2,20 +2,38 @@
 
 body {
     background: radial-gradient(circle at center, #3d0c1b 0%, #1a030a 70%, #050002 100%);
-    height: 100vh; display: flex; justify-content: center; align-items: center;
-    color: #fff; overflow: hidden; font-family: 'Georgia', serif;
+    height: 100vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    color: #fff; 
+    overflow: hidden; 
+    font-family: 'Georgia', serif;
 }
 
 /* Background Stars */
-.stars { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+.stars { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
     background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px);
-    background-size: 550px 550px; animation: twinklingStars 8s linear infinite; }
+    background-size: 550px 550px; animation: twinklingStars 8s linear infinite; 
+}
 @keyframes twinklingStars { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
 
 canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
-.container { z-index: 3; text-align: center; width: 90%; max-width: 400px; position: relative; }
 
-/* YE SABSE ZAROORI HAI: Hidden class sab kuch block karegi jab tak zaroorat na ho */
+/* Fixed Container: Isko center align kiya hai taaki iske andar ke saare steps center mein rahein */
+.container { 
+    z-index: 3; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
+    width: 90%; 
+    max-width: 400px; 
+    position: relative; 
+}
+
 .hidden { display: none !important; }
 
 /* Gift Box */
@@ -24,33 +42,42 @@ canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index
 @keyframes wobbleBox { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
 .tap-text { margin-top: 15px; font-size: 18px; color: #ffeaa7; font-weight: bold; }
 
-/* Template */
-.template-wrapper{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    opacity:0;
-    transition:opacity 2s ease;
+/* Template Section (Forced perfectly in the Center) */
+.template-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 2s ease, filter 2s ease; /* Fade out effect ke liye transition */
 }
 
-.template-img{
-    width:95%;
-    max-width:370px;
-    height:auto;
+.template-img {
+    width: 95%;
+    max-width: 370px;
+    height: auto;
     object-fit: contain;
     background: transparent;
-    border:none;
-    border-radius:45px;
-    box-shadow:0 10px 35px rgba(0,0,0,.35);
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0 10px 35px rgba(0,0,0,.35);
 }
 
-/* Message Page (Fixed: Removed opacity 1 and forced hidden behavior) */
+/* Template Fade out effect class */
+.fade-out-effect {
+    opacity: 0 !important;
+    filter: blur(5px);
+    transition: opacity 2s ease, filter 2s ease;
+}
+
+/* Message Page / Letter (Centered & Beautiful Fade In) */
 .scroll-letter { 
     background: #fffdf5 !important; 
     color: #3e2723 !important; 
     padding: 35px; 
     border-radius: 40px; 
+    width: 100%;          /* Pure box ke central area ko cover karega */
+    max-width: 370px;     /* Template ke jitni hi uniform width */
     height: 70vh; 
     max-height: 560px;
     overflow-y: auto; 
@@ -59,6 +86,9 @@ canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index
     text-align: left; 
     box-shadow: 0 25px 60px rgba(0,0,0,0.5); 
     border: none;
+    margin: 0 auto;       /* Ensures strict centering horizontally */
+    opacity: 0;           /* Shuruat mein hidden rahega animation trigger hone tak */
+    transform: translateY(30px);
 }
 
 /* Watermark Setup */
@@ -86,36 +116,43 @@ canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index
 .signature { font-weight: bold; color: #5d4037 !important; margin-top: 15px; font-style: italic; display: block; }
 
 @media (max-width: 480px) {
-    .scroll-letter { height: 75vh; padding: 25px; }
+    .scroll-letter { height: 75vh; padding: 25px; width: 95%; }
     .letter-text p { font-size: 15px; }
 }
 
-/* Happy Birthday Animation */
-#bdayGreetingScreen{
+/* Happy Birthday Animation Screen */
+#bdayGreetingScreen {
     position: fixed;
-    top:0; left:0; width:100%; height:100%;
-    background:rgba(0,0,0,0.95);
-    display:flex; justify-content:center; align-items:center;
-    z-index:999;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 999;
 }
 
-.bday-text{
-    color:#fff; font-size:58px; font-weight:bold; text-align:center;
-    text-shadow:0 0 15px #ff4d6d; animation:birthdayZoom 2.5s ease-out forwards;
+.bday-text {
+    color: #fff; font-size: 58px; font-weight: bold; text-align: center;
+    text-shadow: 0 0 15px #ff4d6d; animation: birthdayZoom 2.5s ease-out forwards;
 }
 
-@keyframes birthdayZoom{
-    0%{ opacity:0; transform:scale(0.2); filter:blur(10px); }
-    60%{ opacity:1; transform:scale(1.15); filter:blur(0); }
-    100%{ transform:scale(1); }
+@keyframes birthdayZoom {
+    0% { opacity: 0; transform: scale(0.2); filter: blur(10px); }
+    60% { opacity: 1; transform: scale(1.15); filter: blur(0); }
+    100% { transform: scale(1); }
 }
 
-@keyframes messageFadeIn{
-    from{ opacity:0; transform:translateY(25px); }
-    to{ opacity:1; transform:translateY(0); }
+/* Smooth Dheere Dheere Fade In Animation for Letter */
+@keyframes messageFadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
 
-/* Jab JS se show-message class add hogi tabhi opacity 1 hogi aur upar aayega */
-.show-message{
-    animation:messageFadeIn 2s ease forwards;
+/* Jab JS se class add hogi tab yeh smooth fade-in chalega */
+.show-message {
+    animation: messageFadeIn 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
 }
