@@ -14,14 +14,17 @@ body {
 
 canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
 .container { z-index: 3; text-align: center; width: 90%; max-width: 400px; position: relative; }
+
+/* YE SABSE ZAROORI HAI: Hidden class sab kuch block karegi jab tak zaroorat na ho */
 .hidden { display: none !important; }
 
 /* Gift Box */
-.gift-img { width: 160px; cursor: pointer; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); transition: 0.3s; }
+.gift-img { width: 160px; cursor: pointer; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); transition: 0.3s; position: relative; z-index: 10; }
 .shake { animation: wobbleBox 0.5s ease-in-out infinite; }
 @keyframes wobbleBox { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
+.tap-text { margin-top: 15px; font-size: 18px; color: #ffeaa7; font-weight: bold; }
 
-/* Template (Curves Increased) */
+/* Template */
 .template-wrapper{
     width:100%;
     display:flex;
@@ -42,21 +45,20 @@ canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index
     box-shadow:0 10px 35px rgba(0,0,0,.35);
 }
 
-/* Message Page (Fixed & High Visibility) */
+/* Message Page (Fixed: Removed opacity 1 and forced hidden behavior) */
 .scroll-letter { 
-    background: #fffdf5 !important; /* Creamy Paper Look */
-    color: #3e2723 !important; /* Dark Brown Text */
+    background: #fffdf5 !important; 
+    color: #3e2723 !important; 
     padding: 35px; 
     border-radius: 40px; 
     height: 70vh; 
     max-height: 560px;
-    overflow-y: auto; /* Manual Scroll */
-    scroll-behavior: smooth; /* Auto Scroll ko smooth karne ke liye */
+    overflow-y: auto; 
+    scroll-behavior: smooth; 
     position: relative; 
     text-align: left; 
     box-shadow: 0 25px 60px rgba(0,0,0,0.5); 
-    border: none; /* Fixed typo mistake here */
-    opacity: 0; /* JS will trigger opacity via animation */
+    border: none;
 }
 
 /* Watermark Setup */
@@ -65,7 +67,7 @@ canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index
     top: 50%; left: 50%; 
     transform: translate(-50%, -50%); 
     width: 80%; 
-    opacity: 0.12; /* Halka watermark visual look */
+    opacity: 0.12; 
     z-index: 1; 
     pointer-events: none; 
 }
@@ -74,7 +76,7 @@ canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index
 /* Letter Text Container */
 .letter-text { 
     position: relative; 
-    z-index: 5; /* Isse text hamesha watermark ke upar chamkega */
+    z-index: 5; 
     line-height: 1.8; 
     color: #3e2723 !important;
 }
@@ -113,7 +115,7 @@ canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index
     to{ opacity:1; transform:translateY(0); }
 }
 
+/* Jab JS se show-message class add hogi tabhi opacity 1 hogi aur upar aayega */
 .show-message{
     animation:messageFadeIn 2s ease forwards;
 }
-
