@@ -3,42 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday! 🌹</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Special For Gungun ❤️</title>
+    <link rel="stylesheet" href="style.css?v=2.0">
 </head>
 <body>
 
-    <!-- Twinkling Stars Background -->
     <div class="stars"></div>
-    <div class="twinkling"></div>
-
-    <!-- Canvas for Rose Petals & Hearts Particle Effect -->
     <canvas id="effectCanvas"></canvas>
 
-    <!-- Main Container -->
+    <!-- Audios (Dono Files Aapki) -->
+    <audio id="countdownAudio" src="countdown.mp3"></audio>
+    <audio id="bgMusic" src="bg-music.mp3" loop></audio> <!-- Naya Romantic Song -->
+
     <div class="container">
         
-        <!-- STEP 1: The Premium Gift Box -->
-        <div id="giftBox" class="gift-box" onclick="openGift()">
-            <div class="ribbon"></div>
-            <div class="gift-text">Tap to Open Gift 🎁</div>
+        <!-- STEP 1: Gift Box -->
+        <div id="giftSection" class="gift-box-container">
+            <div class="gift-circle-bg">
+                <img src="gift.png" alt="Gift" id="giftBox" class="gift-img" onclick="startSequence()">
+            </div>
+            <p class="tap-text">Tap to Open 🎁</p>
         </div>
 
-        <!-- STEP 2: The Magical Content (Hidden initially) -->
-        <div id="magicalContent" class="hidden">
-            <!-- Birthday Image with Smooth Zoom -->
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=500" alt="Birthday Image" class="zoom-image">
-            </div>
+        <!-- STEP 2: Countdown Screen -->
+        <div id="countdownScreen" class="hidden">
+            <div id="countdownNumber">3</div>
+        </div>
 
-            <!-- Romantic Sliding Letter Box -->
-            <div class="letter-box">
-                <div class="letter-content">
-                    <h3>Dear [Name], ❤️</h3>
-                    <p>Aapke is special din par main bas yeh kehna chahta/chahti hoon ki aap meri zindagi ka sabse khoobsurat hissa ho.</p>
-                    <p>May your day be filled with endless love, laughter, and pure happiness. Happy Birthday! 🌹</p>
-                </div>
+        <!-- STEP 3: Happy Birthday Screen -->
+        <div id="bdayGreetingScreen" class="hidden">
+            <h1 class="bday-text">HAPPY<br>BIRTHDAY! 🎂</h1>
+        </div>
+
+        <!-- STEP 4: Template -->
+        <div id="templateSection" class="hidden template-wrapper">
+            <img src="birthday-template.png" alt="Template" class="template-img">
+        </div>
+
+        <!-- STEP 5: Message (Typewriter & Watermark Fixed) -->
+        <div id="messageSection" class="hidden scroll-letter">
+            <!-- Sketch Watermark Background -->
+            <div class="watermark-bg">
+                <img src="sketch.png" alt="Sketch">
             </div>
+            <!-- Is container ke andar text automatic typewriter se likhega -->
+            <div id="typewriterText" class="letter-text"></div>
         </div>
 
     </div>
