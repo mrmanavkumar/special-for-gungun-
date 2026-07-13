@@ -1,57 +1,61 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special For Gungun ❤️</title>
-    <link rel="stylesheet" href="style.css?v=2.0">
+    <title>Happy Birthday Gungun ❤️</title>
+    <!-- CSS Link with Version Control to fix the Click Issue -->
+    <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
 
+    <!-- Background Twinkling Stars Effect -->
     <div class="stars"></div>
+
+    <!-- Canvas for Floating Roses & Rising Hearts -->
     <canvas id="effectCanvas"></canvas>
 
-    <!-- Audios (Dono Files Aapki) -->
-    <audio id="countdownAudio" src="countdown.mp3"></audio>
-    <audio id="bgMusic" src="bg-music.mp3" loop></audio> <!-- Naya Romantic Song -->
+    <!-- Invisible Audio Players -->
+    <audio id="countdownAudio" src="countdown.mp3" preload="auto"></audio>
+    <audio id="bgMusic" src="bg-music.mp3" loop preload="auto"></audio>
 
+    <!-- Main Container -->
     <div class="container">
-        
-        <!-- STEP 1: Gift Box -->
-        <div id="giftSection" class="gift-box-container">
-            <div class="gift-circle-bg">
-                <img src="gift.png" alt="Gift" id="giftBox" class="gift-img" onclick="startSequence()">
-            </div>
-            <p class="tap-text">Tap to Open 🎁</p>
+
+        <!-- STEP 1: Gift Box Section (Initial Screen) -->
+        <div id="giftSection">
+            <img src="gift.png" id="giftBox" class="gift-img" alt="Gift Box" onclick="startSequence()">
+            <div class="tap-text">Tap to Open the Box ✨</div>
         </div>
 
-        <!-- STEP 2: Countdown Screen -->
+        <!-- STEP 2: Countdown Screen (Hidden initially) -->
         <div id="countdownScreen" class="hidden">
             <div id="countdownNumber">3</div>
         </div>
 
-        <!-- STEP 3: Happy Birthday Screen -->
-        <div id="bdayGreetingScreen" class="hidden">
-            <h1 class="bday-text">HAPPY<br>BIRTHDAY! 🎂</h1>
-        </div>
+    </div> <!-- End of Container -->
 
-        <!-- STEP 4: Template -->
-        <div id="templateSection" class="hidden template-wrapper">
-            <img src="birthday-template.png" alt="Template" class="template-img">
-        </div>
-
-        <!-- STEP 5: Message (Typewriter & Watermark Fixed) -->
-        <div id="messageSection" class="hidden scroll-letter">
-            <!-- Sketch Watermark Background -->
-            <div class="watermark-bg">
-                <img src="sketch.png" alt="Sketch">
-            </div>
-            <!-- Is container ke andar text automatic typewriter se likhega -->
-            <div id="typewriterText" class="letter-text"></div>
-        </div>
-
+    <!-- STEP 3: Happy Birthday Zoom Screen (Fixed Overlay) -->
+    <div id="bdayGreetingScreen" class="hidden">
+        <h1 class="bday-text">HAPPY BIRTHDAY<br>GUNGUN 🎂✨</h1>
     </div>
 
-    <script src="script.js"></script>
+    <!-- STEP 4: Beautiful Photo/Template Section (Hidden initially) -->
+    <div id="templateSection" class="hidden template-wrapper">
+        <img src="birthday-template.png" class="template-img" alt="Birthday Wishes">
+    </div>
+
+    <!-- STEP 5: Romantic Letter Box with Watermark (Hidden initially) -->
+    <div id="messageSection" class="hidden scroll-letter">
+        <!-- Background Sketch Watermark -->
+        <div class="watermark-bg">
+            <img src="sketch.png" alt="Sketch Watermark">
+        </div>
+        <!-- This empty div will be dynamically filled by JavaScript Typewriter -->
+        <div id="typewriterText" class="letter-text"></div>
+    </div>
+
+    <!-- JavaScript Link at the bottom for smooth execution -->
+    <script src="script.js?v=3.0"></script>
 </body>
 </html>
