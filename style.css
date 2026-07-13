@@ -1,1 +1,119 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: radial-gradient(circle at center, #3d0c1b 0%, #1a030a 70%, #050002 100%);
+    height: 100vh; display: flex; justify-content: center; align-items: center;
+    color: #fff; overflow: hidden; font-family: 'Georgia', serif;
+}
+
+/* Background Stars */
+.stars { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+    background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px);
+    background-size: 550px 550px; animation: twinklingStars 8s linear infinite; }
+@keyframes twinklingStars { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
+canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+.container { z-index: 3; text-align: center; width: 90%; max-width: 400px; position: relative; }
+.hidden { display: none !important; }
+
+/* Gift Box */
+.gift-img { width: 160px; cursor: pointer; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); transition: 0.3s; }
+.shake { animation: wobbleBox 0.5s ease-in-out infinite; }
+@keyframes wobbleBox { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
+
+/* Template (Curves Increased) */
+.template-wrapper{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+    transition:opacity 2s ease;
+}
+
+.template-img{
+    width:95%;
+    max-width:370px;
+    height:auto;
+    object-fit: contain;
+    background: transparent;
+    border:none;
+    border-radius:45px;
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
+}
+
+/* Message Page (Fixed & High Visibility) */
+.scroll-letter { 
+    background: #fffdf5 !important; /* Creamy Paper Look */
+    color: #3e2723 !important; /* Dark Brown Text */
+    padding: 35px; 
+    border-radius: 40px; 
+    height: 70vh; 
+    max-height: 560px;
+    overflow-y: auto; /* Manual Scroll */
+    scroll-behavior: smooth; /* Auto Scroll ko smooth karne ke liye */
+    position: relative; 
+    text-align: left; 
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5); 
+    border: none; /* Fixed typo mistake here */
+    opacity: 0; /* JS will trigger opacity via animation */
+}
+
+/* Watermark Setup */
+.watermark-bg { 
+    position: absolute; 
+    top: 50%; left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 80%; 
+    opacity: 0.12; /* Halka watermark visual look */
+    z-index: 1; 
+    pointer-events: none; 
+}
+.watermark-bg img { width: 100%; height: auto; }
+
+/* Letter Text Container */
+.letter-text { 
+    position: relative; 
+    z-index: 5; /* Isse text hamesha watermark ke upar chamkega */
+    line-height: 1.8; 
+    color: #3e2723 !important;
+}
+.letter-text h3 { color: #8b0000 !important; margin-bottom: 15px; font-size: 24px; font-weight: bold; border-bottom: 1px solid #dcdcdc; padding-bottom: 5px;}
+.letter-text p { font-size: 16px; margin-bottom: 15px; font-weight: 500; color: #3e2723 !important; }
+.highlight-bday { color: #8b0000 !important; font-weight: bold; font-size: 19px !important; margin-top: 20px; display: block; }
+.signature { font-weight: bold; color: #5d4037 !important; margin-top: 15px; font-style: italic; display: block; }
+
+@media (max-width: 480px) {
+    .scroll-letter { height: 75vh; padding: 25px; }
+    .letter-text p { font-size: 15px; }
+}
+
+/* Happy Birthday Animation */
+#bdayGreetingScreen{
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    background:rgba(0,0,0,0.95);
+    display:flex; justify-content:center; align-items:center;
+    z-index:999;
+}
+
+.bday-text{
+    color:#fff; font-size:58px; font-weight:bold; text-align:center;
+    text-shadow:0 0 15px #ff4d6d; animation:birthdayZoom 2.5s ease-out forwards;
+}
+
+@keyframes birthdayZoom{
+    0%{ opacity:0; transform:scale(0.2); filter:blur(10px); }
+    60%{ opacity:1; transform:scale(1.15); filter:blur(0); }
+    100%{ transform:scale(1); }
+}
+
+@keyframes messageFadeIn{
+    from{ opacity:0; transform:translateY(25px); }
+    to{ opacity:1; transform:translateY(0); }
+}
+
+.show-message{
+    animation:messageFadeIn 2s ease forwards;
+}
 
