@@ -4,58 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Gungun ❤️</title>
-    <!-- CSS Link with Version Control to fix the Click Issue -->
-    <link rel="stylesheet" href="style.css?v=3.0">
+    <link rel="stylesheet" href="style.css?v=5.0">
 </head>
 <body>
 
-    <!-- Background Twinkling Stars Effect -->
     <div class="stars"></div>
 
-    <!-- Canvas for Floating Roses & Rising Hearts -->
     <canvas id="effectCanvas"></canvas>
 
-    <!-- Invisible Audio Players -->
     <audio id="countdownAudio" src="countdown.mp3" preload="auto"></audio>
     <audio id="bgMusic" src="bg-music.mp3" loop preload="auto"></audio>
 
-    <!-- Main Container -->
     <div class="container">
 
-        <!-- STEP 1: Gift Box Section (Initial Screen) -->
         <div id="giftSection">
-            <img src="gift.png" id="giftBox" class="gift-img" alt="Gift Box" onclick="startSequence()">
+            <img src="gift.png" id="giftBox" class="gift-img" alt="Gift Box">
             <div class="tap-text">Tap to Open the Box ✨</div>
         </div>
 
-        <!-- STEP 2: Countdown Screen (Hidden initially) -->
         <div id="countdownScreen" class="hidden">
             <div id="countdownNumber">3</div>
         </div>
 
-    </div> <!-- End of Container -->
+        <div id="templateSection" class="hidden template-wrapper">
+            <img src="birthday-template.png" class="template-img" alt="Birthday Wishes">
+        </div>
 
-    <!-- STEP 3: Happy Birthday Zoom Screen (Fixed Overlay) -->
+        <div id="messageSection" class="hidden scroll-letter">
+            <div class="watermark-bg">
+                <img src="sketch.png" alt="Sketch Watermark">
+            </div>
+            <div id="typewriterText" class="letter-text"></div>
+        </div>
+
+    </div>
+
     <div id="bdayGreetingScreen" class="hidden">
         <h1 class="bday-text">HAPPY BIRTHDAY<br>GUNGUN 🎂✨</h1>
     </div>
 
-    <!-- STEP 4: Beautiful Photo/Template Section (Hidden initially) -->
-    <div id="templateSection" class="hidden template-wrapper">
-        <img src="birthday-template.png" class="template-img" alt="Birthday Wishes">
-    </div>
-
-    <!-- STEP 5: Romantic Letter Box with Watermark (Hidden initially) -->
-    <div id="messageSection" class="hidden scroll-letter">
-        <!-- Background Sketch Watermark -->
-        <div class="watermark-bg">
-            <img src="sketch.png" alt="Sketch Watermark">
-        </div>
-        <!-- This empty div will be dynamically filled by JavaScript Typewriter -->
-        <div id="typewriterText" class="letter-text"></div>
-    </div>
-
-    <!-- JavaScript Link at the bottom for smooth execution -->
-    <script src="script.js?v=3.0"></script>
+    <script src="script.js?v=5.0"></script>
 </body>
 </html>
