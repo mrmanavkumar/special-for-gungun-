@@ -2,17 +2,11 @@
 
 body {
     background: radial-gradient(circle at center, #3d0c1b 0%, #1a030a 70%, #050002 100%);
-    height: 100vh; 
-    width: 100vw;
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-    color: #fff; 
-    overflow: hidden; 
-    font-family: 'Georgia', serif;
+    height: 100vh; width: 100vw;
+    display: flex; justify-content: center; align-items: center;
+    color: #fff; overflow: hidden; font-family: 'Georgia', serif;
 }
 
-/* Background Stars */
 .stars { 
     position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
     background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px);
@@ -22,153 +16,51 @@ body {
 
 canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
 
-/* Main Container: Isko screen ke center mein physically lock kar diya hai */
 .container { 
-    z-index: 3; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%; 
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+    z-index: 3; display: flex; justify-content: center; align-items: center;
+    width: 100%; height: 100%; position: absolute; top: 0; left: 0;
 }
 
 .hidden { display: none !important; }
 
-/* Gift Box Screen Elements */
-#giftSection {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+#giftSection { display: flex; flex-direction: column; justify-content: center; align-items: center; }
 .gift-img { width: 160px; cursor: pointer; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); transition: 0.3s; position: relative; z-index: 10; }
-.shake { animation: wobbleBox 0.5s ease-in-out infinite; }
+.shake { animation: wobbleBox 0.5s ease-in-out infinite !important; }
 @keyframes wobbleBox { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
-.tap-text { margin-top: 15px; font-size: 18px; color: #ffeaa7; font-weight: bold; }
+.tap-text { margin-top: 15px; font-size: 18px; color: #ffeaa7; font-weight: bold; pointer-events: none; }
 
-/* Countdown Screen Elements */
-#countdownScreen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#countdownNumber {
-    font-size: 80px;
-    font-weight: bold;
-}
+#countdownScreen { display: flex; justify-content: center; align-items: center; }
+#countdownNumber { font-size: 80px; font-weight: bold; color: #fff; }
 
-/* Template Section - Centered using Absolute Layout */
 .template-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 370px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 2s ease, filter 2s ease;
-    z-index: 15;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 90%; max-width: 370px; display: flex; justify-content: center; align-items: center;
+    opacity: 0; transition: opacity 2s ease, filter 2s ease; z-index: 15;
 }
+.template-img { width: 100%; height: auto; object-fit: contain; border-radius: 45px; box-shadow: 0 10px 35px rgba(0,0,0,.35); }
+.fade-out-effect { opacity: 0 !important; filter: blur(5px) !important; }
 
-.template-img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    background: transparent;
-    border: none;
-    border-radius: 45px;
-    box-shadow: 0 10px 35px rgba(0,0,0,.35);
-}
-
-/* Template Fade out effect */
-.fade-out-effect {
-    opacity: 0 !important;
-    filter: blur(5px) !important;
-}
-
-/* Message Page / Letter - Perfect Centering & Smooth Fade In */
 .scroll-letter { 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    /* Shuruat mein hidden position se transform trigger hoga */
-    transform: translate(-50%, -45%); 
-    background: #fffdf5 !important; 
-    color: #3e2723 !important; 
-    padding: 35px; 
-    border-radius: 40px; 
-    width: 90%;          
-    max-width: 370px;     
-    height: 70vh; 
-    max-height: 560px;
-    overflow-y: auto; 
-    scroll-behavior: smooth; 
-    text-align: left; 
-    box-shadow: 0 25px 60px rgba(0,0,0,0.5); 
-    border: none;
-    opacity: 0;
-    z-index: 20;
-    /* Smooth entrance transition fallback */
-    transition: opacity 2.5s cubic-bezier(0.25, 1, 0.5, 1), transform 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -45%); 
+    background: #fffdf5 !important; color: #3e2723 !important; padding: 35px; border-radius: 40px; 
+    width: 90%; max-width: 370px; height: 70vh; max-height: 560px;
+    overflow-y: auto; scroll-behavior: smooth; text-align: left; 
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5); opacity: 0; z-index: 20;
+    transition: opacity 2.5s ease, transform 2.5s ease;
 }
 
-/* Watermark Setup */
-.watermark-bg { 
-    position: absolute; 
-    top: 50%; left: 50%; 
-    transform: translate(-50%, -50%); 
-    width: 80%; 
-    opacity: 0.12; 
-    z-index: 1; 
-    pointer-events: none; 
-}
+.watermark-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; opacity: 0.12; z-index: 1; pointer-events: none; }
 .watermark-bg img { width: 100%; height: auto; }
 
-/* Letter Text Container */
-.letter-text { 
-    position: relative; 
-    z-index: 5; 
-    line-height: 1.8; 
-    color: #3e2723 !important;
-}
+.letter-text { position: relative; z-index: 5; line-height: 1.8; color: #3e2723 !important; }
 .letter-text h3 { color: #8b0000 !important; margin-bottom: 15px; font-size: 24px; font-weight: bold; border-bottom: 1px solid #dcdcdc; padding-bottom: 5px;}
 .letter-text p { font-size: 16px; margin-bottom: 15px; font-weight: 500; color: #3e2723 !important; }
 .highlight-bday { color: #8b0000 !important; font-weight: bold; font-size: 19px !important; margin-top: 20px; display: block; }
 .signature { font-weight: bold; color: #5d4037 !important; margin-top: 15px; font-style: italic; display: block; }
 
-@media (max-width: 480px) {
-    .scroll-letter { height: 75vh; padding: 25px; width: 92%; }
-    .letter-text p { font-size: 15px; }
-}
+#bdayGreetingScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 999; }
+.bday-text { color: #fff; font-size: 58px; font-weight: bold; text-align: center; text-shadow: 0 0 15px #ff4d6d; animation: birthdayZoom 2.5s ease-out forwards; }
+@keyframes birthdayZoom { 0% { opacity: 0; transform: scale(0.2); filter: blur(10px); } 60% { opacity: 1; transform: scale(1.15); filter: blur(0); } 100% { transform: scale(1); } }
 
-/* Happy Birthday Animation Screen */
-#bdayGreetingScreen {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.95);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 999;
-}
-
-.bday-text {
-    color: #fff; font-size: 58px; font-weight: bold; text-align: center;
-    text-shadow: 0 0 15px #ff4d6d; animation: birthdayZoom 2.5s ease-out forwards;
-}
-
-@keyframes birthdayZoom {
-    0% { opacity: 0; transform: scale(0.2); filter: blur(10px); }
-    60% { opacity: 1; transform: scale(1.15); filter: blur(0); }
-    100% { transform: scale(1); }
-}
-
-/* Jab JS se class add hogi tab letter dheere se chamkega aur screen par absolute center ho jayega */
-.show-message {
-    opacity: 1 !important;
-    transform: translate(-50%, -50%) !important; /* Forces absolute centering */
-}
+.show-message { opacity: 1 !important; transform: translate(-50%, -50%) !important; }
+                     
