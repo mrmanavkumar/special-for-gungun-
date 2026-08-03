@@ -1,66 +1,293 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ==========================================================================
+   1. RESET & BASIC SETUP
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    background: radial-gradient(circle at center, #3d0c1b 0%, #1a030a 70%, #050002 100%);
-    height: 100vh; width: 100vw;
-    display: flex; justify-content: center; align-items: center;
-    color: #fff; overflow: hidden; font-family: 'Georgia', serif;
+    background-color: #0f0c1b;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
 }
 
-.stars { 
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
-    background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px);
-    background-size: 550px 550px; animation: twinklingStars 8s linear infinite; 
-}
-@keyframes twinklingStars { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-
-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
-
-.container { 
-    z-index: 3; display: flex; justify-content: center; align-items: center;
-    width: 100%; height: 100%; position: absolute; top: 0; left: 0;
+.hidden {
+    display: none !important;
 }
 
-.hidden { display: none !important; }
+/* Background Effects */
+.stars {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
 
-#giftSection { display: flex; flex-direction: column; justify-content: center; align-items: center; }
-.gift-img { width: 160px; cursor: pointer; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); transition: 0.3s; position: relative; z-index: 10; }
-.shake { animation: wobbleBox 0.5s ease-in-out infinite !important; }
-@keyframes wobbleBox { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
-.tap-text { margin-top: 15px; font-size: 18px; color: #ffeaa7; font-weight: bold; pointer-events: none; }
+#effectCanvas {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
 
-#countdownScreen { display: flex; justify-content: center; align-items: center; }
-#countdownNumber { font-size: 80px; font-weight: bold; color: #fff; }
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 420px;
+    padding: 10px;
+}
+
+/* ==========================================================================
+   2. GIFT BOX SECTION & LINK CLICK FIX
+   ========================================================================== */
+#giftSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 20;
+}
+
+/* Main Link Wrapper to open via link tap */
+.gift-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.gift-img {
+    width: 80%;
+    max-width: 250px; 
+    height: auto;
+    transition: transform 0.3s ease;
+    pointer-events: none; /* Disables direct image tap so link gets the click */
+}
+
+.gift-img.shake-active {
+    animation: intenseShake 0.5s infinite ease-in-out;
+}
+
+.tap-text {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #ff4d6d;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(255, 77, 109, 0.6);
+    pointer-events: none;
+}
+
+@keyframes intenseShake {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    15% { transform: translateY(-10px) rotate(-6deg) scale(1.05); }
+    30% { transform: translateY(5px) rotate(5deg); }
+    45% { transform: translateY(-6px) rotate(-4deg); }
+    60% { transform: translateY(3px) rotate(3deg); }
+    75% { transform: translateY(-4px) rotate(-2deg); }
+    90% { transform: translateY(1px) rotate(1deg); }
+}
+
+/* ==========================================================================
+   3. TRANSITIONS & SCREEN COMPONENT
+   ========================================================================== */
+#countdownScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#countdownNumber {
+    font-size: 90px;
+    font-weight: 800;
+    color: #ff4d6d;
+    text-shadow: 0 0 25px rgba(255, 77, 109, 0.9);
+    animation: zoomPulse 1s infinite alternate;
+}
+
+#bdayGreetingScreen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(15, 12, 27, 0.95);
+    z-index: 100;
+}
+
+.bday-text {
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d;
+    animation: zoomInBday 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    width: 90%;
+    text-align: center;
+}
+
+@keyframes zoomInBday {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
 
 .template-wrapper {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 90%; max-width: 370px; display: flex; justify-content: center; align-items: center;
-    opacity: 0; transition: opacity 2s ease, filter 2s ease; z-index: 15;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 2s ease, transform 2s ease; 
 }
-.template-img { width: 100%; height: auto; object-fit: contain; border-radius: 45px; box-shadow: 0 10px 35px rgba(0,0,0,.35); }
-.fade-out-effect { opacity: 0 !important; filter: blur(5px) !important; }
 
+.template-wrapper.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.template-img {
+    width: 90%;
+    max-width: 320px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(255, 77, 109, 0.3);
+}
+
+/* ==========================================================================
+   4. NOTEBOOK PAGE WITH SKETCH WATERMARK & CORNER ITEMS
+   ========================================================================== */
 .scroll-letter { 
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -45%); 
-    background: #fffdf5 !important; color: #3e2723 !important; padding: 35px; border-radius: 40px; 
-    width: 90%; max-width: 370px; height: 70vh; max-height: 560px;
-    overflow-y: auto; scroll-behavior: smooth; text-align: left; 
-    box-shadow: 0 25px 60px rgba(0,0,0,0.5); opacity: 0; z-index: 20;
-    transition: opacity 2.5s ease, transform 2.5s ease;
+    position: relative;
+    width: 100%;          
+    max-width: 350px;
+    height: 540px; 
+    overflow-y: auto; 
+    overflow-x: hidden;
+    scroll-behavior: smooth; 
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+    margin: 0 auto;
+    background-color: #fbf0ea !important; 
+    border: 8px solid #f7d6d0; 
+    outline: 2px solid #e1b4ad; 
 }
 
-.watermark-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; opacity: 0.12; z-index: 1; pointer-events: none; }
-.watermark-bg img { width: 100%; height: auto; }
+.scroll-letter.active {
+    opacity: 1;
+    transform: scale(1);
+}
 
-.letter-text { position: relative; z-index: 5; line-height: 1.8; color: #3e2723 !important; }
-.letter-text h3 { color: #8b0000 !important; margin-bottom: 15px; font-size: 24px; font-weight: bold; border-bottom: 1px solid #dcdcdc; padding-bottom: 5px;}
-.letter-text p { font-size: 16px; margin-bottom: 15px; font-weight: 500; color: #3e2723 !important; }
-.highlight-bday { color: #8b0000 !important; font-weight: bold; font-size: 19px !important; margin-top: 20px; display: block; }
-.signature { font-weight: bold; color: #5d4037 !important; margin-top: 15px; font-style: italic; display: block; }
+/* SKETCH WATERMARK LAYER (Centered behind text) */
+.scroll-letter::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('sketch.png') !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.18; 
+    z-index: 1;
+    pointer-events: none;
+}
 
-#bdayGreetingScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 999; }
-.bday-text { color: #fff; font-size: 58px; font-weight: bold; text-align: center; text-shadow: 0 0 15px #ff4d6d; animation: birthdayZoom 2.5s ease-out forwards; }
-@keyframes birthdayZoom { 0% { opacity: 0; transform: scale(0.2); filter: blur(10px); } 60% { opacity: 1; transform: scale(1.15); filter: blur(0); } 100% { transform: scale(1); } }
+/* CORNER DECORATIONS */
+.scroll-letter::after {
+    content: "🌹";
+    position: absolute;
+    top: 15px; left: 15px;
+    font-size: 32px;
+    z-index: 10;
+    pointer-events: none;
+    transform: rotate(-10deg);
+}
 
-.show-message { opacity: 1 !important; transform: translate(-50%, -50%) !important; }
-                     
+.letter-text::after {
+    content: "🎈";
+    position: absolute;
+    bottom: 15px; right: 15px;
+    font-size: 32px;
+    z-index: 10;
+    pointer-events: none;
+    transform: rotate(10deg);
+}
+
+/* TEXT AREA STYLING */
+.letter-text { 
+    position: relative; 
+    z-index: 5; 
+    text-align: left; 
+    padding: 50px 25px 50px 25px; 
+    font-family: 'Playfair Display', serif;
+    width: 100%;
+}
+
+.letter-text h3 { 
+    color: #b33939 !important; 
+    font-size: 16px; 
+    font-weight: 800; 
+    text-align: center !important; 
+    margin-bottom: 26px; 
+    line-height: 1.2;
+    border-bottom: 2px dashed #f5c2bb;
+    padding-bottom: 10px;
+}
+
+.letter-text p {
+    font-size: 14.5px;
+    line-height: 26px; 
+    margin: 0;
+    margin-bottom: 26px; 
+    color: #4a2c2a !important;
+    font-weight: 500;
+    word-wrap: break-word;
+    
+    /* Digital Dotted Lines */
+    background-image: linear-gradient(to right, #f5c2bb 50%, rgba(255,255,255,0) 0%);
+    background-position: bottom;
+    background-size: 6px 1px;
+    background-repeat: repeat-x;
+}
+
+.highlight-bday { color: #b33939 !important; font-weight: 700; }
+.signature { font-weight: 700; color: #7f8c8d !important; font-style: italic; text-align: right; display: block; margin-top: 13px; }
+.heart-cursor { display: inline-block; color: #ff4d6d; font-size: 12px; margin-left: 2px; animation: heartPulse 0.6s infinite alternate; vertical-align: middle; }
+
+/* ==========================================================================
+   5. EFFECTS & ANIMATIONS
+   ========================================================================== */
+#rainContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; }
+.rain-item { position: absolute; top: -50px; pointer-events: none; animation: fallDown 7s linear infinite; }
+
+@keyframes fallDown {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.9; }
+    90% { opacity: 0.9; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+@keyframes zoomPulse { from { transform: scale(0.9); } to { transform: scale(1.1); } }
+@keyframes zoomInBday { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes heartPulse { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
+.scroll-letter::-webkit-scrollbar { width: 3px; }
+.scroll-letter::-webkit-scrollbar-track { background: transparent; }
+.scroll-letter::-webkit-scrollbar-thumb { background: rgba(179, 57, 57, 0.15); border-radius: 10px; }
