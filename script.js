@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!targetDiv) return;
 
         const letterData = [
-            { type: 'h3', text: 'Dear GUNGUN🦋' },
+            { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN🦋 },
             { type: 'p', text: 'Gungun, main bas yehi dua karta hu ki tum hamesha khush raho. Tumhare chehre ki muskan kabhi kam na ho, kyuki tum sach me har ek khusi deserve karti ho.' },
             { type: 'p', text: 'Hamesha aise hi muskurati rehna, apne sapno ko poora karna aur life me aage badhte rehna.🩺👩‍⚕️🩺' },
             { type: 'p', text: 'Once again, Happy Birthday Gungun!✨🎂', className: 'highlight-bday' },
