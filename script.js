@@ -138,22 +138,22 @@ document.addEventListener("DOMContentLoaded", () => {
         const scrollBox = document.getElementById("messageSection");
         if (!targetDiv) return;
 
-        const letterData = [
-            { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN🦋' },
-            { type: 'p', text: 'Gungun, main bas yehi dua karta hu ki tum hamesha khush raho. Tumhare chehre ki muskan kabhi kam na ho, kyuki tum sach me har ek khusi deserve karti ho.' },
-            { type: 'p', text: 'Hamesha aise hi muskurati rehna, apne sapno ko poora karna aur life me aage badhte rehna.🩺👩‍⚕️🩺' },
-            { type: 'p', text: 'Once again, Happy Birthday Gungun!✨🎂', className: 'highlight-bday' },
-            { type: 'p', text: 'Take care of yourself.🌸', className: 'signature' },
-            { type: 'p', text: '-MANAV', className: 'signature' }
-        ];
-
+        
         targetDiv.innerHTML = ""; 
 
         for (const data of letterData) {
             const element = document.createElement(data.type);
             if (data.className) element.classList.add(data.className);
             targetDiv.appendChild(element);
-
+        const letterData = [
+            { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
+            { type: 'p', text: 'Gungun, main bas yehi dua karta hu ki tum hamesha khush raho.' },
+            { type: 'p', text: 'Hamesha aise hi muskurati rehna, apne saare sapne poore karo. 🩺👩‍⚕️🩺' },
+            { type: 'p', text: 'Once again, Happy Birthday Gungun! ✨🎂' },
+            { type: 'p', text: 'Take care of yourself. 🌸', className: 'signature' },
+            { type: 'p', text: '- MANAV', className: 'signature' }
+        ];
+            
             let rawText = data.text;
             for (let i = 0; i < rawText.length; i++) {
                 const oldCursor = element.querySelector('.heart-cursor');
