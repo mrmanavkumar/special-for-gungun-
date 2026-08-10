@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 250); 
     }
 
-        // Typewriter Engine
+            // Typewriter Engine
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         const scrollBox = document.getElementById("messageSection");
@@ -140,10 +140,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const letterData = [
             { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
-            { type: 'p', text: 'Gungun, main bas yehi dua karta hu ki tum hamesha khush raho.' },
-            { type: 'p', text: 'Hamesha aise hi muskurati rehna, apne saare sapne poore karo. 🩺👩‍⚕️🩺' },
-            { type: 'p', text: 'Once again, Happy Birthday Gungun! ✨🎂' },
-            { type: 'p', text: 'Take care of yourself. 🌸', className: 'signature' },
+            { type: 'p', text: 'Gungun, main bas yehi dua kerta hu ki tum humesha khush rho. Tumhare chahre ki muskan kabhi kam naa ho kyuki tum sachme her ek khushi deserve kerti ho.' },
+            { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
+            { type: 'p', text: 'Once again happy birthday 🎊✨' },
+            { type: 'p', text: 'Take care of yourself. 🌸✨', className: 'signature' },
             { type: 'p', text: '- MANAV', className: 'signature' }
         ];
 
@@ -170,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
             await new Promise(res => setTimeout(res, 400));
         }
     }
+    
     
     
 
