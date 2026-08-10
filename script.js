@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const letterData = [
             { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
             { type: 'p', text: 'Gungun, main bas yehi dua kerta hu ki tum humesha khush rho. Tumhare chahre ki muskan kabhi kam naa ho kyuki tum sachme her ek khushi deserve kerti ho.' },
-            { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
+            { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko pura kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
             { type: 'p', text: 'Once again happy birthday 🎊✨' },
             { type: 'p', text: 'Take care of yourself. 🌸✨', className: 'signature' },
             { type: 'p', text: '- MANAV', className: 'signature' }
