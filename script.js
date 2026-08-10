@@ -132,19 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 250); 
     }
 
-    // Typewriter Engine
+        // Typewriter Engine
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         const scrollBox = document.getElementById("messageSection");
         if (!targetDiv) return;
 
-        
-        targetDiv.innerHTML = ""; 
-
-        for (const data of letterData) {
-            const element = document.createElement(data.type);
-            if (data.className) element.classList.add(data.className);
-            targetDiv.appendChild(element);
         const letterData = [
             { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
             { type: 'p', text: 'Gungun, main bas yehi dua karta hu ki tum hamesha khush raho.' },
@@ -153,7 +146,14 @@ document.addEventListener("DOMContentLoaded", () => {
             { type: 'p', text: 'Take care of yourself. 🌸', className: 'signature' },
             { type: 'p', text: '- MANAV', className: 'signature' }
         ];
-            
+
+        targetDiv.innerHTML = ""; 
+
+        for (const data of letterData) {
+            const element = document.createElement(data.type);
+            if (data.className) element.classList.add(data.className);
+            targetDiv.appendChild(element);
+
             let rawText = data.text;
             for (let i = 0; i < rawText.length; i++) {
                 const oldCursor = element.querySelector('.heart-cursor');
@@ -170,6 +170,8 @@ document.addEventListener("DOMContentLoaded", () => {
             await new Promise(res => setTimeout(res, 400));
         }
     }
+    
+    
 
     // Confetti System
     function initConfetti() {
