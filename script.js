@@ -23,10 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 1: 5 SECONDS LOADING LOGIC (Fix: Direct Force Display)
+    // STEP 1: 5 SECONDS LOADING LOGIC (With Smooth Fade In)
     setTimeout(() => {
         if (loadingBox) {
-            loadingBox.style.display = "none";
+            loadingBox.style.transition = "opacity 1s ease";
+            loadingBox.style.opacity = "0";
+            setTimeout(() => { loadingBox.style.display = "none"; }, 1000);
         }
         
         if (mainLink) {
@@ -34,11 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
             mainLink.style.display = "flex";
             mainLink.style.flexDirection = "column";
             mainLink.style.alignItems = "center";
-            mainLink.style.opacity = "1";
+            mainLink.style.opacity = "0";
+            mainLink.style.transition = "opacity 1.5s ease";
+            setTimeout(() => { mainLink.style.opacity = "1"; }, 100);
         }
     }, 5000);
 
-    // Mobile Audio Unlocker
+    // Audio Unlocker for Mobile
     function unlockAudio(audioEl) {
         if (!audioEl) return;
         audioEl.play().then(() => {
@@ -47,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }).catch(() => {});
     }
 
-    // STEP 2: Gift Box Click Handler
+    // STEP 2: Gift Box Click Handler (With Fade Out)
     function handleLinkClick(e) {
         if (e) e.preventDefault();
         if (isTriggered) return;
@@ -61,16 +65,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         startMagicalRain();
 
+        // Smooth Fade Out of Gift Section
         setTimeout(() => {
-            if (giftSection) giftSection.style.display = "none";
-            if (countdownScreen) {
-                countdownScreen.classList.remove("hidden");
-                countdownScreen.style.display = "flex";
-                startCountdownTimer(); 
-            } else {
-                showBirthdayGreeting();
+            if (giftSection) {
+                giftSection.style.transition = "opacity 1s ease";
+                giftSection.style.opacity = "0";
+                setTimeout(() => {
+                    giftSection.style.display = "none";
+                    if (countdownScreen) {
+                        countdownScreen.classList.remove("hidden");
+                        countdownScreen.style.display = "flex";
+                        startCountdownTimer(); 
+                    } else {
+                        showBirthdayGreeting();
+                    }
+                }, 1000);
             }
-        }, 1500);
+        }, 1200);
     }
 
     if (mainLink) mainLink.addEventListener("click", handleLinkClick);
@@ -177,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Typewriter Engine
+    // Typewriter Engine (Signature Right Aligned)
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         if (!targetDiv) {
@@ -190,15 +201,18 @@ document.addEventListener("DOMContentLoaded", () => {
             { type: 'p', text: 'Gungun, main bas yehi dua kerta hu ki tum humesha khush rho. Tumhare chahre ki muskan kabhi kam naa ho kyuki tum sachme her ek khushi deserve kerti ho.' },
             { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko pura kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
             { type: 'p', text: 'Once again happy birthday 🎊✨' },
-            { type: 'p', text: 'Take care of yourself. 🌸✨', className: 'signature' },
-            { type: 'p', text: '- MANAV', className: 'signature' }
+            { type: 'p', text: 'Take care of yourself. 🌸✨', alignRight: true },
+            { type: 'p', text: '- MANAV', alignRight: true }
         ];
 
         targetDiv.innerHTML = ""; 
 
         for (const data of letterData) {
             const element = document.createElement(data.type);
-            if (data.className) element.classList.add(data.className);
+            if (data.alignRight) {
+                element.style.textAlign = "right";
+                element.style.marginTop = "10px";
+            }
             targetDiv.appendChild(element);
 
             let rawText = data.text;
@@ -267,13 +281,71 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 8000);
     }
 
-    // STEP 8: Final Poster Screen (mg.png)
+    // STEP 8: Final Poster Screen (mg.png) - 2 Min 20 Sec Display
     function showFinalPoster() {
         if (posterSection) {
             posterSection.classList.remove("hidden");
             posterSection.style.display = "flex";
-            setTimeout(() => posterSection.classList.add("active"), 100);
+            posterSection.style.opacity = "0";
+            posterSection.style.transition = "opacity 2.5s ease";
+            setTimeout(() => { posterSection.style.opacity = "1"; }, 100);
+
+            // 2 Minutes 20 Seconds (140,000ms) baad Fade Out
+            setTimeout(() => {
+                posterSection.style.opacity = "0";
+                setTimeout(() => {
+                    posterSection.style.display = "none";
+                    showCreditsSequence();
+                }, 2500);
+            }, 140000); 
+        } else {
+            showCreditsSequence();
         }
+    }
+
+    // STEP 9: Credits & "THE END" Sequence
+    function showCreditsSequence() {
+        const creditsContainer = document.createElement("div");
+        creditsContainer.id = "creditsSequence";
+        creditsContainer.style.position = "fixed";
+        creditsContainer.style.top = "0";
+        creditsContainer.style.left = "0";
+        creditsContainer.style.width = "100vw";
+        creditsContainer.style.height = "100vh";
+        creditsContainer.style.display = "flex";
+        creditsContainer.style.flexDirection = "column";
+        creditsContainer.style.justifyContent = "center";
+        creditsContainer.style.alignItems = "center";
+        creditsContainer.style.zIndex = "999";
+        creditsContainer.style.color = "#ffffff";
+        creditsContainer.style.textAlign = "center";
+        creditsContainer.style.fontFamily = "sans-serif";
+        creditsContainer.style.opacity = "0";
+        creditsContainer.style.transition = "opacity 1.5s ease";
+
+        document.body.appendChild(creditsContainer);
+
+        // Poster fade out ke 3 Sec baad Credits
+        setTimeout(() => {
+            creditsContainer.innerHTML = `
+                <h2 style="font-size: 1.4rem; margin-bottom: 8px; letter-spacing: 2px; color: #f1f1f1;">IMAGIN AND MAKING</h2>
+                <h1 style="font-size: 2.2rem; margin-bottom: 12px; color: #ffffff; letter-spacing: 3px;">MANAV</h1>
+                <p style="font-size: 1.2rem; color: #ff8fa3; font-style: italic;">specially for Gungun...</p>
+            `;
+            creditsContainer.style.opacity = "1";
+
+            // 5 Sec baad Fade Out & THE END
+            setTimeout(() => {
+                creditsContainer.style.opacity = "0";
+                
+                setTimeout(() => {
+                    creditsContainer.innerHTML = `
+                        <h1 style="font-size: 3rem; letter-spacing: 5px; color: #ffffff; text-shadow: 0 0 15px rgba(255,255,255,0.8);">THE END</h1>
+                    `;
+                    creditsContainer.style.opacity = "1";
+                }, 1500);
+            }, 5000);
+        }, 3000);
     }
 
     // Rain Particle Generator
@@ -337,4 +409,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                
+            
