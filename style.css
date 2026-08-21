@@ -24,7 +24,6 @@ body {
     display: none !important;
 }
 
-/* Background Effects */
 .stars {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -48,7 +47,7 @@ body {
 }
 
 /* ==========================================================================
-   2. GIFT BOX SECTION & LINK CLICK FIX
+   2. INITIAL LOADING & GIFT BOX FADE-IN
    ========================================================================== */
 #giftSection {
     display: flex;
@@ -57,9 +56,38 @@ body {
     justify-content: center;
     position: relative;
     z-index: 20;
+    width: 100%;
+    min-height: 300px;
+    transition: opacity 1.5s ease;
 }
 
-/* Main Link Wrapper to open via link tap */
+.loading-center {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ff758f;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px 22px;
+    border-radius: 25px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 77, 109, 0.4);
+    box-shadow: 0 0 15px rgba(255, 77, 109, 0.2);
+    animation: pulseLoading 1.5s infinite alternate;
+}
+
+@keyframes pulseLoading {
+    0% { transform: scale(0.98); opacity: 0.8; }
+    100% { transform: scale(1.02); opacity: 1; }
+}
+
+.gift-fade-init {
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.gift-fade-init.show-fade {
+    opacity: 1;
+}
+
 .gift-link-wrapper {
     display: flex;
     flex-direction: column;
@@ -77,7 +105,6 @@ body {
     max-width: 250px; 
     height: auto;
     transition: transform 0.3s ease;
-    pointer-events: none; /* Disables direct image tap so link gets the click */
 }
 
 .gift-img.shake-active {
@@ -90,7 +117,6 @@ body {
     color: #ff4d6d;
     font-weight: 600;
     text-shadow: 0 0 10px rgba(255, 77, 109, 0.6);
-    pointer-events: none;
 }
 
 @keyframes intenseShake {
@@ -104,7 +130,7 @@ body {
 }
 
 /* ==========================================================================
-   3. TRANSITIONS & SCREEN COMPONENT
+   3. TRANSITIONS & SCREEN COMPONENTS
    ========================================================================== */
 #countdownScreen {
     display: flex;
@@ -114,7 +140,7 @@ body {
 }
 
 #countdownNumber {
-    font-size: 90px;
+    font-size: 55px;
     font-weight: 800;
     color: #ff4d6d;
     text-shadow: 0 0 25px rgba(255, 77, 109, 0.9);
@@ -132,18 +158,23 @@ body {
 }
 
 .bday-text {
-    font-size: 36px;
+    font-size: 38px;
     font-weight: 800;
     color: #ffffff;
     text-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d;
-    animation: zoomInBday 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     width: 90%;
     text-align: center;
 }
 
-@keyframes zoomInBday {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+.fade-in-out {
+    animation: fadeInOutGreeting 3.5s ease-in-out forwards;
+}
+
+@keyframes fadeInOutGreeting {
+    0% { opacity: 0; transform: scale(0.8); }
+    30% { opacity: 1; transform: scale(1.1); }
+    70% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.9); }
 }
 
 .template-wrapper {
@@ -154,7 +185,7 @@ body {
     align-items: center;
     opacity: 0;
     transform: scale(0.9);
-    transition: opacity 2s ease, transform 2s ease; 
+    transition: opacity 1.5s ease, transform 1.5s ease; 
 }
 
 .template-wrapper.active {
@@ -171,25 +202,21 @@ body {
 }
 
 /* ==========================================================================
-   4. NOTEBOOK PAGE WITH SKETCH WATERMARK & CORNER ITEMS
+   4. NOTEBOOK PAGE WITH PAGE.PNG BACKGROUND
    ========================================================================== */
 .scroll-letter { 
     position: relative;
     width: 100%;          
     max-width: 350px;
     height: 540px; 
-    overflow-y: auto; 
-    overflow-x: hidden;
-    scroll-behavior: smooth; 
+    overflow-y: auto;
     border-radius: 24px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.6);
     opacity: 0;
     transform: scale(0.8);
     transition: opacity 1.5s ease-out, transform 1.5s ease-out;
     margin: 0 auto;
-    background-color: #fbf0ea !important; 
-    border: 8px solid #f7d6d0; 
-    outline: 2px solid #e1b4ad; 
+    background-color: transparent !important; 
 }
 
 .scroll-letter.active {
@@ -197,47 +224,24 @@ body {
     transform: scale(1);
 }
 
-/* SKETCH WATERMARK LAYER (Centered behind text) */
 .scroll-letter::before {
     content: "";
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url('sketch.png') !important;
+    background-image: url('page.png') !important;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.18; 
     z-index: 1;
     pointer-events: none;
+    border-radius: 24px;
 }
 
-/* CORNER DECORATIONS */
-.scroll-letter::after {
-    content: "🌹";
-    position: absolute;
-    top: 15px; left: 15px;
-    font-size: 32px;
-    z-index: 10;
-    pointer-events: none;
-    transform: rotate(-10deg);
-}
-
-.letter-text::after {
-    content: "🎈";
-    position: absolute;
-    bottom: 15px; right: 15px;
-    font-size: 32px;
-    z-index: 10;
-    pointer-events: none;
-    transform: rotate(10deg);
-}
-
-/* TEXT AREA STYLING */
 .letter-text { 
     position: relative; 
     z-index: 5; 
     text-align: left; 
-    padding: 50px 25px 50px 25px; 
+    padding: 80px 25px 20px 25px; 
     font-family: 'Playfair Display', serif;
     width: 100%;
 }
@@ -246,38 +250,98 @@ body {
     color: #b33939 !important; 
     font-size: 16px; 
     font-weight: 800; 
-    text-align: center !important; 
-    margin-bottom: 26px; 
+    text-align: left !important; 
+    margin-bottom: 20px; 
     line-height: 1.2;
     border-bottom: 2px dashed #f5c2bb;
     padding-bottom: 10px;
 }
 
 .letter-text p {
-    font-size: 14.5px;
-    line-height: 26px; 
-    margin: 0;
-    margin-bottom: 26px; 
-    color: #4a2c2a !important;
+    font-size: 14px;
+    line-height: 24px; 
+    margin-bottom: 15px; 
+    color: #333333 !important;
     font-weight: 500;
     word-wrap: break-word;
-    
-    /* Digital Dotted Lines */
-    background-image: linear-gradient(to right, #f5c2bb 50%, rgba(255,255,255,0) 0%);
-    background-position: bottom;
-    background-size: 6px 1px;
-    background-repeat: repeat-x;
 }
 
-.highlight-bday { color: #b33939 !important; font-weight: 700; }
-.signature { font-weight: 700; color: #7f8c8d !important; font-style: italic; text-align: right; display: block; margin-top: 13px; }
-.heart-cursor { display: inline-block; color: #ff4d6d; font-size: 12px; margin-left: 2px; animation: heartPulse 0.6s infinite alternate; vertical-align: middle; }
+.heart-cursor { 
+    display: inline-block; 
+    color: #ff4d6d; 
+    font-size: 14px; 
+    margin-left: 2px; 
+    animation: heartPulse 0.6s infinite alternate; 
+    vertical-align: middle; 
+}
 
 /* ==========================================================================
-   5. EFFECTS & ANIMATIONS
+   5. LAST MESSAGE & POSTER SECTION
    ========================================================================== */
-#rainContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; }
-.rain-item { position: absolute; top: -50px; pointer-events: none; animation: fallDown 7s linear infinite; }
+#lastMsgScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+#lastMsgScreen.active {
+    opacity: 1;
+}
+
+.last-msg-text {
+    font-size: 22px;
+    font-weight: 600;
+    color: #ff758f;
+    text-shadow: 0 0 15px rgba(255, 117, 143, 0.6);
+}
+
+.poster-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 2s ease, transform 2s ease;
+}
+
+.poster-wrapper.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.poster-img {
+    width: 95%;
+    max-width: 360px;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+}
+
+/* ==========================================================================
+   6. EFFECTS & ANIMATIONS
+   ========================================================================== */
+#rainContainer { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none; 
+    z-index: 5; 
+    overflow: hidden; 
+}
+
+.rain-item { 
+    position: absolute; 
+    top: -50px; 
+    pointer-events: none; 
+    animation: fallDown 7s linear infinite; 
+}
 
 @keyframes fallDown {
     0% { transform: translateY(0) rotate(0deg); opacity: 0; }
@@ -285,9 +349,11 @@ body {
     90% { opacity: 0.9; }
     100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
+
 @keyframes zoomPulse { from { transform: scale(0.9); } to { transform: scale(1.1); } }
-@keyframes zoomInBday { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 @keyframes heartPulse { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
+
 .scroll-letter::-webkit-scrollbar { width: 3px; }
 .scroll-letter::-webkit-scrollbar-track { background: transparent; }
 .scroll-letter::-webkit-scrollbar-thumb { background: rgba(179, 57, 57, 0.15); border-radius: 10px; }
+   
