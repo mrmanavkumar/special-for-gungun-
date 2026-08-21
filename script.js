@@ -3,40 +3,74 @@ document.addEventListener("DOMContentLoaded", () => {
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
     const giftBox = document.getElementById("giftBox");
+    const loadingBox = document.getElementById("loadingBox");
     const countdownScreen = document.getElementById("countdownScreen");
     const countdownNumber = document.getElementById("countdownNumber");
     const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
     const templateSection = document.getElementById("templateSection");
     const messageSection = document.getElementById("messageSection");
+    const lastMsgScreen = document.getElementById("lastMsgScreen");
+    const posterSection = document.getElementById("posterSection");
+    
+    // Audio Elements
     const bgMusic = document.getElementById("bgMusic");
+    const hbdVoice = document.getElementById("hbdVoice");
     const countdownAudio = document.getElementById("countdownAudio");
+    const devaMusic = document.getElementById("devaMusic");
+    
     const rainContainer = document.getElementById("rainContainer");
     const effectCanvas = document.getElementById("effectCanvas");
 
     let isTriggered = false;
 
-    // Direct Link Click Handler
+    // STEP 1: 5 SECONDS LOADING LOGIC
+    setTimeout(() => {
+        if (loadingBox) loadingBox.style.display = "none";
+        if (mainLink) {
+            mainLink.classList.remove("hidden");
+            mainLink.style.display = "flex";
+            setTimeout(() => mainLink.classList.add("show-fade"), 50);
+        }
+    }, 5000);
+
+    // STEP 2: Gift Box Click Handler & Rain Start
     function handleLinkClick(e) {
         if (e) e.preventDefault();
         if (isTriggered) return;
         isTriggered = true;
 
-        // Audio unlock for Mobile & Web browsers
+        // Unlock audio context for mobile browsers
         if (bgMusic) {
             bgMusic.play().then(() => {
-                bgMusic.pause(); 
-                bgMusic.currentTime = 0; 
-            }).catch(err => console.log("Audio unlock:", err));
+                bgMusic.pause();
+                bgMusic.currentTime = 0;
+            }).catch(err => console.log("BgMusic unlock err:", err));
         }
 
-        // Trigger Shake Animation on Box Image
+        if (hbdVoice) {
+            hbdVoice.play().then(() => {
+                hbdVoice.pause();
+                hbdVoice.currentTime = 0;
+            }).catch(err => console.log("HbdVoice unlock err:", err));
+        }
+
+        if (devaMusic) {
+            devaMusic.play().then(() => {
+                devaMusic.pause();
+                devaMusic.currentTime = 0;
+            }).catch(err => console.log("DevaMusic unlock err:", err));
+        }
+
         if (giftBox) giftBox.classList.add("shake-active");
 
-        // Transition to Countdown
+        // Gift Click hote hi Sparkle Rain start hogi
+        startMagicalRain();
+
         setTimeout(() => {
             if (giftSection) giftSection.classList.add("hidden");
             if (countdownScreen) {
                 countdownScreen.classList.remove("hidden");
+                countdownScreen.style.display = "flex";
                 startCountdownTimer(); 
             } else {
                 showBirthdayGreeting();
@@ -44,69 +78,102 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1500);
     }
 
-    // Bind event to the link wrapper
-    if (mainLink) {
-        mainLink.addEventListener("click", handleLinkClick);
-    }
+    if (mainLink) mainLink.addEventListener("click", handleLinkClick);
+    if (giftBox) giftBox.addEventListener("click", handleLinkClick);
 
-    // STEP 3: Countdown Timer (3, 2, 1)
+    // STEP 3: Countdown Timer (11:59:50 -> 12:00:00)
     function startCountdownTimer() {
+        let seconds = 50;
+        if (countdownNumber) countdownNumber.textContent = "11:59:50";
+
         if (countdownAudio) {
-            countdownAudio.play().catch(err => console.log("Countdown sound blocked:", err));
+            try {
+                countdownAudio.currentTime = 0;
+                countdownAudio.play().catch(e => console.log("Sound block:", e));
+            } catch(e) {}
         }
 
-        let count = 3;
-        if (countdownNumber) countdownNumber.textContent = count;
-
         const timer = setInterval(() => {
-            count--;
-            if (count > 0) {
-                if (countdownNumber) countdownNumber.textContent = count;
+            if (seconds < 60) {
+                seconds++;
+                if (countdownAudio) {
+                    countdownAudio.currentTime = 0;
+                    countdownAudio.play().catch(e => {});
+                }
+                if (seconds === 60) {
+                    if (countdownNumber) countdownNumber.textContent = "12:00:00";
+                } else {
+                    if (countdownNumber) countdownNumber.textContent = `11:59:${seconds.toString().padStart(2, '0')}`;
+                }
             } else {
                 clearInterval(timer);
-                if (countdownScreen) countdownScreen.classList.add("hidden");
-                showBirthdayGreeting();
+                
+                if (countdownAudio) {
+                    try {
+                        countdownAudio.pause();
+                        countdownAudio.currentTime = 0;
+                    } catch(e) {}
+                }
+
+                setTimeout(() => {
+                    if (countdownScreen) countdownScreen.classList.add("hidden");
+                    showBirthdayGreeting();
+                }, 1000);
             }
         }, 1000);
     }
 
-    // STEP 4: Happy Birthday Screen + Music Starts
+    // STEP 4: Happy Birthday Screen & Music Play
     function showBirthdayGreeting() {
-        if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
+        if (bdayGreetingScreen) {
+            bdayGreetingScreen.classList.remove("hidden");
+            bdayGreetingScreen.style.display = "flex";
+        }
+
+        if (hbdVoice) {
+            try {
+                hbdVoice.currentTime = 0;
+                hbdVoice.play().catch(e => {});
+            } catch(e) {}
+        }
 
         if (bgMusic) {
-            bgMusic.play().catch(err => console.log("Music play failed:", err));
+            try {
+                bgMusic.currentTime = 0;
+                bgMusic.play().catch(e => {});
+            } catch(e) {}
         }
 
         initConfetti();
-        startMagicalRain();
 
+        // 3.5 Sec baad Birthday Greeting fade out & Template display
         setTimeout(() => {
             if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
             
             if (templateSection) {
                 templateSection.classList.remove("hidden");
-                setTimeout(() => { templateSection.classList.add("active"); }, 100);
+                templateSection.style.display = "flex";
+                setTimeout(() => templateSection.classList.add("active"), 100);
                 
+                // Template 15 Seconds tak dikhega fir Fade Out hoga
                 setTimeout(() => {
                     templateSection.classList.remove("active");
-                    
                     setTimeout(() => {
                         templateSection.classList.add("hidden");
                         showLetterPage();
-                    }, 2000); 
+                    }, 1500); 
                 }, 15000); 
-                
             } else {
                 showLetterPage();
             }
-        }, 3000);
+        }, 3500);
     }
 
-    // STEP 6: Notebook Letter Screen Arrival
+    // STEP 5: Notebook Letter Page (page.png Background)
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
+            messageSection.style.display = "block";
             setTimeout(() => {
                 messageSection.classList.add("active");
                 typeWriterEffect();
@@ -114,28 +181,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Rain Particle Generator
-    function startMagicalRain() {
-        const items = ['🌸', '❤️', '🌹', '💕', '✨', '💝'];
-        setInterval(() => {
-            const element = document.createElement('div');
-            element.classList.add('rain-item');
-            element.innerHTML = items[Math.floor(Math.random() * items.length)];
-            element.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 18 + 12; 
-            element.style.fontSize = size + 'px';
-            const fallDuration = Math.random() * 5 + 4; 
-            element.style.animationDuration = fallDuration + 's';
-            
-            if (rainContainer) rainContainer.appendChild(element);
-            setTimeout(() => { element.remove(); }, fallDuration * 1000);
-        }, 250); 
-    }
-
-            // Typewriter Engine
+    // Typewriter Engine (Tumhara Original Short Letter)
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
-        const scrollBox = document.getElementById("messageSection");
         if (!targetDiv) return;
 
         const letterData = [
@@ -161,18 +209,94 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 element.innerHTML += rawText.charAt(i);
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
-
-                if (scrollBox) scrollBox.scrollTop = scrollBox.scrollHeight;
-                await new Promise(res => setTimeout(res, 50)); 
+                if (targetDiv) targetDiv.scrollTop = targetDiv.scrollHeight;
+                
+                await new Promise(res => setTimeout(res, 45)); 
             }
             const finalCursor = element.querySelector('.heart-cursor');
             if (finalCursor) finalCursor.remove();
-            await new Promise(res => setTimeout(res, 400));
+            await new Promise(res => setTimeout(res, 350));
+        }
+
+        // Letter typing complete hone ke baad background music end event handle karega
+        handleMusicEndTransition();
+    }
+
+    // STEP 6: Music End -> 4 Sec Delay -> Show Transition Message
+    function handleMusicEndTransition() {
+        const onBgMusicEnded = () => {
+            setTimeout(() => {
+                if (messageSection) messageSection.classList.remove("active");
+                setTimeout(() => {
+                    if (messageSection) messageSection.classList.add("hidden");
+                    showLastMessageScreen();
+                }, 1500);
+            }, 4000);
+        };
+
+        if (bgMusic) {
+            if (bgMusic.ended) {
+                onBgMusicEnded();
+            } else {
+                bgMusic.onended = onBgMusicEnded;
+            }
+        } else {
+            onBgMusicEnded();
         }
     }
-    
-    
-    
+
+    // STEP 7: "wait for my last message..." Screen & Deva Music Play
+    function showLastMessageScreen() {
+        if (lastMsgScreen) {
+            lastMsgScreen.classList.remove("hidden");
+            lastMsgScreen.style.display = "flex";
+            setTimeout(() => lastMsgScreen.classList.add("active"), 100);
+        }
+
+        if (devaMusic) {
+            try {
+                devaMusic.currentTime = 0;
+                devaMusic.play().catch(e => {});
+            } catch(e) {}
+        }
+
+        // 8 Seconds delay ke baad mg.png poster aayega
+        setTimeout(() => {
+            if (lastMsgScreen) lastMsgScreen.classList.remove("active");
+            setTimeout(() => {
+                if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
+                showFinalPoster();
+            }, 1500);
+        }, 8000);
+    }
+
+    // STEP 8: Final Poster Screen (mg.png)
+    function showFinalPoster() {
+        if (posterSection) {
+            posterSection.classList.remove("hidden");
+            posterSection.style.display = "flex";
+            setTimeout(() => posterSection.classList.add("active"), 100);
+        }
+    }
+
+    // Rain Particle Generator (Sparkles, Hearts, Stars, Balloons)
+    function startMagicalRain() {
+        if (!rainContainer) return;
+        const items = ['✨', '♥️', '🌟', '🎈'];
+        setInterval(() => {
+            const element = document.createElement('div');
+            element.classList.add('rain-item');
+            element.innerText = items[Math.floor(Math.random() * items.length)];
+            element.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 14 + 16; 
+            element.style.fontSize = size + 'px';
+            const fallDuration = Math.random() * 3 + 4; 
+            element.style.animationDuration = fallDuration + 's';
+            
+            rainContainer.appendChild(element);
+            setTimeout(() => { element.remove(); }, fallDuration * 1000);
+        }, 250); 
+    }
 
     // Confetti System
     function initConfetti() {
@@ -216,4 +340,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                
+                        
