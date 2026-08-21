@@ -23,51 +23,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 1: 5 SECONDS LOADING LOGIC
+    // STEP 1: 5 SECONDS LOADING LOGIC (Fix: Direct Force Display)
     setTimeout(() => {
-        if (loadingBox) loadingBox.style.display = "none";
+        if (loadingBox) {
+            loadingBox.style.display = "none";
+        }
+        
         if (mainLink) {
             mainLink.classList.remove("hidden");
             mainLink.style.display = "flex";
-            setTimeout(() => mainLink.classList.add("show-fade"), 50);
+            mainLink.style.flexDirection = "column";
+            mainLink.style.alignItems = "center";
+            mainLink.style.opacity = "1";
         }
     }, 5000);
 
-    // STEP 2: Gift Box Click Handler & Rain Start
+    // Mobile Audio Unlocker
+    function unlockAudio(audioEl) {
+        if (!audioEl) return;
+        audioEl.play().then(() => {
+            audioEl.pause();
+            audioEl.currentTime = 0;
+        }).catch(() => {});
+    }
+
+    // STEP 2: Gift Box Click Handler
     function handleLinkClick(e) {
         if (e) e.preventDefault();
         if (isTriggered) return;
         isTriggered = true;
 
-        // Unlock audio context for mobile browsers
-        if (bgMusic) {
-            bgMusic.play().then(() => {
-                bgMusic.pause();
-                bgMusic.currentTime = 0;
-            }).catch(err => console.log("BgMusic unlock err:", err));
-        }
-
-        if (hbdVoice) {
-            hbdVoice.play().then(() => {
-                hbdVoice.pause();
-                hbdVoice.currentTime = 0;
-            }).catch(err => console.log("HbdVoice unlock err:", err));
-        }
-
-        if (devaMusic) {
-            devaMusic.play().then(() => {
-                devaMusic.pause();
-                devaMusic.currentTime = 0;
-            }).catch(err => console.log("DevaMusic unlock err:", err));
-        }
+        unlockAudio(bgMusic);
+        unlockAudio(hbdVoice);
+        unlockAudio(devaMusic);
 
         if (giftBox) giftBox.classList.add("shake-active");
 
-        // Gift Click hote hi Sparkle Rain start hogi
         startMagicalRain();
 
         setTimeout(() => {
-            if (giftSection) giftSection.classList.add("hidden");
+            if (giftSection) giftSection.style.display = "none";
             if (countdownScreen) {
                 countdownScreen.classList.remove("hidden");
                 countdownScreen.style.display = "flex";
@@ -80,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (mainLink) mainLink.addEventListener("click", handleLinkClick);
     if (giftBox) giftBox.addEventListener("click", handleLinkClick);
+    if (giftSection) giftSection.addEventListener("click", handleLinkClick);
 
     // STEP 3: Countdown Timer (11:59:50 -> 12:00:00)
     function startCountdownTimer() {
@@ -89,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (countdownAudio) {
             try {
                 countdownAudio.currentTime = 0;
-                countdownAudio.play().catch(e => console.log("Sound block:", e));
+                countdownAudio.play().catch(() => {});
             } catch(e) {}
         }
 
@@ -97,8 +93,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (seconds < 60) {
                 seconds++;
                 if (countdownAudio) {
-                    countdownAudio.currentTime = 0;
-                    countdownAudio.play().catch(e => {});
+                    try {
+                        countdownAudio.currentTime = 0;
+                        countdownAudio.play().catch(() => {});
+                    } catch(e) {}
                 }
                 if (seconds === 60) {
                     if (countdownNumber) countdownNumber.textContent = "12:00:00";
@@ -116,14 +114,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 setTimeout(() => {
-                    if (countdownScreen) countdownScreen.classList.add("hidden");
+                    if (countdownScreen) countdownScreen.style.display = "none";
                     showBirthdayGreeting();
                 }, 1000);
             }
         }, 1000);
     }
 
-    // STEP 4: Happy Birthday Screen & Music Play
+    // STEP 4: Happy Birthday Screen
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) {
             bdayGreetingScreen.classList.remove("hidden");
@@ -133,33 +131,31 @@ document.addEventListener("DOMContentLoaded", () => {
         if (hbdVoice) {
             try {
                 hbdVoice.currentTime = 0;
-                hbdVoice.play().catch(e => {});
+                hbdVoice.play().catch(() => {});
             } catch(e) {}
         }
 
         if (bgMusic) {
             try {
                 bgMusic.currentTime = 0;
-                bgMusic.play().catch(e => {});
+                bgMusic.play().catch(() => {});
             } catch(e) {}
         }
 
         initConfetti();
 
-        // 3.5 Sec baad Birthday Greeting fade out & Template display
         setTimeout(() => {
-            if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
+            if (bdayGreetingScreen) bdayGreetingScreen.style.display = "none";
             
             if (templateSection) {
                 templateSection.classList.remove("hidden");
                 templateSection.style.display = "flex";
                 setTimeout(() => templateSection.classList.add("active"), 100);
                 
-                // Template 15 Seconds tak dikhega fir Fade Out hoga
                 setTimeout(() => {
                     templateSection.classList.remove("active");
                     setTimeout(() => {
-                        templateSection.classList.add("hidden");
+                        templateSection.style.display = "none";
                         showLetterPage();
                     }, 1500); 
                 }, 15000); 
@@ -169,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3500);
     }
 
-    // STEP 5: Notebook Letter Page (page.png Background)
+    // STEP 5: Notebook Letter Page
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
@@ -181,10 +177,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Typewriter Engine (Tumhara Original Short Letter)
+    // Typewriter Engine
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
-        if (!targetDiv) return;
+        if (!targetDiv) {
+            handleMusicEndTransition();
+            return;
+        }
 
         const letterData = [
             { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
@@ -218,34 +217,33 @@ document.addEventListener("DOMContentLoaded", () => {
             await new Promise(res => setTimeout(res, 350));
         }
 
-        // Letter typing complete hone ke baad background music end event handle karega
         handleMusicEndTransition();
     }
 
-    // STEP 6: Music End -> 4 Sec Delay -> Show Transition Message
+    // STEP 6: Music End Transition
     function handleMusicEndTransition() {
-        const onBgMusicEnded = () => {
+        let hasTransitioned = false;
+
+        const triggerNext = () => {
+            if (hasTransitioned) return;
+            hasTransitioned = true;
             setTimeout(() => {
                 if (messageSection) messageSection.classList.remove("active");
                 setTimeout(() => {
-                    if (messageSection) messageSection.classList.add("hidden");
+                    if (messageSection) messageSection.style.display = "none";
                     showLastMessageScreen();
                 }, 1500);
             }, 4000);
         };
 
-        if (bgMusic) {
-            if (bgMusic.ended) {
-                onBgMusicEnded();
-            } else {
-                bgMusic.onended = onBgMusicEnded;
-            }
+        if (bgMusic && !bgMusic.paused) {
+            bgMusic.onended = triggerNext;
         } else {
-            onBgMusicEnded();
+            setTimeout(triggerNext, 4000);
         }
     }
 
-    // STEP 7: "wait for my last message..." Screen & Deva Music Play
+    // STEP 7: Last Message Screen & Deva Music
     function showLastMessageScreen() {
         if (lastMsgScreen) {
             lastMsgScreen.classList.remove("hidden");
@@ -256,15 +254,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (devaMusic) {
             try {
                 devaMusic.currentTime = 0;
-                devaMusic.play().catch(e => {});
+                devaMusic.play().catch(() => {});
             } catch(e) {}
         }
 
-        // 8 Seconds delay ke baad mg.png poster aayega
         setTimeout(() => {
             if (lastMsgScreen) lastMsgScreen.classList.remove("active");
             setTimeout(() => {
-                if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
+                if (lastMsgScreen) lastMsgScreen.style.display = "none";
                 showFinalPoster();
             }, 1500);
         }, 8000);
@@ -279,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Rain Particle Generator (Sparkles, Hearts, Stars, Balloons)
+    // Rain Particle Generator
     function startMagicalRain() {
         if (!rainContainer) return;
         const items = ['✨', '♥️', '🌟', '🎈'];
@@ -340,4 +337,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                        
+                
