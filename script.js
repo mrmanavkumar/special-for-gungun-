@@ -339,9 +339,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Poster fade out ke 3 Sec baad Credits
         setTimeout(() => {
             creditsContainer.innerHTML = `
-                <h2 style="font-size: 1.4rem; margin-bottom: 8px; letter-spacing: 2px; color: #f1f1f1;">IMAGIN AND MAKING</h2>
+                <h2 style="font-size: 1.4rem; margin-bottom: 8px; letter-spacing: 2px; color: #f1f1f1;">IMAGIN AND CREATED</h2>
                 <h1 style="font-size: 2.2rem; margin-bottom: 12px; color: #ffffff; letter-spacing: 3px;">MANAV</h1>
-                <p style="font-size: 1.2rem; color: #ff8fa3; font-style: italic;">specially for Gungun...</p>
+                <p style="font-size: 1.2rem; color: #ff8fa3; font-style: italic;">SPECIALLY FOR GUNGUN...</p>
             `;
             creditsContainer.style.opacity = "1";
 
@@ -362,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Rain Particle Generator
     function startMagicalRain() {
         if (!rainContainer) return;
-        const items = ['✨', '♥️', '🌟', '🎈'];
+        const items = ['✨', '♥️', '✨','♥️','🎈','🌟', '🌟','🎈'];
         setInterval(() => {
             const element = document.createElement('div');
             element.classList.add('rain-item');
