@@ -338,7 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Poster fade out ke 3 Sec baad Credits
         setTimeout(() => {
-            creditsContainer.innerHTML = `&
+            creditsContainer.innerHTML = 
                 <h2 style="font-size: 1.4rem; margin-bottom: 8px; letter-spacing: 2px; color: #f1f1f1;">IMAGINED & CREATED</h2>
                 <h1 style="font-size: 2.2rem; margin-bottom: 12px; color: #ffffff; letter-spacing: 3px;">MANAV</h1>
                 <p style="font-size: 1.2rem; color: #ff8fa3; font-style: italic;">SPECIALLY FOR GUNGUN...</p>
