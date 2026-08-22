@@ -23,35 +23,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 1: 5 SECONDS LOADING LOGIC (With Smooth Fade In)
-        // STEP 1: 5 SECONDS LOADING LOGIC (Text Hide Fix)
-        setTimeout(() => {
+    // STEP 1: 5 SECONDS LOADING LOGIC
+    setTimeout(() => {
         const loadingText = document.getElementById("loadingText");
         
-        // 1. Text dhere-dhere fade out hoga
+        // 1. Text dhere-dhere 1.5s me fade out hoga
         if (loadingText) {
             loadingText.style.transition = "opacity 1.5s ease";
             loadingText.style.opacity = "0";
         }
 
-        // 2. Text gayab hone ke 3 second baad
+        // 2. Text gayab hone ke exact 3 second baad
         setTimeout(() => {
             if (loadingText) loadingText.style.display = "none";
+            if (loadingBox) loadingBox.style.display = "none";
             
-            // 3. Gift Box dhere-dhere aayega
-            if (mainLink) {
-                mainLink.classList.remove("hidden");
-                mainLink.style.display = "flex";
-                mainLink.style.flexDirection = "column";
-                mainLink.style.alignItems = "center";
-                mainLink.style.opacity = "0";
-                mainLink.style.transition = "opacity 2s ease";
-                setTimeout(() => { mainLink.style.opacity = "1"; }, 100);
+            // 3. Gift Box Section dhere-dhere fade in hoga
+            const boxTarget = giftSection || mainLink;
+            if (boxTarget) {
+                boxTarget.classList.remove("hidden");
+                boxTarget.style.display = "flex";
+                boxTarget.style.flexDirection = "column";
+                boxTarget.style.alignItems = "center";
+                boxTarget.style.opacity = "0";
+                boxTarget.style.transition = "opacity 2s ease";
+                setTimeout(() => { boxTarget.style.opacity = "1"; }, 100);
             }
         }, 3000);
     }, 5000);
-    
-    
 
     // Audio Unlocker for Mobile
     function unlockAudio(audioEl) {
@@ -62,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }).catch(() => {});
     }
 
-    // STEP 2: Gift Box Click Handler (With Fade Out)
+    // STEP 2: Gift Box Click Handler
     function handleLinkClick(e) {
         if (e) e.preventDefault();
         if (isTriggered) return;
@@ -199,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Typewriter Engine (Signature Right Aligned)
+    // Typewriter Engine
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         if (!targetDiv) {
@@ -292,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 8000);
     }
 
-    // STEP 8: Final Poster Screen (mg.png) - 2 Min 20 Sec Display
+    // STEP 8: Final Poster Screen (mg.png)
     function showFinalPoster() {
         if (posterSection) {
             posterSection.classList.remove("hidden");
@@ -301,7 +300,6 @@ document.addEventListener("DOMContentLoaded", () => {
             posterSection.style.transition = "opacity 2.5s ease";
             setTimeout(() => { posterSection.style.opacity = "1"; }, 100);
 
-            // 2 Minutes 20 Seconds (140,000ms) baad Fade Out
             setTimeout(() => {
                 posterSection.style.opacity = "0";
                 setTimeout(() => {
@@ -314,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // STEP 9: Credits & "THE END" Sequence
+    // STEP 9: Clean Credits & "THE END" Sequence (SINGLE & FIX)
     function showCreditsSequence() {
         const creditsContainer = document.createElement("div");
         creditsContainer.id = "creditsSequence";
@@ -336,10 +334,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.body.appendChild(creditsContainer);
 
-        // Poster fade out ke 3 Sec baad Credits
+        // Poster fade out ke 3 Sec baad Clean Credits
         setTimeout(() => {
-            creditsContainer.innerHTML = 
-                <h2 style="font-size: 1.4rem; margin-bottom: 8px; letter-spacing: 2px; color: #f1f1f1;">IMAGINED & CREATED</h2>
+            creditsContainer.innerHTML = `
+                <h2 style="font-size: 1.2rem; margin-bottom: 8px; letter-spacing: 2px; color: #f1f1f1;">IMAGINED & CREATED BY</h2>
                 <h1 style="font-size: 2.2rem; margin-bottom: 12px; color: #ffffff; letter-spacing: 3px;">MANAV</h1>
                 <p style="font-size: 1.2rem; color: #ff8fa3; font-style: italic;">SPECIALLY FOR GUNGUN...</p>
             `;
@@ -420,4 +418,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-            
+                    
