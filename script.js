@@ -23,32 +23,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 1: 5 SECONDS LOADING LOGIC
+    // STEP 1: LOADING -> GIFT BOX TRANSITION (FIXED)
     setTimeout(() => {
         const loadingText = document.getElementById("loadingText");
+        const loadingBox = document.getElementById("loadingBox");
         
-        // 1. Text dhere-dhere 1.5s me fade out hoga
+        // 1. Text fade out
         if (loadingText) {
             loadingText.style.transition = "opacity 1.5s ease";
             loadingText.style.opacity = "0";
         }
 
-        // 2. Text gayab hone ke exact 3 second baad
+        // 2. Text gayab hone ke baad Gift Box ko FORCED DISPLAY dena
         setTimeout(() => {
             if (loadingText) loadingText.style.display = "none";
             if (loadingBox) loadingBox.style.display = "none";
             
-            // 3. Gift Box Section dhere-dhere fade in hoga
-            const boxTarget = giftSection || mainLink;
-            if (boxTarget) {
-                boxTarget.classList.remove("hidden");
-                boxTarget.style.display = "flex";
-                boxTarget.style.flexDirection = "column";
-                boxTarget.style.alignItems = "center";
-                boxTarget.style.opacity = "0";
-                boxTarget.style.transition = "opacity 2s ease";
-                setTimeout(() => { boxTarget.style.opacity = "1"; }, 100);
+            // giftSection aur mainLink DONO se 'hidden' class hata kar FORCED DISPLAY dena
+            if (giftSection) {
+                giftSection.classList.remove("hidden");
+                giftSection.style.display = "flex";
+                giftSection.style.flexDirection = "column";
+                giftSection.style.alignItems = "center";
+                giftSection.style.justifyContent = "center";
+                giftSection.style.opacity = "0";
+                giftSection.style.transition = "opacity 2s ease";
             }
+
+            if (mainLink) {
+                mainLink.classList.remove("hidden");
+                mainLink.style.display = "flex";
+            }
+
+            // 3. Fade in Gift Box
+            setTimeout(() => { 
+                if (giftSection) giftSection.style.opacity = "1"; 
+            }, 100);
+
         }, 3000);
     }, 5000);
 
@@ -61,9 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }).catch(() => {});
     }
 
-    // STEP 2: Gift Box Click Handler
+    // STEP 2: Gift Box Click Handler (Sirf Gift Box Click Par Chalega)
     function handleLinkClick(e) {
-        if (e) e.preventDefault();
+        if (e) e.stopPropagation(); // Event bleed-through stop karega
         if (isTriggered) return;
         isTriggered = true;
 
@@ -94,9 +105,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1200);
     }
 
+    // Event Listener (Sirf Gift Box aur Link par trigger hoga)
     if (mainLink) mainLink.addEventListener("click", handleLinkClick);
     if (giftBox) giftBox.addEventListener("click", handleLinkClick);
-    if (giftSection) giftSection.addEventListener("click", handleLinkClick);
+    
 
     // STEP 3: Countdown Timer (11:59:50 -> 12:00:00)
     function startCountdownTimer() {
