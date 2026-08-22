@@ -24,7 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let isTriggered = false;
 
     // STEP 1: 5 SECONDS LOADING LOGIC (With Smooth Fade In)
+        // STEP 1: 5 SECONDS LOADING LOGIC (Text Hide Fix)
     setTimeout(() => {
+        const loadingText = document.getElementById("loadingText");
+        if (loadingText) loadingText.style.display = "none"; 
+
         if (loadingBox) {
             loadingBox.style.transition = "opacity 1s ease";
             loadingBox.style.opacity = "0";
@@ -41,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => { mainLink.style.opacity = "1"; }, 100);
         }
     }, 5000);
+    
 
     // Audio Unlocker for Mobile
     function unlockAudio(audioEl) {
