@@ -25,26 +25,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // STEP 1: 5 SECONDS LOADING LOGIC (With Smooth Fade In)
         // STEP 1: 5 SECONDS LOADING LOGIC (Text Hide Fix)
-    setTimeout(() => {
+        setTimeout(() => {
         const loadingText = document.getElementById("loadingText");
-        if (loadingText) loadingText.style.display = "none"; 
-
-        if (loadingBox) {
-            loadingBox.style.transition = "opacity 1s ease";
-            loadingBox.style.opacity = "0";
-            setTimeout(() => { loadingBox.style.display = "none"; }, 1000);
-        }
         
-        if (mainLink) {
-            mainLink.classList.remove("hidden");
-            mainLink.style.display = "flex";
-            mainLink.style.flexDirection = "column";
-            mainLink.style.alignItems = "center";
-            mainLink.style.opacity = "0";
-            mainLink.style.transition = "opacity 1.5s ease";
-            setTimeout(() => { mainLink.style.opacity = "1"; }, 100);
+        // 1. Text dhere-dhere fade out hoga
+        if (loadingText) {
+            loadingText.style.transition = "opacity 1.5s ease";
+            loadingText.style.opacity = "0";
         }
+
+        // 2. Text gayab hone ke 3 second baad
+        setTimeout(() => {
+            if (loadingText) loadingText.style.display = "none";
+            
+            // 3. Gift Box dhere-dhere aayega
+            if (mainLink) {
+                mainLink.classList.remove("hidden");
+                mainLink.style.display = "flex";
+                mainLink.style.flexDirection = "column";
+                mainLink.style.alignItems = "center";
+                mainLink.style.opacity = "0";
+                mainLink.style.transition = "opacity 2s ease";
+                setTimeout(() => { mainLink.style.opacity = "1"; }, 100);
+            }
+        }, 3000);
     }, 5000);
+    
     
 
     // Audio Unlocker for Mobile
