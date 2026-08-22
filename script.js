@@ -23,39 +23,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 1: LOADING -> GIFT BOX TRANSITION (FIXED)
+    // STEP 1: 5 SECONDS LOADING LOGIC (GUARANTEED GIFT BOX SHOW)
     setTimeout(() => {
         const loadingText = document.getElementById("loadingText");
-        const loadingBox = document.getElementById("loadingBox");
         
-        // 1. Text fade out
+        // 1. Loading Text Fade Out
         if (loadingText) {
             loadingText.style.transition = "opacity 1.5s ease";
             loadingText.style.opacity = "0";
         }
 
-        // 2. Text gayab hone ke baad Gift Box ko FORCED DISPLAY dena
+        // 2. Text Gayab Hone ke baad Gift Box Dikhana
         setTimeout(() => {
-            if (loadingText) loadingText.style.display = "none";
-            if (loadingBox) loadingBox.style.display = "none";
+            if (loadingText) loadingText.style.setProperty("display", "none", "important");
+            if (loadingBox) loadingBox.style.setProperty("display", "none", "important");
             
-            // giftSection aur mainLink DONO se 'hidden' class hata kar FORCED DISPLAY dena
+            // Gift Section ko Forcefully Visible karna
             if (giftSection) {
                 giftSection.classList.remove("hidden");
-                giftSection.style.display = "flex";
-                giftSection.style.flexDirection = "column";
-                giftSection.style.alignItems = "center";
-                giftSection.style.justifyContent = "center";
-                giftSection.style.opacity = "0";
-                giftSection.style.transition = "opacity 2s ease";
+                giftSection.setAttribute("style", "display: flex !important; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 2s ease; visibility: visible !important;");
             }
 
             if (mainLink) {
                 mainLink.classList.remove("hidden");
-                mainLink.style.display = "flex";
+                mainLink.setAttribute("style", "display: flex !important; flex-direction: column; align-items: center; justify-content: center; visibility: visible !important;");
             }
 
-            // 3. Fade in Gift Box
+            if (giftBox) {
+                giftBox.style.setProperty("display", "block", "important");
+                giftBox.style.setProperty("visibility", "visible", "important");
+            }
+
+            // Smooth Fade In
             setTimeout(() => { 
                 if (giftSection) giftSection.style.opacity = "1"; 
             }, 100);
@@ -72,9 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }).catch(() => {});
     }
 
-    // STEP 2: Gift Box Click Handler (Sirf Gift Box Click Par Chalega)
+    // STEP 2: Gift Box Click Handler (Sirf Box/Link Click hone par)
     function handleLinkClick(e) {
-        if (e) e.stopPropagation(); // Event bleed-through stop karega
+        if (e) e.stopPropagation();
         if (isTriggered) return;
         isTriggered = true;
 
@@ -92,10 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 giftSection.style.transition = "opacity 1s ease";
                 giftSection.style.opacity = "0";
                 setTimeout(() => {
-                    giftSection.style.display = "none";
+                    giftSection.style.setProperty("display", "none", "important");
                     if (countdownScreen) {
                         countdownScreen.classList.remove("hidden");
-                        countdownScreen.style.display = "flex";
+                        countdownScreen.style.setProperty("display", "flex", "important");
                         startCountdownTimer(); 
                     } else {
                         showBirthdayGreeting();
@@ -105,10 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1200);
     }
 
-    // Event Listener (Sirf Gift Box aur Link par trigger hoga)
     if (mainLink) mainLink.addEventListener("click", handleLinkClick);
     if (giftBox) giftBox.addEventListener("click", handleLinkClick);
-    
 
     // STEP 3: Countdown Timer (11:59:50 -> 12:00:00)
     function startCountdownTimer() {
@@ -147,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 setTimeout(() => {
-                    if (countdownScreen) countdownScreen.style.display = "none";
+                    if (countdownScreen) countdownScreen.style.setProperty("display", "none", "important");
                     showBirthdayGreeting();
                 }, 1000);
             }
@@ -158,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) {
             bdayGreetingScreen.classList.remove("hidden");
-            bdayGreetingScreen.style.display = "flex";
+            bdayGreetingScreen.style.setProperty("display", "flex", "important");
         }
 
         if (hbdVoice) {
@@ -178,17 +175,17 @@ document.addEventListener("DOMContentLoaded", () => {
         initConfetti();
 
         setTimeout(() => {
-            if (bdayGreetingScreen) bdayGreetingScreen.style.display = "none";
+            if (bdayGreetingScreen) bdayGreetingScreen.style.setProperty("display", "none", "important");
             
             if (templateSection) {
                 templateSection.classList.remove("hidden");
-                templateSection.style.display = "flex";
+                templateSection.style.setProperty("display", "flex", "important");
                 setTimeout(() => templateSection.classList.add("active"), 100);
                 
                 setTimeout(() => {
                     templateSection.classList.remove("active");
                     setTimeout(() => {
-                        templateSection.style.display = "none";
+                        templateSection.style.setProperty("display", "none", "important");
                         showLetterPage();
                     }, 1500); 
                 }, 15000); 
@@ -202,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
-            messageSection.style.display = "block";
+            messageSection.style.setProperty("display", "block", "important");
             setTimeout(() => {
                 messageSection.classList.add("active");
                 typeWriterEffect();
@@ -266,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 if (messageSection) messageSection.classList.remove("active");
                 setTimeout(() => {
-                    if (messageSection) messageSection.style.display = "none";
+                    if (messageSection) messageSection.style.setProperty("display", "none", "important");
                     showLastMessageScreen();
                 }, 1500);
             }, 4000);
@@ -283,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showLastMessageScreen() {
         if (lastMsgScreen) {
             lastMsgScreen.classList.remove("hidden");
-            lastMsgScreen.style.display = "flex";
+            lastMsgScreen.style.setProperty("display", "flex", "important");
             setTimeout(() => lastMsgScreen.classList.add("active"), 100);
         }
 
@@ -297,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             if (lastMsgScreen) lastMsgScreen.classList.remove("active");
             setTimeout(() => {
-                if (lastMsgScreen) lastMsgScreen.style.display = "none";
+                if (lastMsgScreen) lastMsgScreen.style.setProperty("display", "none", "important");
                 showFinalPoster();
             }, 1500);
         }, 8000);
@@ -307,7 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showFinalPoster() {
         if (posterSection) {
             posterSection.classList.remove("hidden");
-            posterSection.style.display = "flex";
+            posterSection.style.setProperty("display", "flex", "important");
             posterSection.style.opacity = "0";
             posterSection.style.transition = "opacity 2.5s ease";
             setTimeout(() => { posterSection.style.opacity = "1"; }, 100);
@@ -315,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 posterSection.style.opacity = "0";
                 setTimeout(() => {
-                    posterSection.style.display = "none";
+                    posterSection.style.setProperty("display", "none", "important");
                     showCreditsSequence();
                 }, 2500);
             }, 140000); 
@@ -324,7 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // STEP 9: Clean Credits & "THE END" Sequence (SINGLE & FIX)
+    // STEP 9: Clean Credits & "THE END" Sequence
     function showCreditsSequence() {
         const creditsContainer = document.createElement("div");
         creditsContainer.id = "creditsSequence";
