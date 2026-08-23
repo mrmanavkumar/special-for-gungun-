@@ -60,18 +60,15 @@ body {
     min-height: 300px;
     transition: opacity 1.5s ease;
 }
-
 .loading-center {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     color: #ff758f;
-    background: rgba(255, 255, 255, 0.08);
-    padding: 12px 22px;
-    border-radius: 25px;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 77, 109, 0.4);
-    box-shadow: 0 0 15px rgba(255, 77, 109, 0.2);
-    animation: pulseLoading 1.5s infinite alternate;
+    text-shadow: 0 0 10px rgba(255, 117, 143, 0.5);
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
 }
 
 @keyframes pulseLoading {
