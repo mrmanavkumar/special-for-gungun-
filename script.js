@@ -23,44 +23,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 1: 5 SECONDS LOADING LOGIC (GUARANTEED GIFT BOX SHOW)
+    // STEP 1: LOADING TEXT TO GIFT BOX TRANSITION
     setTimeout(() => {
         const loadingText = document.getElementById("loadingText");
         
-        // 1. Loading Text Fade Out
+        // 1. Text Fade Out (1.5s)
         if (loadingText) {
             loadingText.style.transition = "opacity 1.5s ease";
             loadingText.style.opacity = "0";
         }
 
-        // 2. Text Gayab Hone ke baad Gift Box Dikhana
+        // 2. Exact 2s Pause ke baad Text remove & Gift Box Show
         setTimeout(() => {
-            if (loadingText) loadingText.style.setProperty("display", "none", "important");
-            if (loadingBox) loadingBox.style.setProperty("display", "none", "important");
+            if (loadingBox) loadingBox.style.display = "none";
             
-            // Gift Section ko Forcefully Visible karna
-            if (giftSection) {
-                giftSection.classList.remove("hidden");
-                giftSection.setAttribute("style", "display: flex !important; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 2s ease; visibility: visible !important;");
-            }
-
             if (mainLink) {
-                mainLink.classList.remove("hidden");
-                mainLink.setAttribute("style", "display: flex !important; flex-direction: column; align-items: center; justify-content: center; visibility: visible !important;");
+                mainLink.style.display = "flex";
+                mainLink.style.transition = "opacity 2s ease";
+                
+                setTimeout(() => {
+                    mainLink.style.opacity = "1";
+                }, 50);
             }
-
-            if (giftBox) {
-                giftBox.style.setProperty("display", "block", "important");
-                giftBox.style.setProperty("visibility", "visible", "important");
-            }
-
-            // Smooth Fade In
-            setTimeout(() => { 
-                if (giftSection) giftSection.style.opacity = "1"; 
-            }, 100);
-
-        }, 3000);
-    }, 5000);
+        }, 2000);
+    }, 4000);
 
     // Audio Unlocker for Mobile
     function unlockAudio(audioEl) {
@@ -71,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }).catch(() => {});
     }
 
-    // STEP 2: Gift Box Click Handler (Sirf Box/Link Click hone par)
+    // STEP 2: Gift Box Click Handler
     function handleLinkClick(e) {
         if (e) e.stopPropagation();
         if (isTriggered) return;
@@ -91,10 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 giftSection.style.transition = "opacity 1s ease";
                 giftSection.style.opacity = "0";
                 setTimeout(() => {
-                    giftSection.style.setProperty("display", "none", "important");
+                    giftSection.style.display = "none";
                     if (countdownScreen) {
                         countdownScreen.classList.remove("hidden");
-                        countdownScreen.style.setProperty("display", "flex", "important");
                         startCountdownTimer(); 
                     } else {
                         showBirthdayGreeting();
@@ -144,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 setTimeout(() => {
-                    if (countdownScreen) countdownScreen.style.setProperty("display", "none", "important");
+                    if (countdownScreen) countdownScreen.classList.add("hidden");
                     showBirthdayGreeting();
                 }, 1000);
             }
@@ -155,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) {
             bdayGreetingScreen.classList.remove("hidden");
-            bdayGreetingScreen.style.setProperty("display", "flex", "important");
         }
 
         if (hbdVoice) {
@@ -175,17 +159,16 @@ document.addEventListener("DOMContentLoaded", () => {
         initConfetti();
 
         setTimeout(() => {
-            if (bdayGreetingScreen) bdayGreetingScreen.style.setProperty("display", "none", "important");
+            if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
             
             if (templateSection) {
                 templateSection.classList.remove("hidden");
-                templateSection.style.setProperty("display", "flex", "important");
                 setTimeout(() => templateSection.classList.add("active"), 100);
                 
                 setTimeout(() => {
                     templateSection.classList.remove("active");
                     setTimeout(() => {
-                        templateSection.style.setProperty("display", "none", "important");
+                        templateSection.classList.add("hidden");
                         showLetterPage();
                     }, 1500); 
                 }, 15000); 
@@ -199,7 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
-            messageSection.style.setProperty("display", "block", "important");
             setTimeout(() => {
                 messageSection.classList.add("active");
                 typeWriterEffect();
@@ -263,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 if (messageSection) messageSection.classList.remove("active");
                 setTimeout(() => {
-                    if (messageSection) messageSection.style.setProperty("display", "none", "important");
+                    if (messageSection) messageSection.classList.add("hidden");
                     showLastMessageScreen();
                 }, 1500);
             }, 4000);
@@ -280,7 +262,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function showLastMessageScreen() {
         if (lastMsgScreen) {
             lastMsgScreen.classList.remove("hidden");
-            lastMsgScreen.style.setProperty("display", "flex", "important");
             setTimeout(() => lastMsgScreen.classList.add("active"), 100);
         }
 
@@ -294,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             if (lastMsgScreen) lastMsgScreen.classList.remove("active");
             setTimeout(() => {
-                if (lastMsgScreen) lastMsgScreen.style.setProperty("display", "none", "important");
+                if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
                 showFinalPoster();
             }, 1500);
         }, 8000);
@@ -304,15 +285,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function showFinalPoster() {
         if (posterSection) {
             posterSection.classList.remove("hidden");
-            posterSection.style.setProperty("display", "flex", "important");
-            posterSection.style.opacity = "0";
-            posterSection.style.transition = "opacity 2.5s ease";
-            setTimeout(() => { posterSection.style.opacity = "1"; }, 100);
+            setTimeout(() => posterSection.classList.add("active"), 100);
 
             setTimeout(() => {
-                posterSection.style.opacity = "0";
+                posterSection.classList.remove("active");
                 setTimeout(() => {
-                    posterSection.style.setProperty("display", "none", "important");
+                    posterSection.classList.add("hidden");
                     showCreditsSequence();
                 }, 2500);
             }, 140000); 
@@ -343,7 +321,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.body.appendChild(creditsContainer);
 
-        // Poster fade out ke 3 Sec baad Clean Credits
         setTimeout(() => {
             creditsContainer.innerHTML = `
                 <h2 style="font-size: 1.2rem; margin-bottom: 8px; letter-spacing: 2px; color: #f1f1f1;">IMAGINED & CREATED BY</h2>
@@ -352,7 +329,6 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             creditsContainer.style.opacity = "1";
 
-            // 5 Sec baad Fade Out & THE END
             setTimeout(() => {
                 creditsContainer.style.opacity = "0";
                 
@@ -427,4 +403,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                    
+                            
