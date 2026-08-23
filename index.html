@@ -17,32 +17,31 @@
 
     <!-- AUDIO FILES SYSTEM -->
     <audio id="countdownAudio" src="tiktok.m4a" preload="auto"></audio>
-    <audio id="hbdVoice" src="HB.m4a" preload="auto"></audio> <!-- HAPPY BIRTHDAY VOICE -->
-    <audio id="bgMusic" src="bg-music.mp3" preload="auto"></audio> <!-- MAIN BACKGROUND MUSIC -->
-    <audio id="devaMusic" src="deva.mp3" preload="auto"></audio> <!-- DEVA MUSIC FOR FINALE -->
+    <audio id="hbdVoice" src="HB.m4a" preload="auto"></audio>
+    <audio id="bgMusic" src="bg-music.mp3" preload="auto"></audio>
+    <audio id="devaMusic" src="deva.mp3" preload="auto"></audio>
 
     <!-- MAIN INTERACTIVE CONTAINER -->
     <div class="container">
 
         <!-- STEP 1 & 2: GIFT BOX SECTION -->
         <div id="giftSection">
-            <div id="loadingBox" class="loading-box">
-    <span id="loadingText">Something is loading for Gungun... ✨</span>
+            <div id="loadingBox" class="loading-center">
+                <span id="loadingText">Something is loading for Gungun... ✨</span>
             </div>
             
-            
-            <a href="javascript:void(0)" id="mainLink" class="gift-link-wrapper gift-fade-init hidden">
+            <a href="javascript:void(0)" id="mainLink" class="gift-link-wrapper" style="display: none; opacity: 0;">
                 <img id="giftBox" class="gift-img" src="gift.png" alt="Special Gift for You">
                 <p id="tapText" class="tap-text">Tap on the Gift Box to Open! ✨</p>
             </a>
         </div>
 
-        <!-- STEP 3: COUNTDOWN TIMER SCREEN (11:59:50 -> 12:00:00) -->
+        <!-- STEP 3: COUNTDOWN TIMER SCREEN -->
         <div id="countdownScreen" class="hidden">
             <div id="countdownNumber">11:59:50</div>
         </div>
 
-        <!-- STEP 4: ZOOM IN HAPPY BIRTHDAY GREETING SCREEN WITH FADE -->
+        <!-- STEP 4: ZOOM IN HAPPY BIRTHDAY GREETING SCREEN -->
         <div id="bdayGreetingScreen" class="hidden">
             <h1 class="bday-text fade-in-out">HAPPY BIRTHDAY</h1>
         </div>
@@ -52,7 +51,7 @@
             <img class="template-img" src="birthday-template.png" alt="Birthday Special Memory">
         </div>
 
-        <!-- STEP 6: NOTEBOOK LETTER BOX (PAGE.PNG BACKGROUND) -->
+        <!-- STEP 6: NOTEBOOK LETTER BOX -->
         <div id="messageSection" class="hidden scroll-letter">
             <div id="typewriterText" class="letter-text"></div>
         </div>
@@ -62,7 +61,7 @@
             <h2 class="last-msg-text">wait for my last message...</h2>
         </div>
 
-        <!-- STEP 8: FINAL POSTER SCREEN (MG.PNG) -->
+        <!-- STEP 8: FINAL POSTER SCREEN -->
         <div id="posterSection" class="hidden poster-wrapper">
             <img class="poster-img" src="mg.png" alt="Gungun Poster">
         </div>
