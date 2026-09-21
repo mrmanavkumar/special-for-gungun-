@@ -23,32 +23,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 1: LOADING TEXT TO GIFT BOX TRANSITION
+    // STEP 1: INITIAL CLEANUP -> 4.5 SEC BLANK DELAY -> TYPEWRITER LOADING -> 6 SEC HOLD -> FADE OUT
+    const initialLoadingText = document.getElementById("loadingText");
+    if (initialLoadingText) {
+        initialLoadingText.innerHTML = ""; // Initial HTML Text clear (Blank Screen Keep-up)
+        initialLoadingText.style.color = "#ffffff"; // Force White Color
+        initialLoadingText.style.opacity = "0"; // Blank setup
+    }
+
     setTimeout(() => {
-        const loadingText = document.getElementById("loadingText");
-        
-        // 1. Text Fade Out (1.5s)
-        if (loadingText) {
-            loadingText.style.transition = "opacity 1.5s ease";
-            loadingText.style.opacity = "0";
-        }
-
-        // 2. Exact 2s Pause ke baad Text remove & Gift Box Show
-        setTimeout(() => {
-            if (loadingBox) loadingBox.style.display = "none";
+        if (initialLoadingText) {
+            initialLoadingText.style.opacity = "1";
+            const loadingTextStr = "Somthing is loading for Gungun...";
             
-            if (mainLink) {
-                mainLink.style.display = "flex";
-                mainLink.style.transition = "opacity 2s ease";
+            // Typewriter effect with Heart Cursor
+            typewriterWithHeart(initialLoadingText, loadingTextStr, () => {
                 
+                // Typing complete hone ke baad 6 SECONDS HOLD
                 setTimeout(() => {
-                    mainLink.style.opacity = "1";
-                }, 50);
-            }
-        }, 2000);
-    }, 4000);
+                    // Dhere-dhere Fade Out (1.8s)
+                    initialLoadingText.style.transition = "opacity 1.8s ease";
+                    initialLoadingText.style.opacity = "0";
 
-    // Audio Unlocker for Mobile
+                    setTimeout(() => {
+                        if (loadingBox) loadingBox.style.display = "none";
+                        
+                        if (mainLink) {
+                            mainLink.style.display = "flex";
+                            mainLink.style.opacity = "0";
+                            void mainLink.offsetWidth; // Force Reflow
+                            
+                            // Smooth Gift Box Reveal (2.5s)
+                            mainLink.style.transition = "opacity 2.5s ease-in-out";
+                            mainLink.style.opacity = "1";
+                        }
+                    }, 1800);
+                }, 6000); // 6 Seconds Hold Time
+            });
+        }
+    }, 4500); // 4.5 Seconds Wait Before Typing Starts
+
+    // Audio Unlocker for Mobile Browsers
     function unlockAudio(audioEl) {
         if (!audioEl) return;
         audioEl.play().then(() => {
@@ -189,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Typewriter Engine
+    // Typewriter Engine for Letter
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         if (!targetDiv) {
@@ -201,7 +216,6 @@ document.addEventListener("DOMContentLoaded", () => {
             { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
             { type: 'p', text: 'Gungun, main bas yehi dua kerta hu ki tum humesha khush rho. Tumhare chahre ki muskan kabhi kam naa ho kyuki tum sachme her ek khushi deserve kerti ho.' },
             { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko pura kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
-            { type: 'p', text: 'Once again happy birthday 🎊✨' },
             { type: 'p', text: 'Take care of yourself. 🌸✨', alignRight: true },
             { type: 'p', text: '- MANAV', alignRight: true }
         ];
@@ -235,30 +249,40 @@ document.addEventListener("DOMContentLoaded", () => {
         handleMusicEndTransition();
     }
 
-    // STEP 6: Music End Transition
+    // STEP 6: Letter End -> Stop BG Music -> 5 Sec Blank Delay
     function handleMusicEndTransition() {
         let hasTransitioned = false;
 
         const triggerNext = () => {
             if (hasTransitioned) return;
             hasTransitioned = true;
+            
+            if (messageSection) messageSection.classList.remove("active");
+            if (bgMusic) {
+                try {
+                    bgMusic.pause();
+                    bgMusic.currentTime = 0;
+                } catch(e) {}
+            }
+
             setTimeout(() => {
-                if (messageSection) messageSection.classList.remove("active");
+                if (messageSection) messageSection.classList.add("hidden");
+                
+                // EXACT 5 SECONDS BLANK SCREEN DELAY
                 setTimeout(() => {
-                    if (messageSection) messageSection.classList.add("hidden");
                     showLastMessageScreen();
-                }, 1500);
-            }, 4000);
+                }, 5000);
+            }, 1500);
         };
 
         if (bgMusic && !bgMusic.paused) {
             bgMusic.onended = triggerNext;
         } else {
-            setTimeout(triggerNext, 4000);
+            setTimeout(triggerNext, 2000);
         }
     }
 
-    // STEP 7: Last Message Screen & Deva Music
+    // STEP 7: Transition Message Screen with Heart Cursor & Deva Music Play
     function showLastMessageScreen() {
         if (lastMsgScreen) {
             lastMsgScreen.classList.remove("hidden");
@@ -272,13 +296,66 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch(e) {}
         }
 
-        setTimeout(() => {
-            if (lastMsgScreen) lastMsgScreen.classList.remove("active");
+        let targetEl = document.querySelector(".last-msg-text");
+        if (!targetEl && lastMsgScreen) {
+            targetEl = lastMsgScreen;
+        }
+
+        if (targetEl) {
+            targetEl.style.color = "#ffffff"; // Force White Color
+        }
+
+        const textToType = "In my eyes, who you truly are…\nlet me show you.";
+
+        // Typewriter Engine with Heart Cursor ♥️
+        typewriterWithHeart(targetEl, textToType, () => {
+            // Typing completion -> HOLD FOR EXACT 8 SECONDS
             setTimeout(() => {
-                if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
-                showFinalPoster();
-            }, 1500);
-        }, 8000);
+                if (lastMsgScreen) lastMsgScreen.classList.remove("active");
+                
+                setTimeout(() => {
+                    if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
+                    
+                    // 3 SECONDS PAUSE BEFORE POSTER REVEAL
+                    setTimeout(() => {
+                        showFinalPoster();
+                    }, 3000);
+                }, 1500);
+            }, 8000);
+        });
+    }
+
+    // Typewriter Engine with Heart Cursor ♥️
+    function typewriterWithHeart(element, text, callback) {
+        if (!element) {
+            if (callback) callback();
+            return;
+        }
+        element.innerHTML = "";
+        let index = 0;
+
+        const cursor = document.createElement("span");
+        cursor.className = "heart-cursor";
+        cursor.innerHTML = "♥️";
+        element.appendChild(cursor);
+
+        function type() {
+            if (index < text.length) {
+                let char = text.charAt(index);
+                if (char === "\n") {
+                    element.insertBefore(document.createElement("br"), cursor);
+                } else {
+                    let charNode = document.createTextNode(char);
+                    element.insertBefore(charNode, cursor);
+                }
+                index++;
+                setTimeout(type, 85);
+            } else {
+                if (callback) callback();
+            }
+        }
+
+        type();
     }
 
     // STEP 8: Final Poster Screen (mg.png)
@@ -299,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // STEP 9: Clean Credits & "THE END" Sequence
+    // STEP 9: Cinematic Fade Sequence (4s Delay -> Wish 6s -> Credits 5s -> THE END)
     function showCreditsSequence() {
         const creditsContainer = document.createElement("div");
         creditsContainer.id = "creditsSequence";
@@ -312,56 +389,96 @@ document.addEventListener("DOMContentLoaded", () => {
         creditsContainer.style.flexDirection = "column";
         creditsContainer.style.justifyContent = "center";
         creditsContainer.style.alignItems = "center";
-        creditsContainer.style.zIndex = "999";
+        creditsContainer.style.zIndex = "9999";
         creditsContainer.style.color = "#ffffff";
         creditsContainer.style.textAlign = "center";
-        creditsContainer.style.fontFamily = "sans-serif";
+        creditsContainer.style.fontFamily = "'Georgia', serif";
         creditsContainer.style.opacity = "0";
-        creditsContainer.style.transition = "opacity 1.5s ease";
+        creditsContainer.style.transition = "opacity 2s ease";
+        creditsContainer.style.backgroundColor = "rgba(0, 0, 0, 0.95)";
+        creditsContainer.style.padding = "20px";
 
         document.body.appendChild(creditsContainer);
 
         setTimeout(() => {
             creditsContainer.innerHTML = `
-                <h2 style="font-size: 1.2rem; margin-bottom: 8px; letter-spacing: 2px; color: #f1f1f1;">IMAGINED & CREATED BY</h2>
-                <h1 style="font-size: 2.2rem; margin-bottom: 12px; color: #ffffff; letter-spacing: 3px;">MANAV</h1>
-                <p style="font-size: 1.2rem; color: #ff8fa3; font-style: italic;">SPECIALLY FOR GUNGUN...</p>
+                <h1 style="font-size: 1.8rem; line-height: 1.5; color: #d4af37; letter-spacing: 1.5px; font-weight: normal;">
+                    Once again, a very Happy Birthday to you! ✨
+                </h1>
             `;
             creditsContainer.style.opacity = "1";
 
             setTimeout(() => {
                 creditsContainer.style.opacity = "0";
-                
+
                 setTimeout(() => {
                     creditsContainer.innerHTML = `
-                        <h1 style="font-size: 3rem; letter-spacing: 5px; color: #ffffff; text-shadow: 0 0 15px rgba(255,255,255,0.8);">THE END</h1>
+                        <h2 style="font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 3px; color: #cccccc; font-weight: 300;">IMAGINED AND CREATED BY</h2>
+                        <h1 style="font-size: 2.2rem; margin-bottom: 12px; color: #d4af37; letter-spacing: 4px;">MANAV</h1>
+                        <p style="font-size: 1.2rem; color: #ffffff; font-style: italic; letter-spacing: 1px;">SPECIALLY FOR GUNGUN</p>
                     `;
                     creditsContainer.style.opacity = "1";
-                }, 1500);
-            }, 5000);
-        }, 3000);
+
+                    setTimeout(() => {
+                        creditsContainer.style.opacity = "0";
+
+                        setTimeout(() => {
+                            creditsContainer.innerHTML = `
+                                <h1 style="font-size: 2.5rem; letter-spacing: 6px; color: #ffffff; text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); font-weight: 300;">— THE END —</h1>
+                            `;
+                            creditsContainer.style.opacity = "1";
+                        }, 2000);
+
+                    }, 5000);
+
+                }, 2000);
+
+            }, 6000);
+
+        }, 4000);
     }
 
-    // Rain Particle Generator
+    // Real Animated Butterfly & Sparkle Rain Generator
     function startMagicalRain() {
         if (!rainContainer) return;
-        const items = ['✨', '♥️', '✨','♥️','🎈','🌟', '🌟','🎈']
-            setInterval(() => {
-        for (let i = 0; i < 2; i++) {
-            const element = document.createElement('div');
-            element.classList.add('rain-item');
-            element.innerText = items[Math.floor(Math.random() * items.length)];
-            element.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 14 + 16;
-            element.style.fontSize = size + 'px';
-            const fallDuration = Math.random() * 3 + 4;
-            element.style.animationDuration = fallDuration + 's';
 
-            rainContainer.appendChild(element);
-            setTimeout(() => { element.remove(); }, fallDuration * 1000);
-        }
-    }, 125);
+        const sparkles = ['✨', '🌟', '♥️', '✨', '🎈'];
+        const butterflyImgSrc = 'https://cdn-icons-png.flaticon.com/512/1864/1864593.png';
+
+        setInterval(() => {
+            // 1. Generate Sparkles
+            const sparkleEl = document.createElement('div');
+            sparkleEl.classList.add('rain-item');
+            sparkleEl.innerText = sparkles[Math.floor(Math.random() * sparkles.length)];
+            sparkleEl.style.left = Math.random() * 98 + 'vw';
+            sparkleEl.style.fontSize = (Math.random() * 10 + 16) + 'px';
+            const sparkleDuration = Math.random() * 3 + 3.5;
+            sparkleEl.style.animationDuration = sparkleDuration + 's';
+            sparkleEl.style.textShadow = "0 0 10px rgba(255, 215, 0, 0.85)";
+            sparkleEl.style.pointerEvents = "none";
+            rainContainer.appendChild(sparkleEl);
+
+            setTimeout(() => { sparkleEl.remove(); }, sparkleDuration * 1000);
+
+            // 2. Generate Real Flapping Butterfly
+            const bfContainer = document.createElement('div');
+            bfContainer.classList.add('butterfly-item');
             
+            const bfImg = document.createElement('img');
+            bfImg.src = butterflyImgSrc;
+            
+            bfContainer.appendChild(bfImg);
+            bfContainer.style.left = Math.random() * 95 + 'vw';
+            
+            const bfDuration = Math.random() * 4 + 5; // Slow graceful flight
+            bfContainer.style.animationDuration = bfDuration + 's';
+
+            rainContainer.appendChild(bfContainer);
+
+            setTimeout(() => { bfContainer.remove(); }, bfDuration * 1000);
+
+        }, 300);
+    }
 
     // Confetti System
     function initConfetti() {
@@ -405,4 +522,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                            
+                
