@@ -345,21 +345,23 @@ document.addEventListener("DOMContentLoaded", () => {
     // Rain Particle Generator
     function startMagicalRain() {
         if (!rainContainer) return;
-        const items = ['✨', '♥️', '✨','♥️','🎈','🌟', '🌟','🎈'];
-        setInterval(() => {
+        const items = ['✨', '♥️', '✨','♥️','🎈','🌟', '🌟','🎈']
+            setInterval(() => {
+        for (let i = 0; i < 2; i++) {
             const element = document.createElement('div');
             element.classList.add('rain-item');
             element.innerText = items[Math.floor(Math.random() * items.length)];
             element.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 14 + 16; 
+            const size = Math.random() * 14 + 16;
             element.style.fontSize = size + 'px';
-            const fallDuration = Math.random() * 3 + 4; 
+            const fallDuration = Math.random() * 3 + 4;
             element.style.animationDuration = fallDuration + 's';
-            
+
             rainContainer.appendChild(element);
             setTimeout(() => { element.remove(); }, fallDuration * 1000);
-        }, 250); 
-    }
+        }
+    }, 125);
+            
 
     // Confetti System
     function initConfetti() {
