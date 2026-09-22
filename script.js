@@ -1,4 +1,4 @@
-Document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
@@ -23,12 +23,54 @@ Document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
+    // Helper: Typewriter Engine with Heart Cursor ♥️ (Defined at top to avoid Reference Errors)
+    function typewriterWithHeart(element, text, callback) {
+        if (!element) {
+            if (callback) callback();
+            return;
+        }
+        element.innerHTML = "";
+        let index = 0;
+
+        const cursor = document.createElement("span");
+        cursor.className = "heart-cursor";
+        cursor.innerHTML = "♥️";
+        element.appendChild(cursor);
+
+        function type() {
+            if (index < text.length) {
+                let char = text.charAt(index);
+                if (char === "\n") {
+                    element.insertBefore(document.createElement("br"), cursor);
+                } else {
+                    let charNode = document.createTextNode(char);
+                    element.insertBefore(charNode, cursor);
+                }
+                index++;
+                setTimeout(type, 85);
+            } else {
+                if (callback) callback();
+            }
+        }
+
+        type();
+    }
+
+    // Audio Unlocker for Mobile Browsers
+    function unlockAudio(audioEl) {
+        if (!audioEl) return;
+        audioEl.play().then(() => {
+            audioEl.pause();
+            audioEl.currentTime = 0;
+        }).catch(() => {});
+    }
+
     // STEP 1: INITIAL CLEANUP -> 4.5 SEC BLANK DELAY -> TYPEWRITER LOADING -> 6 SEC HOLD -> FADE OUT
     const initialLoadingText = document.getElementById("loadingText");
     if (initialLoadingText) {
-        initialLoadingText.innerHTML = ""; // Initial HTML Text clear (Blank Screen Keep-up)
-        initialLoadingText.style.color = "#ffffff"; // Force White Color
-        initialLoadingText.style.opacity = "0"; // Blank setup
+        initialLoadingText.innerHTML = ""; // Initial HTML Text clear
+        initialLoadingText.style.color = "#ffffff"; 
+        initialLoadingText.style.opacity = "0"; 
     }
 
     setTimeout(() => {
@@ -41,7 +83,6 @@ Document.addEventListener("DOMContentLoaded", () => {
                 
                 // Typing complete hone ke baad 6 SECONDS HOLD
                 setTimeout(() => {
-                    // Dhere-dhere Fade Out (1.8s)
                     initialLoadingText.style.transition = "opacity 1.8s ease";
                     initialLoadingText.style.opacity = "0";
 
@@ -58,19 +99,10 @@ Document.addEventListener("DOMContentLoaded", () => {
                             mainLink.style.opacity = "1";
                         }
                     }, 1800);
-                }, 6000); // 6 Seconds Hold Time
+                }, 6000); // 6 Seconds Hold
             });
         }
-    }, 4500); // 4.5 Seconds Wait Before Typing Starts
-
-    // Audio Unlocker for Mobile Browsers
-    function unlockAudio(audioEl) {
-        if (!audioEl) return;
-        audioEl.play().then(() => {
-            audioEl.pause();
-            audioEl.currentTime = 0;
-        }).catch(() => {});
-    }
+    }, 4500); // 4.5 Seconds Delay
 
     // STEP 2: Gift Box Click Handler
     function handleLinkClick(e) {
@@ -86,7 +118,6 @@ Document.addEventListener("DOMContentLoaded", () => {
 
         startMagicalRain();
 
-        // Smooth Fade Out of Gift Section
         setTimeout(() => {
             if (giftSection) {
                 giftSection.style.transition = "opacity 1s ease";
@@ -268,7 +299,6 @@ Document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 if (messageSection) messageSection.classList.add("hidden");
                 
-                // EXACT 5 SECONDS BLANK SCREEN DELAY
                 setTimeout(() => {
                     showLastMessageScreen();
                 }, 5000);
@@ -302,21 +332,18 @@ Document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (targetEl) {
-            targetEl.style.color = "#ffffff"; // Force White Color
+            targetEl.style.color = "#ffffff";
         }
 
         const textToType = "In my eyes, who you truly are…\nlet me show you.";
 
-        // Typewriter Engine with Heart Cursor ♥️
         typewriterWithHeart(targetEl, textToType, () => {
-            // Typing completion -> HOLD FOR EXACT 8 SECONDS
             setTimeout(() => {
                 if (lastMsgScreen) lastMsgScreen.classList.remove("active");
                 
                 setTimeout(() => {
                     if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
                     
-                    // 3 SECONDS PAUSE BEFORE POSTER REVEAL
                     setTimeout(() => {
                         showFinalPoster();
                     }, 3000);
@@ -325,40 +352,7 @@ Document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Typewriter Engine with Heart Cursor ♥️
-    function typewriterWithHeart(element, text, callback) {
-        if (!element) {
-            if (callback) callback();
-            return;
-        }
-        element.innerHTML = "";
-        let index = 0;
-
-        const cursor = document.createElement("span");
-        cursor.className = "heart-cursor";
-        cursor.innerHTML = "♥️";
-        element.appendChild(cursor);
-
-        function type() {
-            if (index < text.length) {
-                let char = text.charAt(index);
-                if (char === "\n") {
-                    element.insertBefore(document.createElement("br"), cursor);
-                } else {
-                    let charNode = document.createTextNode(char);
-                    element.insertBefore(charNode, cursor);
-                }
-                index++;
-                setTimeout(type, 85);
-            } else {
-                if (callback) callback();
-            }
-        }
-
-        type();
-    }
-
-    // STEP 8: Final Poster Screen (mg.png)
+    // STEP 8: Final Poster Screen
     function showFinalPoster() {
         if (posterSection) {
             posterSection.classList.remove("hidden");
@@ -376,7 +370,7 @@ Document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // STEP 9: Cinematic Fade Sequence (4s Delay -> Wish 6s -> Credits 5s -> THE END)
+    // STEP 9: Cinematic Credits
     function showCreditsSequence() {
         const creditsContainer = document.createElement("div");
         creditsContainer.id = "creditsSequence";
@@ -438,7 +432,7 @@ Document.addEventListener("DOMContentLoaded", () => {
         }, 4000);
     }
 
-    // Real Animated Butterfly & Sparkle Rain Generator (Updated for Real 3D Flapping Butterfly)
+    // Real Animated Butterfly Rain
     function startMagicalRain() {
         if (!rainContainer) return;
 
@@ -446,7 +440,6 @@ Document.addEventListener("DOMContentLoaded", () => {
         const butterflyImgSrc = 'https://cdn-icons-png.flaticon.com/512/1864/1864593.png';
 
         setInterval(() => {
-            // 1. Generate Sparkles
             const sparkleEl = document.createElement('div');
             sparkleEl.classList.add('rain-item');
             sparkleEl.innerText = sparkles[Math.floor(Math.random() * sparkles.length)];
@@ -460,7 +453,6 @@ Document.addEventListener("DOMContentLoaded", () => {
 
             setTimeout(() => { sparkleEl.remove(); }, sparkleDuration * 1000);
 
-            // 2. Generate Real 3D Flapping Butterfly
             const bfContainer = document.createElement('div');
             bfContainer.classList.add('butterfly-item');
             
@@ -470,7 +462,7 @@ Document.addEventListener("DOMContentLoaded", () => {
             bfContainer.appendChild(bfImg);
             bfContainer.style.left = Math.random() * 92 + 'vw';
             
-            const bfDuration = Math.random() * 4 + 5; // Slow graceful flight
+            const bfDuration = Math.random() * 4 + 5;
             bfContainer.style.animationDuration = bfDuration + 's';
 
             rainContainer.appendChild(bfContainer);
@@ -522,4 +514,4 @@ Document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-            
+                
