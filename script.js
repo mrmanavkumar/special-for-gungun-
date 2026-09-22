@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+Document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
@@ -438,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 4000);
     }
 
-    // Real Animated Butterfly & Sparkle Rain Generator
+    // Real Animated Butterfly & Sparkle Rain Generator (Updated for Real 3D Flapping Butterfly)
     function startMagicalRain() {
         if (!rainContainer) return;
 
@@ -460,7 +460,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             setTimeout(() => { sparkleEl.remove(); }, sparkleDuration * 1000);
 
-            // 2. Generate Real Flapping Butterfly
+            // 2. Generate Real 3D Flapping Butterfly
             const bfContainer = document.createElement('div');
             bfContainer.classList.add('butterfly-item');
             
@@ -468,7 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
             bfImg.src = butterflyImgSrc;
             
             bfContainer.appendChild(bfImg);
-            bfContainer.style.left = Math.random() * 95 + 'vw';
+            bfContainer.style.left = Math.random() * 92 + 'vw';
             
             const bfDuration = Math.random() * 4 + 5; // Slow graceful flight
             bfContainer.style.animationDuration = bfDuration + 's';
@@ -477,7 +477,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             setTimeout(() => { bfContainer.remove(); }, bfDuration * 1000);
 
-        }, 300);
+        }, 280);
     }
 
     // Confetti System
@@ -522,4 +522,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                
+            
