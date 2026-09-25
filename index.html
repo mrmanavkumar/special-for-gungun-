@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>specially for Gungun💖</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,500;0,700;0,800;1,500&family=Poppins:wght=400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
 
+    <!-- BACKGROUND STARS EFFECT & CANVAS SYSTEM -->
+    <div class="stars"></div>
+    <canvas id="effectCanvas"></canvas>
+    <div id="rainContainer"></div>
+
+    <!-- AUDIO FILES SYSTEM -->
+    <audio id="countdownAudio" src="tiktok.m4a" preload="auto"></audio>
+    <audio id="hbdVoice" src="HB.m4a" preload="auto"></audio>
+    <audio id="bgMusic" src="bg-music.mp3" preload="auto"></audio>
+    <audio id="devaMusic" src="deva.mp3" preload="auto"></audio>
+
+    <!-- MAIN INTERACTIVE CONTAINER -->
+    <div class="container">
+
+        <!-- STEP 1 & 2: GIFT BOX SECTION -->
+        <div id="giftSection">
+            <div id="loadingBox" class="loading-center">
+                <span id="loadingText">Something is loading for Gungun... ✨</span>
+            </div>
+            
+            <a href="javascript:void(0)" id="mainLink" class="gift-link-wrapper" style="display: none; opacity: 0;">
+                <img id="giftBox" class="gift-img" src="gift.png" alt="Special Gift for You">
+                <p id="tapText" class="tap-text">Tap on the Gift Box to Open! ✨</p>
+            </a>
+        </div>
+
+        <!-- STEP 3: COUNTDOWN TIMER SCREEN -->
+        <div id="countdownScreen" class="hidden">
+            <div id="countdownNumber">11:59:50</div>
+        </div>
+
+        <!-- STEP 4: ZOOM IN HAPPY BIRTHDAY GREETING SCREEN -->
+        <div id="bdayGreetingScreen" class="hidden">
+            <h1 class="bday-text fade-in-out">HAPPY BIRTHDAY</h1>
+        </div>
+
+        <!-- STEP 5: TEMPLATE TRANSITION IMAGE -->
+        <div id="templateSection" class="hidden template-wrapper">
+            <img class="template-img" src="birthday-template.png" alt="Birthday Special Memory">
+        </div>
+
+        <!-- STEP 6: NOTEBOOK LETTER BOX -->
+        <div id="messageSection" class="hidden scroll-letter">
+            <div id="typewriterText" class="letter-text"></div>
+        </div>
+
+        <!-- STEP 7: TRANSITION MESSAGE SCREEN -->
+        <div id="lastMsgScreen" class="hidden">
+            <h2 class="last-msg-text">In my eyes, who you truly are...<br>let me show you.</h2>
+        </div>
+
+        <!-- STEP 8: FINAL POSTER SCREEN -->
+        <div id="posterSection" class="hidden poster-wrapper">
+            <img class="poster-img" src="mg.png" alt="Gungun Poster">
+        </div>
+
+    </div>
+
+    <!-- Main Logic Script Engine -->
+    <script src="./script.js"></script>
+</body>
+</html>
