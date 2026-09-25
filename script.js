@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+Document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
@@ -23,54 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // Helper: Typewriter Engine with Heart Cursor ♥️ (Defined at top to avoid Reference Errors)
-    function typewriterWithHeart(element, text, callback) {
-        if (!element) {
-            if (callback) callback();
-            return;
-        }
-        element.innerHTML = "";
-        let index = 0;
-
-        const cursor = document.createElement("span");
-        cursor.className = "heart-cursor";
-        cursor.innerHTML = "♥️";
-        element.appendChild(cursor);
-
-        function type() {
-            if (index < text.length) {
-                let char = text.charAt(index);
-                if (char === "\n") {
-                    element.insertBefore(document.createElement("br"), cursor);
-                } else {
-                    let charNode = document.createTextNode(char);
-                    element.insertBefore(charNode, cursor);
-                }
-                index++;
-                setTimeout(type, 85);
-            } else {
-                if (callback) callback();
-            }
-        }
-
-        type();
-    }
-
-    // Audio Unlocker for Mobile Browsers
-    function unlockAudio(audioEl) {
-        if (!audioEl) return;
-        audioEl.play().then(() => {
-            audioEl.pause();
-            audioEl.currentTime = 0;
-        }).catch(() => {});
-    }
-
     // STEP 1: INITIAL CLEANUP -> 4.5 SEC BLANK DELAY -> TYPEWRITER LOADING -> 6 SEC HOLD -> FADE OUT
     const initialLoadingText = document.getElementById("loadingText");
     if (initialLoadingText) {
-        initialLoadingText.innerHTML = ""; // Initial HTML Text clear
-        initialLoadingText.style.color = "#ffffff"; 
-        initialLoadingText.style.opacity = "0"; 
+        initialLoadingText.innerHTML = ""; // Initial HTML Text clear (Blank Screen Keep-up)
+        initialLoadingText.style.color = "#ffffff"; // Force White Color
+        initialLoadingText.style.opacity = "0"; // Blank setup
     }
 
     setTimeout(() => {
@@ -83,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 // Typing complete hone ke baad 6 SECONDS HOLD
                 setTimeout(() => {
+                    // Dhere-dhere Fade Out (1.8s)
                     initialLoadingText.style.transition = "opacity 1.8s ease";
                     initialLoadingText.style.opacity = "0";
 
@@ -99,10 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
                             mainLink.style.opacity = "1";
                         }
                     }, 1800);
-                }, 6000); // 6 Seconds Hold
+                }, 6000); // 6 Seconds Hold Time
             });
         }
-    }, 4500); // 4.5 Seconds Delay
+    }, 4500); // 4.5 Seconds Wait Before Typing Starts
+
+    // Audio Unlocker for Mobile Browsers
+    function unlockAudio(audioEl) {
+        if (!audioEl) return;
+        audioEl.play().then(() => {
+            audioEl.pause();
+            audioEl.currentTime = 0;
+        }).catch(() => {});
+    }
 
     // STEP 2: Gift Box Click Handler
     function handleLinkClick(e) {
@@ -118,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         startMagicalRain();
 
+        // Smooth Fade Out of Gift Section
         setTimeout(() => {
             if (giftSection) {
                 giftSection.style.transition = "opacity 1s ease";
@@ -299,6 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 if (messageSection) messageSection.classList.add("hidden");
                 
+                // EXACT 5 SECONDS BLANK SCREEN DELAY
                 setTimeout(() => {
                     showLastMessageScreen();
                 }, 5000);
@@ -332,18 +302,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (targetEl) {
-            targetEl.style.color = "#ffffff";
+            targetEl.style.color = "#ffffff"; // Force White Color
         }
 
         const textToType = "In my eyes, who you truly are…\nlet me show you.";
 
+        // Typewriter Engine with Heart Cursor ♥️
         typewriterWithHeart(targetEl, textToType, () => {
+            // Typing completion -> HOLD FOR EXACT 8 SECONDS
             setTimeout(() => {
                 if (lastMsgScreen) lastMsgScreen.classList.remove("active");
                 
                 setTimeout(() => {
                     if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
                     
+                    // 3 SECONDS PAUSE BEFORE POSTER REVEAL
                     setTimeout(() => {
                         showFinalPoster();
                     }, 3000);
@@ -352,7 +325,40 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // STEP 8: Final Poster Screen
+    // Typewriter Engine with Heart Cursor ♥️
+    function typewriterWithHeart(element, text, callback) {
+        if (!element) {
+            if (callback) callback();
+            return;
+        }
+        element.innerHTML = "";
+        let index = 0;
+
+        const cursor = document.createElement("span");
+        cursor.className = "heart-cursor";
+        cursor.innerHTML = "♥️";
+        element.appendChild(cursor);
+
+        function type() {
+            if (index < text.length) {
+                let char = text.charAt(index);
+                if (char === "\n") {
+                    element.insertBefore(document.createElement("br"), cursor);
+                } else {
+                    let charNode = document.createTextNode(char);
+                    element.insertBefore(charNode, cursor);
+                }
+                index++;
+                setTimeout(type, 85);
+            } else {
+                if (callback) callback();
+            }
+        }
+
+        type();
+    }
+
+    // STEP 8: Final Poster Screen (mg.png)
     function showFinalPoster() {
         if (posterSection) {
             posterSection.classList.remove("hidden");
@@ -370,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // STEP 9: Cinematic Credits
+    // STEP 9: Cinematic Fade Sequence (4s Delay -> Wish 6s -> Credits 5s -> THE END)
     function showCreditsSequence() {
         const creditsContainer = document.createElement("div");
         creditsContainer.id = "creditsSequence";
@@ -432,44 +438,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 4000);
     }
 
-    // Real Animated Butterfly Rain
+    // MULTI-COLORED BALLOONS GENERATOR (UPDATED)
     function startMagicalRain() {
         if (!rainContainer) return;
 
-        const sparkles = ['✨', '🌟', '♥️', '✨', '🎈'];
-        const butterflyImgSrc = 'https://cdn-icons-png.flaticon.com/512/1864/1864593.png';
+        const balloonColors = [
+            "#ff4f81", // pink
+            "#ff6b6b", // red
+            "#ffd166", // yellow
+            "#4dabf7", // blue
+            "#b197fc", // purple
+            "#69db7c", // green
+            "#ff922b"  // orange
+        ];
 
-        setInterval(() => {
-            const sparkleEl = document.createElement('div');
-            sparkleEl.classList.add('rain-item');
-            sparkleEl.innerText = sparkles[Math.floor(Math.random() * sparkles.length)];
-            sparkleEl.style.left = Math.random() * 98 + 'vw';
-            sparkleEl.style.fontSize = (Math.random() * 10 + 16) + 'px';
-            const sparkleDuration = Math.random() * 3 + 3.5;
-            sparkleEl.style.animationDuration = sparkleDuration + 's';
-            sparkleEl.style.textShadow = "0 0 10px rgba(255, 215, 0, 0.85)";
-            sparkleEl.style.pointerEvents = "none";
-            rainContainer.appendChild(sparkleEl);
+        function createBalloon() {
+            const balloon = document.createElement("div");
+            balloon.className = "falling-balloon";
 
-            setTimeout(() => { sparkleEl.remove(); }, sparkleDuration * 1000);
+            const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
 
-            const bfContainer = document.createElement('div');
-            bfContainer.classList.add('butterfly-item');
-            
-            const bfImg = document.createElement('img');
-            bfImg.src = butterflyImgSrc;
-            
-            bfContainer.appendChild(bfImg);
-            bfContainer.style.left = Math.random() * 92 + 'vw';
-            
-            const bfDuration = Math.random() * 4 + 5;
-            bfContainer.style.animationDuration = bfDuration + 's';
+            balloon.style.left = Math.random() * 100 + "vw";
+            balloon.style.background = color;
+            balloon.style.animationDuration = (8 + Math.random() * 6) + "s";
+            balloon.style.animationDelay = Math.random() * 3 + "s";
 
-            rainContainer.appendChild(bfContainer);
+            rainContainer.appendChild(balloon);
 
-            setTimeout(() => { bfContainer.remove(); }, bfDuration * 1000);
+            setTimeout(() => {
+                balloon.remove();
+            }, 16000);
+        }
 
-        }, 280);
+        setInterval(createBalloon, 900);
     }
 
     // Confetti System
@@ -514,4 +515,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                
+             
