@@ -6,7 +6,7 @@
     <title>specially for Gungun💖</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,500;0,700;0,800;1,500&family=Poppins:wght=400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -68,7 +68,244 @@
 
     </div>
 
-    <!-- Main Logic Script Engine -->
-    <script src="./script.js"></script>
+    <!-- SCRIPT LOGIC directly inside HTML -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const loadingBox = document.getElementById("loadingBox");
+            const mainLink = document.getElementById("mainLink");
+            const giftBox = document.getElementById("giftBox");
+            const giftSection = document.getElementById("giftSection");
+            
+            const countdownScreen = document.getElementById("countdownScreen");
+            const countdownNumber = document.getElementById("countdownNumber");
+            
+            const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
+            const templateSection = document.getElementById("templateSection");
+            const messageSection = document.getElementById("messageSection");
+            const typewriterText = document.getElementById("typewriterText");
+            const lastMsgScreen = document.getElementById("lastMsgScreen");
+            const posterSection = document.getElementById("posterSection");
+            const rainContainer = document.getElementById("rainContainer");
+
+            const countdownAudio = document.getElementById("countdownAudio");
+            const hbdVoice = document.getElementById("hbdVoice");
+            const bgMusic = document.getElementById("bgMusic");
+            const devaMusic = document.getElementById("devaMusic");
+
+            const letterHeading = "Dearest Gungun,";
+            const letterBody = [
+                "Happy Birthday! 💖",
+                "On this special day, I wanted to create something truly magical just for you. Every single moment shared with you holds a very special place in my heart.",
+                "May your year ahead be filled with infinite joy, laughter, success, and all the happiness you deserve in this world. Keep shining bright as always!"
+            ];
+
+            const balloonColors = ['#ff4f81', '#ff6b6b', '#ffd166', '#4dabf7', '#b197fc', '#69db7c', '#ff922b'];
+
+            function safePlay(audioEl) {
+                if (audioEl) {
+                    let promise = audioEl.play();
+                    if (promise !== undefined) {
+                        promise.catch(err => console.log("Audio play error:", err));
+                    }
+                }
+            }
+
+            // 1. Loading Se Gift Box Par Shift
+            setTimeout(() => {
+                if (loadingBox) loadingBox.style.display = "none";
+                if (mainLink) {
+                    mainLink.style.display = "flex";
+                    setTimeout(() => {
+                        mainLink.style.opacity = "1";
+                        mainLink.classList.add("gift-fade-init", "show-fade");
+                    }, 50);
+                }
+            }, 1000);
+
+            // 2. Gift Box Click
+            if (mainLink) {
+                mainLink.addEventListener("click", () => {
+                    if (giftBox) giftBox.classList.add("shake-active");
+                    
+                    setTimeout(() => {
+                        if (giftSection) giftSection.style.opacity = "0";
+                        setTimeout(() => {
+                            if (giftSection) giftSection.classList.add("hidden");
+                            startCountdownSequence();
+                        }, 1000);
+                    }, 1000);
+                });
+            }
+
+            // 3. Countdown Timer
+            function startCountdownSequence() {
+                if (countdownScreen) countdownScreen.classList.remove("hidden");
+                let secondsLeft = 10;
+                
+                safePlay(countdownAudio);
+
+                const countdownInterval = setInterval(() => {
+                    secondsLeft--;
+                    if (secondsLeft >= 0) {
+                        if (countdownNumber) {
+                            countdownNumber.innerText = `11:59:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft}`;
+                        }
+                    } else {
+                        clearInterval(countdownInterval);
+                        if (countdownScreen) countdownScreen.classList.add("hidden");
+                        triggerBirthdayGreeting();
+                    }
+                }, 1000);
+            }
+
+            // 4. Birthday Greeting & Balloons
+            function triggerBirthdayGreeting() {
+                if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
+                
+                safePlay(hbdVoice);
+                safePlay(bgMusic);
+                startBalloonRain();
+
+                setTimeout(() => {
+                    if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
+                    showTemplateSection();
+                }, 3500);
+            }
+
+            // 5. Template Image
+            function showTemplateSection() {
+                if (templateSection) {
+                    templateSection.classList.remove("hidden");
+                    setTimeout(() => templateSection.classList.add("active"), 100);
+
+                    setTimeout(() => {
+                        templateSection.classList.remove("active");
+                        setTimeout(() => {
+                            templateSection.classList.add("hidden");
+                            showNotebookLetter();
+                        }, 1000);
+                    }, 4000);
+                } else {
+                    showNotebookLetter();
+                }
+            }
+
+            // 6. Letter Typewriter
+            function showNotebookLetter() {
+                if (!messageSection || !typewriterText) {
+                    showLastMsgScreen();
+                    return;
+                }
+
+                messageSection.classList.remove("hidden");
+                setTimeout(() => messageSection.classList.add("active"), 100);
+
+                let h3 = document.createElement("h3");
+                typewriterText.appendChild(h3);
+                
+                let cursor = document.createElement("span");
+                cursor.className = "heart-cursor";
+                cursor.innerHTML = "💖";
+
+                typeWriterEffect(h3, letterHeading, 0, () => {
+                    let paragraphIndex = 0;
+                    
+                    function typeNextParagraph() {
+                        if (paragraphIndex < letterBody.length) {
+                            let p = document.createElement("p");
+                            typewriterText.appendChild(p);
+                            p.appendChild(cursor);
+                            
+                            typeWriterEffect(p, letterBody[paragraphIndex], 0, () => {
+                                paragraphIndex++;
+                                setTimeout(typeNextParagraph, 500);
+                            }, cursor);
+                        } else {
+                            setTimeout(() => {
+                                messageSection.classList.remove("active");
+                                setTimeout(() => {
+                                    messageSection.classList.add("hidden");
+                                    showLastMsgScreen();
+                                }, 1000);
+                            }, 4000);
+                        }
+                    }
+                    
+                    typeNextParagraph();
+                });
+            }
+
+            function typeWriterEffect(element, text, index, callback, cursorElement = null) {
+                if (index < text.length) {
+                    if (cursorElement) {
+                        element.insertBefore(document.createTextNode(text.charAt(index)), cursorElement);
+                    } else {
+                        element.innerHTML += text.charAt(index);
+                    }
+                    setTimeout(() => typeWriterEffect(element, text, index + 1, callback, cursorElement), 40);
+                } else if (callback) {
+                    callback();
+                }
+            }
+
+            // 7. Last Message
+            function showLastMsgScreen() {
+                if (lastMsgScreen) {
+                    lastMsgScreen.classList.remove("hidden");
+                    setTimeout(() => lastMsgScreen.classList.add("active"), 100);
+
+                    setTimeout(() => {
+                        lastMsgScreen.classList.remove("active");
+                        setTimeout(() => {
+                            lastMsgScreen.classList.add("hidden");
+                            showFinalPoster();
+                        }, 1000);
+                    }, 4000);
+                } else {
+                    showFinalPoster();
+                }
+            }
+
+            // 8. Final Poster
+            function showFinalPoster() {
+                if (bgMusic) {
+                    bgMusic.pause();
+                    bgMusic.currentTime = 0;
+                }
+                safePlay(devaMusic);
+
+                if (posterSection) {
+                    posterSection.classList.remove("hidden");
+                    setTimeout(() => posterSection.classList.add("active"), 100);
+                }
+            }
+
+            // Balloons Generator
+            function startBalloonRain() {
+                if (!rainContainer) return;
+                setInterval(() => {
+                    createBalloon();
+                }, 350);
+            }
+
+            function createBalloon() {
+                const balloon = document.createElement("div");
+                balloon.classList.add("falling-balloon");
+
+                balloon.style.left = Math.random() * 100 + "vw";
+                const randomColor = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+                balloon.style.backgroundColor = randomColor;
+
+                const duration = Math.random() * 5 + 8;
+                balloon.style.animationDuration = duration + "s";
+
+                rainContainer.appendChild(balloon);
+
+                setTimeout(() => {
+                    balloon.remove();
+                }, duration * 1000);
+            }
+        });
+    </script>
 </body>
 </html>
