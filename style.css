@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. RESET & BASIC SETUP
+   1. RESET & UNIVERSAL FIXED BACKGROUND SETUP (back.png)
    ========================================================================== */
 * {
     margin: 0;
@@ -12,7 +12,12 @@ body {
     padding: 0;
     width: 100vw;
     height: 100vh;
-    background: radial-gradient(circle at center, #2e081d 0%, #080005 100%) !important;
+    background-image: url('back.png') !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    background-color: #000000;
     font-family: 'Poppins', sans-serif;
     color: #fff;
     overflow: hidden;
@@ -27,16 +32,12 @@ body {
     display: none !important;
 }
 
-.stars {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
-    pointer-events: none;
-}
-
 #effectCanvas {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
     z-index: 0;
     pointer-events: none;
 }
@@ -63,6 +64,7 @@ body {
     min-height: 300px;
     transition: opacity 1.5s ease;
 }
+
 .loading-center {
     font-size: 18px;
     font-weight: 600;
@@ -72,11 +74,6 @@ body {
     border: none;
     padding: 0;
     box-shadow: none;
-}
-
-@keyframes pulseLoading {
-    0% { transform: scale(0.98); opacity: 0.8; }
-    100% { transform: scale(1.02); opacity: 1; }
 }
 
 .gift-fade-init {
@@ -153,7 +150,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(15, 12, 27, 0.95);
+    background: rgba(15, 12, 27, 0.85);
     z-index: 100;
 }
 
@@ -177,7 +174,6 @@ body {
     100% { opacity: 0; transform: scale(0.9); }
 }
 
-/* --- UPDATED: TEMPLATE SOFT CENTER ZOOM & GLOW --- */
 .template-wrapper {
     position: relative;
     width: 100%;
@@ -185,17 +181,13 @@ body {
     justify-content: center;
     align-items: center;
     opacity: 0;
-    transform: scale(0.82);
-    filter: blur(6px);
-    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-                filter 1.2s ease;
+    transform: scale(0.9);
+    transition: opacity 1.5s ease, transform 1.5s ease; 
 }
 
 .template-wrapper.active {
     opacity: 1;
     transform: scale(1);
-    filter: blur(0px);
 }
 
 .template-img {
@@ -203,39 +195,32 @@ body {
     max-width: 320px;
     height: auto;
     border-radius: 20px;
-    box-shadow: 0 0 30px rgba(255, 77, 109, 0.5), 0 0 60px rgba(255, 117, 143, 0.3);
+    box-shadow: 0 15px 35px rgba(255, 77, 109, 0.3);
 }
 
 /* ==========================================================================
    4. NOTEBOOK PAGE WITH PAGE.PNG BACKGROUND & FIXED HEADING
    ========================================================================== */
-
-/* --- UPDATED: 3D JOURNAL UNFOLD DROP EFFECT --- */
 .scroll-letter { 
     position: relative;
     width: 100%;          
     max-width: 350px;
     height: 540px; 
     border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
     margin: 0 auto;
     background-color: transparent !important; 
     display: flex;
     flex-direction: column;
     overflow: hidden;
-
-    /* 3D Drop Starting Setup */
-    opacity: 0;
-    transform: translateY(-50px) rotateX(20deg) scale(0.88);
-    transform-origin: top center;
-    transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1),
-                transform 1.2s cubic-bezier(0.23, 1, 0.32, 1),
-                box-shadow 1.2s ease;
 }
 
 .scroll-letter.active {
     opacity: 1;
-    transform: translateY(0) rotateX(0deg) scale(1);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 30px rgba(255, 77, 109, 0.25);
+    transform: scale(1);
 }
 
 .scroll-letter::before {
@@ -312,6 +297,8 @@ body {
     min-height: 200px;
     opacity: 0;
     transition: opacity 1.5s ease;
+    position: relative;
+    z-index: 20;
 }
 
 #lastMsgScreen.active {
@@ -321,38 +308,37 @@ body {
 .last-msg-text {
     font-size: 1.05rem;
     font-weight: 600;
-    color: #ff758f;
-    text-shadow: 0 0 15px rgba(255, 117, 143, 0.6);
+    color: #d4af37 !important;
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
     white-space: nowrap;
     text-align: center;
     width: 100%;
 }
 
-    /* ==========================================
-   UPDATED: MG.PNG REAL-TIME SKETCH DRAW REVEAL
-   ========================================== */
+/* Poster Wrapper setup */
 .poster-wrapper {
     position: relative;
+    z-index: 10;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transform: scale(0.9);
+    transition: opacity 2s ease, transform 2s ease;
 }
 
 .poster-wrapper.active {
     opacity: 1;
+    transform: scale(1);
 }
 
-.sketch-container {
+.cloud-container {
     position: relative;
     width: 95%;
     max-width: 360px;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85);
-    background: #080005;
 }
 
 .poster-img {
@@ -360,71 +346,60 @@ body {
     height: auto;
     display: block;
     border-radius: 16px;
-    filter: grayscale(85%) contrast(125%);
-    transition: filter 1s ease 3.8s;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.8);
 }
 
-.poster-wrapper.active .poster-img {
-    filter: grayscale(0%) contrast(100%);
+/* ==========================================================================
+   6. CREDITS SEQUENCE OVERLAY BACKGROUND
+   ========================================================================== */
+#creditsSequence {
+    background-image: url('back.png') !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    background-color: #000000;
 }
 
-/* SOLID OVERLAY: Poster starting me 100% dark cover rahega */
-.sketch-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #080005;
-    z-index: 2;
-    pointer-events: none;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+/* ==========================================================================
+   7. EFFECTS & PARTICLES DIMMING LOGIC
+   ========================================================================== */
+#rainContainer { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none; 
+    z-index: 5;
+    overflow: hidden; 
 }
 
-/* Pencil chalte waqt overlay reveal hoga */
-.poster-wrapper.active .sketch-overlay {
-    animation: sketchReveal 3.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+/* Message section active hone par background particles dim hone ki logic */
+body:has(#lastMsgScreen:not(.hidden)) #rainContainer,
+body:has(#lastMsgScreen.active) #rainContainer,
+body:has(#lastMsgScreen:not(.hidden)) canvas,
+body:has(#lastMsgScreen.active) canvas {
+    opacity: 0.10 !important;
+    z-index: 1 !important;
+    transition: opacity 0.8s ease;
 }
 
-.pencil-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: 26px;
-    z-index: 3;
-    opacity: 0;
-    pointer-events: none;
+.rain-item { 
+    position: absolute; 
+    top: -50px; 
+    pointer-events: none; 
+    animation: fallDown 7s linear infinite; 
 }
 
-.poster-wrapper.active .pencil-icon {
-    animation: pencilDraw 3.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+@keyframes fallDown {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(360deg); }
 }
 
-/* Mask Wipe Animation */
-@keyframes sketchReveal {
-    0% { 
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); 
-    }
-    25% { 
-        clip-path: polygon(35% 0, 100% 0, 100% 100%, 15% 100%); 
-    }
-    55% { 
-        clip-path: polygon(70% 0, 100% 0, 100% 100%, 45% 100%); 
-    }
-    85% { 
-        clip-path: polygon(95% 0, 100% 0, 100% 100%, 80% 100%); 
-    }
-    100% { 
-        clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); 
-        opacity: 0; 
-    }
-}
+@keyframes zoomPulse { from { transform: scale(0.9); } to { transform: scale(1.1); } }
+@keyframes heartPulse { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
 
-/* Pencil Trajectory */
-@keyframes pencilDraw {
-    0% { opacity: 1; top: 2%; left: 2%; transform: rotate(-20deg); }
-    25% { opacity: 1; top: 25%; left: 30%; transform: rotate(15deg); }
-    55% { opacity: 1; top: 55%; left: 60%; transform: rotate(-10deg); }
-    85% { opacity: 1; top: 85%; left: 85%; transform: rotate(20deg); }
-    100% { opacity: 0; top: 95%; left: 95%; }
-}
+.letter-body::-webkit-scrollbar { width: 3px; }
+.letter-body::-webkit-scrollbar-track { background: transparent; }
+.letter-body::-webkit-scrollbar-thumb { background: rgba(179, 57, 57, 0.15); border-radius: 10px; }
