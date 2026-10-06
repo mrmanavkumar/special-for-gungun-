@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+Document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
@@ -21,41 +21,41 @@ document.addEventListener("DOMContentLoaded", () => {
     const rainContainer = document.getElementById("rainContainer");
     const effectCanvas = document.getElementById("effectCanvas");
 
-    let isTriggered = false;
+    Let isTriggered = false;
 
     // STEP 1: INITIAL CLEANUP -> 4.5 SEC BLANK DELAY -> TYPEWRITER LOADING -> 6 SEC HOLD -> FADE OUT
-    const initialLoadingText = document.getElementById("loadingText");
-    if (initialLoadingText) {
-        initialLoadingText.innerHTML = ""; // Initial HTML Text clear (Blank Screen Keep-up)
-        initialLoadingText.style.color = "#ffffff"; // Force White Color
-        initialLoadingText.style.opacity = "0"; // Blank setup
+    Const initialLoadingText = document.getElementById("loadingText");
+    If (initialLoadingText) {
+        InitialLoadingText.innerHTML = ""; // Initial HTML Text clear
+        InitialLoadingText.style.color = "#ffffff"; // Force White Color
+        InitialLoadingText.style.opacity = "0"; // Blank setup
     }
 
-    setTimeout(() => {
-        if (initialLoadingText) {
-            initialLoadingText.style.opacity = "1";
-            const loadingTextStr = "Somthing is loading for Gungun...";
+    SetTimeout(() => {
+        If (initialLoadingText) {
+            InitialLoadingText.style.opacity = "1";
+            Const loadingTextStr = "Something is loading for Gungun...";
             
             // Typewriter effect with Heart Cursor
-            typewriterWithHeart(initialLoadingText, loadingTextStr, () => {
+            TypewriterWithHeart(initialLoadingText, loadingTextStr, () => {
                 
                 // Typing complete hone ke baad 6 SECONDS HOLD
-                setTimeout(() => {
+                SetTimeout(() => {
                     // Dhere-dhere Fade Out (1.8s)
-                    initialLoadingText.style.transition = "opacity 1.8s ease";
-                    initialLoadingText.style.opacity = "0";
+                    InitialLoadingText.style.transition = "opacity 1.8s ease";
+                    InitialLoadingText.style.opacity = "0";
 
-                    setTimeout(() => {
-                        if (loadingBox) loadingBox.style.display = "none";
+                    SetTimeout(() => {
+                        If (loadingBox) loadingBox.style.display = "none";
                         
-                        if (mainLink) {
-                            mainLink.style.display = "flex";
-                            mainLink.style.opacity = "0";
-                            void mainLink.offsetWidth; // Force Reflow
+                        If (mainLink) {
+                            MainLink.style.display = "flex";
+                            MainLink.style.opacity = "0";
+                            Void mainLink.offsetWidth; // Force Reflow
                             
                             // Smooth Gift Box Reveal (2.5s)
-                            mainLink.style.transition = "opacity 2.5s ease-in-out";
-                            mainLink.style.opacity = "1";
+                            MainLink.style.transition = "opacity 2.5s ease-in-out";
+                            MainLink.style.opacity = "1";
                         }
                     }, 1800);
                 }, 6000); // 6 Seconds Hold Time
@@ -64,277 +64,277 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 4500); // 4.5 Seconds Wait Before Typing Starts
 
     // Audio Unlocker for Mobile Browsers
-    function unlockAudio(audioEl) {
-        if (!audioEl) return;
-        audioEl.play().then(() => {
-            audioEl.pause();
-            audioEl.currentTime = 0;
+    Function unlockAudio(audioEl) {
+        If (!audioEl) return;
+        AudioEl.play().then(() => {
+            AudioEl.pause();
+            AudioEl.currentTime = 0;
         }).catch(() => {});
     }
 
     // STEP 2: Gift Box Click Handler
-    function handleLinkClick(e) {
-        if (e) e.stopPropagation();
-        if (isTriggered) return;
-        isTriggered = true;
+    Function handleLinkClick(e) {
+        If (e) e.stopPropagation();
+        If (isTriggered) return;
+        IsTriggered = true;
 
-        unlockAudio(bgMusic);
-        unlockAudio(hbdVoice);
-        unlockAudio(devaMusic);
+        UnlockAudio(bgMusic);
+        UnlockAudio(hbdVoice);
+        UnlockAudio(devaMusic);
 
-        if (giftBox) giftBox.classList.add("shake-active");
+        If (giftBox) giftBox.classList.add("shake-active");
 
-        startMagicalRain();
+        StartMagicalRain();
 
         // Smooth Fade Out of Gift Section
-        setTimeout(() => {
-            if (giftSection) {
-                giftSection.style.transition = "opacity 1s ease";
-                giftSection.style.opacity = "0";
-                setTimeout(() => {
-                    giftSection.style.display = "none";
-                    if (countdownScreen) {
-                        countdownScreen.classList.remove("hidden");
-                        startCountdownTimer(); 
+        SetTimeout(() => {
+            If (giftSection) {
+                GiftSection.style.transition = "opacity 1s ease";
+                GiftSection.style.opacity = "0";
+                SetTimeout(() => {
+                    GiftSection.style.display = "none";
+                    If (countdownScreen) {
+                        CountdownScreen.classList.remove("hidden");
+                        StartCountdownTimer(); 
                     } else {
-                        showBirthdayGreeting();
+                        ShowBirthdayGreeting();
                     }
                 }, 1000);
             }
         }, 1200);
     }
 
-    if (mainLink) mainLink.addEventListener("click", handleLinkClick);
-    if (giftBox) giftBox.addEventListener("click", handleLinkClick);
+    If (mainLink) mainLink.addEventListener("click", handleLinkClick);
+    If (giftBox) giftBox.addEventListener("click", handleLinkClick);
 
     // STEP 3: Countdown Timer (11:59:50 -> 12:00:00)
-    function startCountdownTimer() {
-        let seconds = 50;
-        if (countdownNumber) countdownNumber.textContent = "11:59:50";
+    Function startCountdownTimer() {
+        Let seconds = 50;
+        If (countdownNumber) countdownNumber.textContent = "11:59:50";
 
-        if (countdownAudio) {
-            try {
-                countdownAudio.currentTime = 0;
-                countdownAudio.play().catch(() => {});
+        If (countdownAudio) {
+            Try {
+                CountdownAudio.currentTime = 0;
+                CountdownAudio.play().catch(() => {});
             } catch(e) {}
         }
 
-        const timer = setInterval(() => {
-            if (seconds < 60) {
-                seconds++;
-                if (countdownAudio) {
-                    try {
-                        countdownAudio.currentTime = 0;
-                        countdownAudio.play().catch(() => {});
+        Const timer = setInterval(() => {
+            If (seconds < 60) {
+                Seconds++;
+                If (countdownAudio) {
+                    Try {
+                        CountdownAudio.currentTime = 0;
+                        CountdownAudio.play().catch(() => {});
                     } catch(e) {}
                 }
-                if (seconds === 60) {
-                    if (countdownNumber) countdownNumber.textContent = "12:00:00";
+                If (seconds === 60) {
+                    If (countdownNumber) countdownNumber.textContent = "12:00:00";
                 } else {
-                    if (countdownNumber) countdownNumber.textContent = `11:59:${seconds.toString().padStart(2, '0')}`;
+                    If (countdownNumber) countdownNumber.textContent = `11:59:${seconds.toString().padStart(2, '0')}`;
                 }
             } else {
-                clearInterval(timer);
+                ClearInterval(timer);
                 
-                if (countdownAudio) {
-                    try {
-                        countdownAudio.pause();
-                        countdownAudio.currentTime = 0;
+                If (countdownAudio) {
+                    Try {
+                        CountdownAudio.pause();
+                        CountdownAudio.currentTime = 0;
                     } catch(e) {}
                 }
 
-                setTimeout(() => {
-                    if (countdownScreen) countdownScreen.classList.add("hidden");
-                    showBirthdayGreeting();
+                SetTimeout(() => {
+                    If (countdownScreen) countdownScreen.classList.add("hidden");
+                    ShowBirthdayGreeting();
                 }, 1000);
             }
         }, 1000);
     }
 
-        // STEP 4: Happy Birthday Screen
-    function showBirthdayGreeting() {
-        if (bdayGreetingScreen) {
-            bdayGreetingScreen.classList.remove("hidden");
+    // STEP 4: Happy Birthday Screen
+    Function showBirthdayGreeting() {
+        If (bdayGreetingScreen) {
+            BdayGreetingScreen.classList.remove("hidden");
         }
 
-        if (hbdVoice) {
-            try {
-                hbdVoice.currentTime = 0;
-                hbdVoice.play().catch(() => {});
+        If (hbdVoice) {
+            Try {
+                HbdVoice.currentTime = 0;
+                HbdVoice.play().catch(() => {});
             } catch(e) {}
         }
 
-        if (bgMusic) {
-            try {
-                bgMusic.currentTime = 0;
-                bgMusic.play().catch(() => {});
+        If (bgMusic) {
+            Try {
+                BgMusic.currentTime = 0;
+                BgMusic.play().catch(() => {});
             } catch(e) {}
         }
 
-        initConfetti();
+        InitConfetti();
 
-        setTimeout(() => {
-            if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
+        SetTimeout(() => {
+            If (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
             
-            if (templateSection) {
-                templateSection.classList.remove("hidden");
-                setTimeout(() => templateSection.classList.add("active"), 100);
+            If (templateSection) {
+                TemplateSection.classList.remove("hidden");
+                SetTimeout(() => templateSection.classList.add("active"), 100);
                 
-                // CHANGE 1: 20 SECONDS FOR TEMPLATE
-                setTimeout(() => {
-                    templateSection.classList.remove("active");
-                    setTimeout(() => {
-                        templateSection.classList.add("hidden");
-                        showLetterPage();
+                // 20 SECONDS FOR TEMPLATE
+                SetTimeout(() => {
+                    TemplateSection.classList.remove("active");
+                    SetTimeout(() => {
+                        TemplateSection.classList.add("hidden");
+                        ShowLetterPage();
                     }, 1500); 
                 }, 20000); 
             } else {
-                showLetterPage();
+                ShowLetterPage();
             }
         }, 3500);
     }
 
-// STEP 5: Notebook Letter Page (1 Minute Total Hold)
-function showLetterPage() {
-    if (messageSection) {
-        messageSection.classList.remove("hidden");
-        setTimeout(() => {
-            messageSection.classList.add("active");
-            typeWriterEffect();
-        }, 100);
-    }
-}
-
-// Typewriter Engine for Letter
-async function typeWriterEffect() {
-    const targetDiv = document.getElementById("typewriterText");
-    if (!targetDiv) {
-        handleMusicEndTransition();
-        return;
-    }
-
-    targetDiv.style.overflowY = "auto";
-    targetDiv.style.webkitOverflowScrolling = "touch";
-
-    const letterData = [
-        { type: 'p', text: 'Gungun, tumhare birthday par main dil se dua karta hoon ki tumhari zindagi hamesha khushiyon se bhari rahe.' },
-        { type: 'p', text: 'Tum hamesha muskurati raho, aur tumhare chehre ki ye muskaan kabhi kam na ho, kyunki tum sach mein har ek khushi deserve karti ho.' },
-        { type: 'p', text: 'Tumne jo bhi sapne dekhe hain, woh saare sach ho, aur tum life mein hamesha aage badhti raho🩺👩‍⚕️🩺' },
-        { type: 'p', text: 'Tumhe zindagi mein woh sab mile jo tum dil se chahti ho.' },
-        { type: 'p', text: 'Bas itni si dua hai meri—tum jahan bhi raho, hamesha khush raho😊' },
-        { type: 'p', text: 'Take care of yourself. 🌸✨', alignRight: true },
-        { type: 'p', text: '- MANAV', alignRight: true }
-    ];
-
-    targetDiv.innerHTML = ""; 
-
-    const startTime = Date.now(); // Screen start time capture
-
-    for (const data of letterData) {
-        const element = document.createElement(data.type);
-        if (data.alignRight) {
-            element.style.textAlign = "right";
-            element.style.marginTop = "10px";
+    // STEP 5: Notebook Letter Page (1 Minute Total Hold)
+    Function showLetterPage() {
+        If (messageSection) {
+            MessageSection.classList.remove("hidden");
+            SetTimeout(() => {
+                MessageSection.classList.add("active");
+                TypeWriterEffect();
+            }, 100);
         }
-        targetDiv.appendChild(element);
-
-        let rawText = data.text;
-        for (let i = 0; i < rawText.length; i++) {
-            const oldCursor = element.querySelector('.heart-cursor');
-            if (oldCursor) oldCursor.remove();
-
-            element.innerHTML += rawText.charAt(i);
-            element.innerHTML += '<span class="heart-cursor">❤️</span>';
-            
-            targetDiv.scrollTop = targetDiv.scrollHeight;
-            
-            await new Promise(res => setTimeout(res, 45)); // Comfortable reading speed
-        }
-        const finalCursor = element.querySelector('.heart-cursor');
-        if (finalCursor) finalCursor.remove();
-        
-        await new Promise(res => setTimeout(res, 300));
     }
 
-    // Exact 45 second ( 45000 ms) Hold Calculation
-    const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 45000 - elapsedTime); 
+    // Typewriter Engine for Letter
+    Async function typeWriterEffect() {
+        Const targetDiv = document.getElementById("typewriterText");
+        If (!targetDiv) {
+            HandleMusicEndTransition();
+            Return;
+        }
 
-    setTimeout(() => {
-        handleMusicEndTransition();
-    }, remainingTime);
-                }
+        TargetDiv.style.overflowY = "auto";
+        TargetDiv.style.webkitOverflowScrolling = "touch";
+
+        Const letterData = [
+            { type: 'p', text: 'Gungun, tumhare birthday par main dil se dua karta hoon ki tumhari zindagi hamesha khushiyon se bhari rahe.' },
+            { type: 'p', text: 'Tum hamesha muskurati raho, aur tumhare chehre ki ye muskaan kabhi kam na ho, kyunki tum sach mein har ek khushi deserve karti ho.' },
+            { type: 'p', text: 'Tumne jo bhi sapne dekhe hain, woh saare sach ho, aur tum life mein hamesha aage badhti raho🩺👩‍⚕️🩺' },
+            { type: 'p', text: 'Tumhe zindagi mein woh sab mile jo tum dil se chahti ho.' },
+            { type: 'p', text: 'Bas itni si dua hai meri—tum jahan bhi raho, hamesha khush raho😊' },
+            { type: 'p', text: 'Take care of yourself. 🌸✨', alignRight: true },
+            { type: 'p', text: '- MANAV', alignRight: true }
+        ];
+
+        TargetDiv.innerHTML = ""; 
+
+        Const startTime = Date.now(); // Screen start time capture
+
+        For (const data of letterData) {
+            Const element = document.createElement(data.type);
+            If (data.alignRight) {
+                Element.style.textAlign = "right";
+                Element.style.marginTop = "10px";
+            }
+            TargetDiv.appendChild(element);
+
+            Let rawText = data.text;
+            For (let i = 0; i < rawText.length; i++) {
+                Const oldCursor = element.querySelector('.heart-cursor');
+                If (oldCursor) oldCursor.remove();
+
+                Element.innerHTML += rawText.charAt(i);
+                Element.innerHTML += '<span class="heart-cursor">❤️</span>';
+                
+                TargetDiv.scrollTop = targetDiv.scrollHeight;
+                
+                Await new Promise(res => setTimeout(res, 45)); // Comfortable reading speed
+            }
+            Const finalCursor = element.querySelector('.heart-cursor');
+            If (finalCursor) finalCursor.remove();
+            
+            Await new Promise(res => setTimeout(res, 300));
+        }
+
+        // Exact 30 second ( 30000 ms) Hold Calculation
+        Const elapsedTime = Date.now() - startTime;
+        Const remainingTime = Math.max(0, 30000 - elapsedTime); 
+
+        SetTimeout(() => {
+            HandleMusicEndTransition();
+        }, remainingTime);
+    }
     
     // STEP 6: Letter End -> Stop BG Music -> 5 Sec Blank Delay
-    function handleMusicEndTransition() {
-        let hasTransitioned = false;
+    Function handleMusicEndTransition() {
+        Let hasTransitioned = false;
 
-        const triggerNext = () => {
-            if (hasTransitioned) return;
-            hasTransitioned = true;
+        Const triggerNext = () => {
+            If (hasTransitioned) return;
+            HasTransitioned = true;
             
-            if (messageSection) messageSection.classList.remove("active");
-            if (bgMusic) {
-                try {
-                    bgMusic.pause();
-                    bgMusic.currentTime = 0;
+            If (messageSection) messageSection.classList.remove("active");
+            If (bgMusic) {
+                Try {
+                    BgMusic.pause();
+                    BgMusic.currentTime = 0;
                 } catch(e) {}
             }
 
-            setTimeout(() => {
-                if (messageSection) messageSection.classList.add("hidden");
+            SetTimeout(() => {
+                If (messageSection) messageSection.classList.add("hidden");
                 
                 // EXACT 5 SECONDS BLANK SCREEN DELAY
-                setTimeout(() => {
-                    showLastMessageScreen();
+                SetTimeout(() => {
+                    ShowLastMessageScreen();
                 }, 5000);
             }, 1500);
         };
 
-        if (bgMusic && !bgMusic.paused) {
-            bgMusic.onended = triggerNext;
+        If (bgMusic && !bgMusic.paused) {
+            BgMusic.onended = triggerNext;
         } else {
-            setTimeout(triggerNext, 2000);
+            SetTimeout(triggerNext, 2000);
         }
     }
 
     // STEP 7: Transition Message Screen with Heart Cursor & Deva Music Play
-    function showLastMessageScreen() {
-        if (lastMsgScreen) {
-            lastMsgScreen.classList.remove("hidden");
-            setTimeout(() => lastMsgScreen.classList.add("active"), 100);
+    Function showLastMessageScreen() {
+        If (lastMsgScreen) {
+            LastMsgScreen.classList.remove("hidden");
+            SetTimeout(() => lastMsgScreen.classList.add("active"), 100);
         }
 
-        if (devaMusic) {
-            try {
-                devaMusic.currentTime = 0;
-                devaMusic.play().catch(() => {});
+        If (devaMusic) {
+            Try {
+                DevaMusic.currentTime = 0;
+                DevaMusic.play().catch(() => {});
             } catch(e) {}
         }
 
-        let targetEl = document.querySelector(".last-msg-text");
-        if (!targetEl && lastMsgScreen) {
-            targetEl = lastMsgScreen;
+        Let targetEl = document.querySelector(".last-msg-text");
+        If (!targetEl && lastMsgScreen) {
+            TargetEl = lastMsgScreen;
         }
 
-        if (targetEl) {
-            targetEl.style.color = "#ffffff"; // Force White Color
+        If (targetEl) {
+            TargetEl.style.color = "#d4af37"; // Golden Yellow Accent
         }
 
-        const textToType = "In my eyes, who you truly are…\nlet me show you.";
+        Const textToType = "In my eyes, who you truly are…\nlet me show you.";
 
         // Typewriter Engine with Heart Cursor ♥️
-        typewriterWithHeart(targetEl, textToType, () => {
+        TypewriterWithHeart(targetEl, textToType, () => {
             // Typing completion -> HOLD FOR EXACT 8 SECONDS
-            setTimeout(() => {
-                if (lastMsgScreen) lastMsgScreen.classList.remove("active");
+            SetTimeout(() => {
+                If (lastMsgScreen) lastMsgScreen.classList.remove("active");
                 
-                setTimeout(() => {
-                    if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
+                SetTimeout(() => {
+                    If (lastMsgScreen) lastMsgScreen.classList.add("hidden");
                     
                     // 3 SECONDS PAUSE BEFORE POSTER REVEAL
-                    setTimeout(() => {
-                        showFinalPoster();
+                    SetTimeout(() => {
+                        ShowFinalPoster();
                     }, 3000);
                 }, 1500);
             }, 8000);
@@ -342,107 +342,109 @@ async function typeWriterEffect() {
     }
 
     // Typewriter Engine with Heart Cursor ♥️
-    function typewriterWithHeart(element, text, callback) {
-        if (!element) {
-            if (callback) callback();
-            return;
+    Function typewriterWithHeart(element, text, callback) {
+        If (!element) {
+            If (callback) callback();
+            Return;
         }
-        element.innerHTML = "";
-        let index = 0;
+        Element.innerHTML = "";
+        Let index = 0;
 
-        const cursor = document.createElement("span");
-        cursor.className = "heart-cursor";
-        cursor.innerHTML = "♥️";
-        element.appendChild(cursor);
+        Const cursor = document.createElement("span");
+        Cursor.className = "heart-cursor";
+        Cursor.innerHTML = "♥️";
+        Element.appendChild(cursor);
 
-        function type() {
-            if (index < text.length) {
-                let char = text.charAt(index);
-                if (char === "\n") {
-                    element.insertBefore(document.createElement("br"), cursor);
+        Function type() {
+            If (index < text.length) {
+                Let char = text.charAt(index);
+                If (char === "\n") {
+                    Element.insertBefore(document.createElement("br"), cursor);
                 } else {
-                    let charNode = document.createTextNode(char);
-                    element.insertBefore(charNode, cursor);
+                    Let charNode = document.createTextNode(char);
+                    Element.insertBefore(charNode, cursor);
                 }
-                index++;
-                setTimeout(type, 85);
+                Index++;
+                SetTimeout(type, 85);
             } else {
-                if (callback) callback();
+                If (callback) callback();
             }
         }
 
-        type();
+        Type();
     }
 
     // STEP 8: Final Poster Screen (mg.png)
-    function showFinalPoster() {
-        if (posterSection) {
-            posterSection.classList.remove("hidden");
-            setTimeout(() => posterSection.classList.add("active"), 100);
+    Function showFinalPoster() {
+        If (posterSection) {
+            PosterSection.classList.remove("hidden");
+            
+            // Poster active state & timing
+            SetTimeout(() => posterSection.classList.add("active"), 100);
 
-            setTimeout(() => {
-                posterSection.classList.remove("active");
-                setTimeout(() => {
-                    posterSection.classList.add("hidden");
-                    showCreditsSequence();
+            SetTimeout(() => {
+                PosterSection.classList.remove("active");
+                SetTimeout(() => {
+                    PosterSection.classList.add("hidden");
+                    ShowCreditsSequence();
                 }, 2500);
             }, 140000); 
         } else {
-            showCreditsSequence();
+            ShowCreditsSequence();
         }
     }
+    
 
     // STEP 9: Cinematic Fade Sequence (4s Delay -> Wish 6s -> Credits 5s -> THE END)
-    function showCreditsSequence() {
-        const creditsContainer = document.createElement("div");
-        creditsContainer.id = "creditsSequence";
-        creditsContainer.style.position = "fixed";
-        creditsContainer.style.top = "0";
-        creditsContainer.style.left = "0";
-        creditsContainer.style.width = "100vw";
-        creditsContainer.style.height = "100vh";
-        creditsContainer.style.display = "flex";
-        creditsContainer.style.flexDirection = "column";
-        creditsContainer.style.justifyContent = "center";
-        creditsContainer.style.alignItems = "center";
-        creditsContainer.style.zIndex = "9999";
-        creditsContainer.style.color = "#ffffff";
-        creditsContainer.style.textAlign = "center";
-        creditsContainer.style.fontFamily = "'Georgia', serif";
-        creditsContainer.style.opacity = "0";
-        creditsContainer.style.transition = "opacity 2s ease";
-        creditsContainer.style.backgroundColor = "rgba(0, 0, 0, 0.95)";
-        creditsContainer.style.padding = "20px";
+    Function showCreditsSequence() {
+        Const creditsContainer = document.createElement("div");
+        CreditsContainer.id = "creditsSequence";
+        CreditsContainer.style.position = "fixed";
+        CreditsContainer.style.top = "0";
+        CreditsContainer.style.left = "0";
+        CreditsContainer.style.width = "100vw";
+        CreditsContainer.style.height = "100vh";
+        CreditsContainer.style.display = "flex";
+        CreditsContainer.style.flexDirection = "column";
+        CreditsContainer.style.justifyContent = "center";
+        CreditsContainer.style.alignItems = "center";
+        CreditsContainer.style.zIndex = "9999";
+        CreditsContainer.style.color = "#ffffff";
+        CreditsContainer.style.textAlign = "center";
+        CreditsContainer.style.fontFamily = "'Georgia', serif";
+        CreditsContainer.style.opacity = "0";
+        CreditsContainer.style.transition = "opacity 2s ease";
+        CreditsContainer.style.padding = "20px";
 
-        document.body.appendChild(creditsContainer);
+        Document.body.appendChild(creditsContainer);
 
-        setTimeout(() => {
-            creditsContainer.innerHTML = `
+        SetTimeout(() => {
+            CreditsContainer.innerHTML = `
                 <h1 style="font-size: 1.8rem; line-height: 1.5; color: #d4af37; letter-spacing: 1.5px; font-weight: normal;">
                     Once again, a very Happy Birthday to you! ✨
                 </h1>
             `;
-            creditsContainer.style.opacity = "1";
+            CreditsContainer.style.opacity = "1";
 
-            setTimeout(() => {
-                creditsContainer.style.opacity = "0";
+            SetTimeout(() => {
+                CreditsContainer.style.opacity = "0";
 
-                setTimeout(() => {
-                    creditsContainer.innerHTML = `
-                        <h2 style="font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 3px; color: #cccccc; font-weight: 300;">IMAGINED AND CREATED BY</h2>
+                SetTimeout(() => {
+                    CreditsContainer.innerHTML = `
+                        <h2 style="font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 3px; color: #cccccc; font-weight: 300;">CONCEPT, DESIGN & CREATION BY</h2>
                         <h1 style="font-size: 2.2rem; margin-bottom: 12px; color: #d4af37; letter-spacing: 4px;">MANAV</h1>
                         <p style="font-size: 1.2rem; color: #ffffff; font-style: italic; letter-spacing: 1px;">SPECIALLY FOR GUNGUN</p>
                     `;
-                    creditsContainer.style.opacity = "1";
+                    CreditsContainer.style.opacity = "1";
 
-                    setTimeout(() => {
-                        creditsContainer.style.opacity = "0";
+                    SetTimeout(() => {
+                        CreditsContainer.style.opacity = "0";
 
-                        setTimeout(() => {
-                            creditsContainer.innerHTML = `
+                        SetTimeout(() => {
+                            CreditsContainer.innerHTML = `
                                 <h1 style="font-size: 2.5rem; letter-spacing: 6px; color: #ffffff; text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); font-weight: 300;">— THE END —</h1>
                             `;
-                            creditsContainer.style.opacity = "1";
+                            CreditsContainer.style.opacity = "1";
                         }, 2000);
 
                     }, 5000);
@@ -455,64 +457,64 @@ async function typeWriterEffect() {
     }
 
     // Rain Particle Generator
-    function startMagicalRain() {
-        if (!rainContainer) return;
-        const items = ['✨', '♥️', '✨','♥️','🎈','🌟', '🌟','🎈'];
-        setInterval(() => {
-            const element = document.createElement('div');
-            element.classList.add('rain-item');
-            element.innerText = items[Math.floor(Math.random() * items.length)];
-            element.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 14 + 16; 
-            element.style.fontSize = size + 'px';
-            const fallDuration = Math.random() * 3 + 4; 
-            element.style.animationDuration = fallDuration + 's';
+    Function startMagicalRain() {
+        If (!rainContainer) return;
+        Const items = ['✨', '♥️', '✨','♥️','🎈','🌟', '🌟','🎈'];
+        SetInterval(() => {
+            Const element = document.createElement('div');
+            Element.classList.add('rain-item');
+            Element.innerText = items[Math.floor(Math.random() * items.length)];
+            Element.style.left = Math.random() * 100 + 'vw';
+            Const size = Math.random() * 14 + 16; 
+            Element.style.fontSize = size + 'px';
+            Const fallDuration = Math.random() * 3 + 4; 
+            Element.style.animationDuration = fallDuration + 's';
             
-            rainContainer.appendChild(element);
-            setTimeout(() => { element.remove(); }, fallDuration * 1000);
+            RainContainer.appendChild(element);
+            SetTimeout(() => { element.remove(); }, fallDuration * 1000);
         }, 250); 
     }
 
     // Confetti System
-    function initConfetti() {
-        if (!effectCanvas) return;
-        const ctx = effectCanvas.getContext("2d");
-        let width = (effectCanvas.width = window.innerWidth);
-        let height = (effectCanvas.height = window.innerHeight);
-        const particles = [];
-        const colors = ["#ff4d6d", "#ff758f", "#ff8fa3", "#ffb3c1", "#fff"];
+    Function initConfetti() {
+        If (!effectCanvas) return;
+        Const ctx = effectCanvas.getContext("2d");
+        Let width = (effectCanvas.width = window.innerWidth);
+        Let height = (effectCanvas.height = window.innerHeight);
+        Const particles = [];
+        Const colors = ["#ff4d6d", "#ff758f", "#ff8fa3", "#ffb3c1", "#fff"];
 
-        for (let i = 0; i < 100; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height - height,
-                r: Math.random() * 4 + 2,
-                d: Math.random() * 50 + 10,
-                color: colors[Math.floor(Math.random() * colors.length)],
-                tilt: Math.random() * 10 - 5,
-                tiltAngleIncremental: Math.random() * 0.07 + 0.02,
-                tiltAngle: 0
+        For (let i = 0; i < 100; i++) {
+            Particles.push({
+                X: Math.random() * width,
+                Y: Math.random() * height - height,
+                R: Math.random() * 4 + 2,
+                D: Math.random() * 50 + 10,
+                Color: colors[Math.floor(Math.random() * colors.length)],
+                Tilt: Math.random() * 10 - 5,
+                TiltAngleIncremental: Math.random() * 0.07 + 0.02,
+                TiltAngle: 0
             });
         }
 
-        function draw() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach((p, idx) => {
-                p.tiltAngle += p.tiltAngleIncremental;
-                p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
-                p.x += Math.sin(p.tiltAngle);
-                p.tilt = Math.sin(p.tiltAngle - idx / 3) * 15;
-                ctx.beginPath();
-                ctx.lineWidth = p.r;
-                ctx.strokeStyle = p.color;
-                ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
-                ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
-                ctx.stroke();
+        Function draw() {
+            Ctx.clearRect(0, 0, width, height);
+            Particles.forEach((p, idx) => {
+                P.tiltAngle += p.tiltAngleIncremental;
+                P.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+                P.x += Math.sin(p.tiltAngle);
+                P.tilt = Math.sin(p.tiltAngle - idx / 3) * 15;
+                Ctx.beginPath();
+                Ctx.lineWidth = p.r;
+                Ctx.strokeStyle = p.color;
+                Ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+                Ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+                Ctx.stroke();
             });
-            particles.forEach((p) => { if (p.y > height) { p.y = -20; p.x = Math.random() * width; } });
-            requestAnimationFrame(draw);
+            Particles.forEach((p) => { if (p.y > height) { p.y = -20; p.x = Math.random() * width; } });
+            RequestAnimationFrame(draw);
         }
-        draw();
+        Draw();
     }
 });
-                                                      
+        
